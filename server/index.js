@@ -1,6 +1,6 @@
 import express from "express";
 import "./db/server.js";
-import usersRouter from "./routes/usersRouter.js";
+import clientsRouter from "./routes/clientsRouter.js";
 import { errorHandler } from "./middlewares/ErrorHandler.js";
 import cors from "cors";
 
@@ -12,7 +12,7 @@ app.use(express.json());
 
 //ROUTES
 
-app.use("/users", usersRouter);
+app.use("/clients", clientsRouter);
 
 app.use(errorHandler);
 
