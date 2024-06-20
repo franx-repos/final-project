@@ -1,23 +1,58 @@
 import mongoose from "mongoose";
 
 const taskSchema = new mongoose.Schema({
-  sowo_id: {
+  title: {
     type: String,
-    required: [true, "sowo_id is required"],
-    unique: true,
-    trim: true,
   },
-  name: {
-    type: String,
-    required: [true, "name is required"],
+  create_date: {
+    type: Date,
+    default: Date.now,
   },
-  house: {
-    type: String,
-    required: [true, "house is required"],
-  },
-  timeOfArrival: {
+  finish_date: {
     type: Date,
   },
+  deadline: {
+    type: Date,
+  },
+  payment: {
+    type: Boolean,
+    default: false,
+  },
+  task_type: {
+    type: [String],
+  },
+  industry: {
+    type: [String],
+  },
+  description: {
+    type: String,
+  },
+
+  status: {
+    type: String,
+  },
+  assigned_to: {
+    type: mongoose.Schema.ObjectId,
+    ref: "Pro",
+  },
+  created_by: {
+    type: mongoose.Schema.ObjectId,
+    ref: "Client",
+  },
+
+  documents: [
+    {
+      title: {
+        type: String,
+      },
+      url: {
+        type: String,
+      },
+      icon: {
+        type: String,
+      },
+    },
+  ],
 
   // image_url: {
   //   type: String,
