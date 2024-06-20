@@ -24,16 +24,30 @@ export const getClientById = async (req, res, next) => {
 };
 
 export const addNewClient = async (req, res, next) => {
-  const { sowo_id, name, house, timeOfArrival } = req.body;
-
+  const { role, ...data } = req.body;
+  console.log(data);
+  console.log(role);
   try {
-    const newClient = new Client({ sowo_id, name, house, timeOfArrival });
+    const newClient = new Client({ data, role });
     const savedClient = await newClient.save();
     res.status(201).json(savedClient);
   } catch (error) {
     next(error);
   }
 };
+//Beispiel für Insomnia oder postman
+// {
+//   "first_name":"John",
+//   "last_name":"Doe",
+//   "email": "JohnDoe@email.de",
+//   "password":"123445639",
+//   "vat_id":"23445",
+//   "tax_id":"",
+//   "street":"hellostreet 19",
+//   "zip":"12345",
+//   "city":"Berlin",
+//   "role":"client"
+// }
 
 export const updateClient = async (req, res, next) => {
   const { id } = req.params;
