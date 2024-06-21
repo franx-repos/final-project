@@ -1,5 +1,4 @@
 import Chat from "../models/chatSchema.js";
-import TestChat from "../models/chatTestSchema.js";
 
 //Über die Task Id werden die messages geholt
 //Wenn ein user einem Chatroom joined
@@ -17,7 +16,7 @@ export const updateChat = async (req, res, next) => {
   const { id } = req.params;
   const { client_name, pro_name, task_name, messages } = req.body;
   try {
-    const updateChat = await TestChat.findByIdAndUpdate(
+    const updateChat = await Chat.findByIdAndUpdate(
       id,
       { client_name, pro_name, task_name, messages },
       { new: true }
@@ -34,7 +33,7 @@ export const updateChat = async (req, res, next) => {
 export const getChatById = async (req, res, next) => {
   const { id } = req.params;
   try {
-    const chat = await TestChat.findById(id);
+    const chat = await Chat.findById(id);
     if (!chat) {
       throw { statusCode: 404, message: "Chat not found" };
     }
@@ -46,7 +45,7 @@ export const getChatById = async (req, res, next) => {
 //
 export const getAllChats = async (req, res, next) => {
   try {
-    const chat = await TestChat.find();
+    const chat = await Chat.find();
     if (!chat.length) {
       throw { statusCode: 404, message: "Chats not found" };
     }
@@ -56,9 +55,9 @@ export const getAllChats = async (req, res, next) => {
 
 //Create a Chatroom this happens automatically as a professional and client connect
 export const createNewChat = async (req, res, next) => {
-  const { client_name, pro_name, task_name } = req.body;
+  const { client_id, pro_id, task_id } = req.body;
   try {
-    const newChat = new TestChat({ client_name, pro_name, task_name });
+    const newChat = new Chat({ client_id, pro_id, task_id });
     const savedChat = await newChat.save();
     res.status(201).json(savedChat);
   } catch (error) {
