@@ -1,8 +1,10 @@
 import mongoose from "mongoose";
 
 const taskSchema = new mongoose.Schema({
-  title: {
+ content:{
+   title: {
     type: String,
+    required: true,
   },
   create_date: {
     type: Date,
@@ -18,6 +20,9 @@ const taskSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  price : {
+    type:Number,
+  },
   task_type: {
     type: [String],
   },
@@ -27,9 +32,9 @@ const taskSchema = new mongoose.Schema({
   description: {
     type: String,
   },
-
   status: {
     type: String,
+    default: "OPEN",
   },
   assigned_to: {
     type: mongoose.Schema.ObjectId,
@@ -39,10 +44,10 @@ const taskSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: "Client",
   },
-
+},
   documents: [
     {
-      title: {
+      documentstitle: {
         type: String,
       },
       url: {

@@ -20,4 +20,4 @@ app.use("/tasks", tasksRouter);
 
 app.use(errorHandler);
 
-app.listen(PORT, () => console.log(`Server is running on Port: ${PORT}`));
+app.listen(PORT, () => console.log(`Server is running on Port:http://localhost:${PORT}`));
