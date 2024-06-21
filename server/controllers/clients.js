@@ -51,14 +51,20 @@ export const addNewClient = async (req, res, next) => {
 
 export const updateClient = async (req, res, next) => {
   const { id } = req.params;
-  const { first_name, email_verified, role, industry, languages } = req.body;
+  const { email_verified, role, industry, languages, ...data } = req.body;
   // console.log(industry);
-  // console.log(data);
+  console.log(data);
   // console.log(country);
   try {
     const updatedClient = await Client.findByIdAndUpdate(
       id,
-      { first_name, email_verified, role, industry, languages },
+      {
+        first_name: data.first_name,
+        email_verified,
+        role,
+        industry,
+        languages,
+      },
       { new: true }
     );
     if (!updatedClient) {

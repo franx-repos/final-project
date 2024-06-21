@@ -8,6 +8,7 @@ import { errorHandler } from "./middlewares/ErrorHandler.js";
 import cors from "cors";
 import { createServer } from "http";
 import { Server } from "socket.io";
+import { instrument } from "@socket.io/admin-ui";
 
 const app = express();
 const PORT = 8001;
@@ -16,7 +17,7 @@ const PORT = 8001;
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173", "https://admin.socket.io/"],
   },
 });
 
@@ -34,6 +35,11 @@ io.on("connection", (socket) => {
     );
   });
 
+  //room is the task id later
+  socket.on("join-room", (room) => {
+    socket.join(room);
+  });
+
   socket.on("disconnect", () => {
     console.log("A user disconnected");
   });
@@ -42,6 +48,11 @@ io.on("connection", (socket) => {
 io.engine.on("connection_error", (err) => {
   console.log(err.req); // the request object
   console.log(err.message); // the error "Session ID unknown"
+});
+
+instrument(io, {
+  auth: false,
+  mode: "development",
 });
 
 app.use(cors());
