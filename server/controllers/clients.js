@@ -25,8 +25,8 @@ export const getClientById = async (req, res, next) => {
 
 export const addNewClient = async (req, res, next) => {
   const { role, ...data } = req.body;
-  console.log(data);
-  console.log(role);
+  // console.log(data);
+  // console.log(role);
   try {
     const newClient = new Client({ data, role });
     const savedClient = await newClient.save();
@@ -35,6 +35,7 @@ export const addNewClient = async (req, res, next) => {
     next(error);
   }
 };
+
 //Beispiel für Insomnia oder postman
 // {
 //   "first_name":"John",
