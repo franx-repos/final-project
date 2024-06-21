@@ -37,7 +37,20 @@ io.on("connection", (socket) => {
 
   //room is the task id later
   socket.on("join-room", (room) => {
+    console.log(`join room: ${room}`);
     socket.join(room);
+  });
+
+  socket.on("send-message", (message, room) => {
+    console.log(message);
+    console.log(room);
+    if (room === "" || room === undefined) {
+      socket.broadcast.emit("recieve-message", message);
+      socket.to("Room1").emit("some event", message);
+      console.log(message);
+    } else {
+      socket.to(room).emit("recieve-message", message);
+    }
   });
 
   socket.on("disconnect", () => {
