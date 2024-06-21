@@ -68,24 +68,3 @@ const clientSchema = new mongoose.Schema({
 });
 
 export default mongoose.model("Client", clientSchema);
-
-// Clients
-// {
-//     {
-//         "id":"3",
-//         "first_name":"John",
-//         "last_name": "Dou",
-//         "email":"johnDoe@email.com",
-//         "password":"****",
-//         "vatID":"1234",
-//         "taxID":"1233",
-//         "street": "TestStreet 4",
-//         "zip": "48952",
-//         "city": "Berlin",
-//         "country": "Germany",
-//         "Language": "german",
-//     orders_ids{
-//         "1",
-//         "4",
-//         }
-//     },
