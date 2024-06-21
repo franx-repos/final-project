@@ -51,14 +51,18 @@ export const addNewClient = async (req, res, next) => {
 
 export const updateClient = async (req, res, next) => {
   const { id } = req.params;
-  const { first_name, email_verified, role, industry, languages } = req.body;
-  // console.log(industry);
-  // console.log(data);
-  // console.log(country);
+  const { data, email_verified, role, industry, languages } = req.body;
+
   try {
     const updatedClient = await Client.findByIdAndUpdate(
       id,
-      { first_name, email_verified, role, industry, languages },
+      {
+        data,
+        email_verified,
+        role,
+        industry,
+        languages,
+      },
       { new: true }
     );
     if (!updatedClient) {
@@ -70,22 +74,22 @@ export const updateClient = async (req, res, next) => {
   }
 };
 
-export const addTagToClient = async (req, res, next) => {
-  const { id } = req.body;
-  const { tag } = req.body;
+// export const addTagToClient = async (req, res, next) => {
+//   const { id } = req.body;
+//   const { tag } = req.body;
 
-  try {
-    const client = await Client.findById(id);
-    if (!client) {
-      throw { statusCode: 404, message: "Client not found" };
-    }
-    client.tags.push(tag);
-    const updateClient = await client.save();
-    res.json(updateClient);
-  } catch (error) {
-    next(error);
-  }
-};
+//   try {
+//     const client = await Client.findById(id);
+//     if (!client) {
+//       throw { statusCode: 404, message: "Client not found" };
+//     }
+//     client.tags.push(tag);
+//     const updateClient = await client.save();
+//     res.json(updateClient);
+//   } catch (error) {
+//     next(error);
+//   }
+// };
 
 export const deleteClient = async (req, res, next) => {
   const { id } = req.params;
