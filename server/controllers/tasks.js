@@ -20,29 +20,34 @@ export const getTaskById = async (req, res, next) => {
       throw { statusCode: 404, message: "Task not found" };
     }
     res.json(task);
-  } catch (error) {}
+  } catch (error) {
+    next(error);
+  }
 };
 
-export const addNewTask = async (req, res, next) => {
-  const { sowo_id, name, house, timeOfArrival } = req.body;
-
+export const CreateTask = async (req, res, next) => {
+  // const {title,deadline,task_type,industry,description,created_by,...documents} = req.body;
+  const {content,...documents} = req.body;
+  console.log(content)
+  console.log(documents)
   try {
-    const newTask = new Task({ sowo_id, name, house, timeOfArrival });
+    // const newTask = new Task({title,deadline,task_type,industry,description,created_by,documents} );
+    const newTask = new Task({content,documents} );
     const savedTask = await newTask.save();
     res.status(201).json(savedTask);
   } catch (error) {
     next(error);
   }
 };
-
+    
 export const updateTask = async (req, res, next) => {
   const { id } = req.params;
-  const { sowo_id, name, house } = req.body;
-
+  const { content,...documents} = req.body;
+  // const { title,deadline,task_type,industry,description,created_by,...documents} = req.body;
   try {
     const updatedTask = await Task.findByIdAndUpdate(
       id,
-      { sowo_id, name, house, timeOfArrival },
+      { content,documents },
       { new: true }
     );
     if (!updatedTask) {
@@ -54,22 +59,8 @@ export const updateTask = async (req, res, next) => {
   }
 };
 
-export const addTagToTask = async (req, res, next) => {
-  const { id } = req.body;
-  const { tag } = req.body;
 
-  try {
-    const task = await Task.findById(id);
-    if (!task) {
-      throw { statusCode: 404, message: "Task not found" };
-    }
-    task.tags.push(tag);
-    const updateTask = await task.save();
-    res.json(updateTask);
-  } catch (error) {
-    next(error);
-  }
-};
+
 
 export const deleteTask = async (req, res, next) => {
   const { id } = req.params;

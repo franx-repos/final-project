@@ -25,8 +25,8 @@ export const getClientById = async (req, res, next) => {
 
 export const addNewClient = async (req, res, next) => {
   const { role, ...data } = req.body;
-  console.log(data);
-  console.log(role);
+  // console.log(data);
+  // console.log(role);
   try {
     const newClient = new Client({ data, role });
     const savedClient = await newClient.save();
@@ -35,6 +35,7 @@ export const addNewClient = async (req, res, next) => {
     next(error);
   }
 };
+
 //Beispiel für Insomnia oder postman
 // {
 //   "first_name":"John",
@@ -51,15 +52,13 @@ export const addNewClient = async (req, res, next) => {
 
 export const updateClient = async (req, res, next) => {
   const { id } = req.params;
-  const { email_verified, role, industry, languages, ...data } = req.body;
-  // console.log(industry);
-  console.log(data);
-  // console.log(country);
+  const { data, email_verified, role, industry, languages } = req.body;
+
   try {
     const updatedClient = await Client.findByIdAndUpdate(
       id,
       {
-        first_name: data.first_name,
+        data,
         email_verified,
         role,
         industry,
@@ -76,22 +75,22 @@ export const updateClient = async (req, res, next) => {
   }
 };
 
-export const addTagToClient = async (req, res, next) => {
-  const { id } = req.body;
-  const { tag } = req.body;
+// export const addTagToClient = async (req, res, next) => {
+//   const { id } = req.body;
+//   const { tag } = req.body;
 
-  try {
-    const client = await Client.findById(id);
-    if (!client) {
-      throw { statusCode: 404, message: "Client not found" };
-    }
-    client.tags.push(tag);
-    const updateClient = await client.save();
-    res.json(updateClient);
-  } catch (error) {
-    next(error);
-  }
-};
+//   try {
+//     const client = await Client.findById(id);
+//     if (!client) {
+//       throw { statusCode: 404, message: "Client not found" };
+//     }
+//     client.tags.push(tag);
+//     const updateClient = await client.save();
+//     res.json(updateClient);
+//   } catch (error) {
+//     next(error);
+//   }
+// };
 
 export const deleteClient = async (req, res, next) => {
   const { id } = req.params;

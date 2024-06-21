@@ -6,7 +6,7 @@ const tasksRouter = Router();
 tasksRouter
   .route("/")
   .get(taskController.getAllTasks)
-  .post(taskController.addNewTask);
+  .post(taskController.CreateTask);
 
 tasksRouter
   .route("/:id")

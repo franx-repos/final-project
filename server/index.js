@@ -80,8 +80,12 @@ app.use("/chats", chatRouter);
 
 app.use(errorHandler);
 
+<<<<<<< HEAD
 // app.listen(PORT, () => console.log(`Server is running on Port: ${PORT}`));
 
 httpServer.listen(PORT, () => {
   console.log(`Server is running on Port: ${PORT} socket.io is attached`);
 });
+=======
+app.listen(PORT, () => console.log(`Server is running on Port:http://localhost:${PORT}`));
+>>>>>>> dev
