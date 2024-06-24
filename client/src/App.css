@@ -40,3 +40,12 @@
 .read-the-docs {
   color: #888;
 }
+
+/* needed for particle.js */
+.background {
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
