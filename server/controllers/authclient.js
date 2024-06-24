@@ -43,7 +43,7 @@ export const signUp = asyncHandler(async(req,res,next) => {
 })
 
 //funktion für Log in
-export const logIn = asyncHandler(async(req, res, next) => { const {data: {email, password}} = req.body;
+export const logIn = asyncHandler(async(req, res, next) => { const { email, password } = req.body.data;
 
 const existingClient = await Client.findOne({ email }).select('+password'); 
 if (!existingClient) throw new ErrorResponse("Email does not exists", 404);

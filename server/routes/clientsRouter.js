@@ -17,7 +17,7 @@ clientsRouter
   // clientsRouter.patch("/:id", clientController.addTagToClient);
 
   clientsRouter.post("/register", authClient.signUp);
-  clientsRouter.post("/Login",authClient.logIn);
+  clientsRouter.post("/login",authClient.logIn);
 
 
-export default clientsRouter;
+export default clientsRouter; 
