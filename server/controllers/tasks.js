@@ -70,7 +70,6 @@ export const updateTask = async (req, res, next) => {
   console.log(content);
   try {
     if (req.file) {
-      console.log("yes");
       const url = req.file.path;
       console.log(url);
       documents.url = url;
@@ -91,6 +90,8 @@ export const updateTask = async (req, res, next) => {
       task.documents.push(documents); // document zum alten hinzufügen
       console.log(documents);
     }
+
+    //Delete Document
 
     const updatedTask = await task.save();
     res.json(updatedTask);
