@@ -5,12 +5,14 @@ import prosRouter from "./routes/prosRouter.js";
 import tasksRouter from "./routes/tasksRouter.js";
 import { errorHandler } from "./middlewares/ErrorHandler.js";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 
 const app = express();
 const PORT = 8001;
 
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 
 //ROUTES
 

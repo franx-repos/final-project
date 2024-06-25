@@ -8,7 +8,7 @@ const verifyToken = asyncHandler(async(req,res,next) => {
 
     if (!token) throw new ErrorResponse("please login", 401);
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRECT);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.cid = decoded.cid;
     next()
 });
