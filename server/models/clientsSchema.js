@@ -24,17 +24,18 @@ const clientSchema = new mongoose.Schema({
       required: [true, "password is required"],
       select: false,
       minlength: 6,
-      maxlength: 12,
     },
     vat_id: {
       type: String,
-      unique: true,
+      //unique: true,
       trim: true,
+      sparse: true
     },
     tax_id: {
       type: String,
-      unique: true,
+      //unique: true,
       trim: true,
+      sparse: true
     },
     street: {
       type: String,
