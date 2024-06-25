@@ -1,12 +1,21 @@
+import Footer from "./Footer";
+import HeroSection from "./landing-page/HeroSection";
+import HowItWorks from "./landing-page/HowItWorks";
+import NavigationTop from "./NavigationTop";
+import OurPartners from "./landing-page/OurPartners";
+import ThemeToggle from "./ThemeToggle";
+
 function TaxMax() {
-  return 
-  <div>   
-   <h1 className="text-3xl font-bold underline">
-  Hello world!
-</h1>
-
-</div>;
+  return (
+    <>
+      <ThemeToggle />
+      <NavigationTop />
+      <HeroSection />
+      <HowItWorks />
+      <OurPartners />
+      <Footer />
+    </>
+  );
 }
-
 
 export default TaxMax;

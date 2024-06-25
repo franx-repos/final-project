@@ -6,6 +6,7 @@ import tasksRouter from "./routes/tasksRouter.js";
 import chatRouter from "./routes/chatRouter.js";
 import { errorHandler } from "./middlewares/ErrorHandler.js";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import { instrument } from "@socket.io/admin-ui";
@@ -70,6 +71,7 @@ instrument(io, {
 
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 
 //ROUTES
 

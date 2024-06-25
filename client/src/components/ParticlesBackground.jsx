@@ -7,7 +7,7 @@ const ParticlesBackground = () => {
       selector: ".background",
       maxParticles: 160,
       color: "#5CBFBF",
-      speed: 0.05,
+      speed: 0.075,
       sizeVariations: 5,
       minDistance: 175,
       connectParticles: true,
@@ -38,12 +38,7 @@ const ParticlesBackground = () => {
     });
   }, []);
 
-  return (
-    <canvas
-      className="background"
-      // style={{ position: "absolute", width: "100%", height: "100%" }}
-    ></canvas>
-  );
+  return <canvas className="background bg-white dark:bg-black fixed"></canvas>;
 };
 
 export default ParticlesBackground;
