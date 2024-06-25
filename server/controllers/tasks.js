@@ -152,9 +152,9 @@ export const deleteTaskDocument = async (req, res, next) => {
     //delete document in DB through updating array in db
     console.log(filtered_documents);
     task.documents = filtered_documents;
-    // const updatedTask = await task.save();
+    const updatedTask = await task.save();
 
-    res.json(task);
+    res.json(updateTask);
   } catch (error) {
     next(error);
   }
