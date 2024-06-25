@@ -1,4 +1,4 @@
-import LineArt from "../assets/LineArt";
+import LineArt from "../../assets/LineArt";
 
 function HeroSection() {
   return (

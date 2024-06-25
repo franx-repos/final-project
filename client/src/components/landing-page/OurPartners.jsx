@@ -62,10 +62,10 @@ function OurPartners() {
                 </div>
               </div>
               <div>
-                <p className="mt-3 mb-4 font-light text-gray-500 dark:text-gray-400">
+                <p className="mt-3 mb-4 px-3 font-light text-gray-500 dark:text-gray-400">
                   {partner.desc}
                 </p>
-                <ul className="flex space-x-4 sm:mt-0">
+                {/* <ul className="flex space-x-4 sm:mt-0">
                   <li>
                     <a
                       href="#"
@@ -138,7 +138,7 @@ function OurPartners() {
                       </svg>
                     </a>
                   </li>
-                </ul>
+                </ul> */}
               </div>
             </div>
           ))}
