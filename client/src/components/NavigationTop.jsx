@@ -42,7 +42,7 @@ const NavigationTop = () => {
   };
 
   return (
-    <nav className="bg-white/75 border-gray-200 dark:bg-gray-900/85 relative">
+    <nav className="bg-white/75 border-gray-200 dark:bg-gray-900/80 relative">
       <div className={styles.container}>
         <a href="#" className={styles.logo}>
           <img

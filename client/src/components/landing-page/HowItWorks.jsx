@@ -1,5 +1,5 @@
 const styles = {
-  container: "flex flex-col justify-center bg-white/75 dark:bg-gray-900/85",
+  container: "flex flex-col justify-center bg-white/75 dark:bg-gray-900/80",
   content: "my-16 p-5 flex flex-col items-center gap-16",
   header: "flex flex-col gap-2 text-center",
   title:
@@ -8,7 +8,7 @@ const styles = {
     "text-base font-medium leading-7 text-dark-grey-600 dark:text-white",
   stepsWrapper:
     "flex w-full flex-col items-center justify-between gap-y-10 lg:flex-row lg:gap-x-8 lg:gap-y-0 xl:gap-x-10",
-  stepContainer: "flex items-start gap-4",
+  stepContainer: "flex flex-col items-start gap-4",
   stepIcon:
     "flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-teal-500 text-white dark:bg-transparent dark:border-2 dark:border-teal-500",
   stepIconNumber:
@@ -26,19 +26,19 @@ const steps = [
     num: "1",
     title: "Create your Account",
     desc: "Condimentum vit pellemsque habitant morbi at molestie.",
-    img: "",
+    img: "/src/assets/user-icon.svg",
   },
   {
     num: "2",
-    title: "Setup your Account",
+    title: "Create a task",
     desc: "Condimentum vit pellemsque habitant morbi at molestie.",
-    img: "",
+    img: "/src/assets/task-icon.svg",
   },
   {
     num: "3",
-    title: "Start connecting with TaxMax",
+    title: "Get connected with a Pro",
     desc: "Condimentum vit pellemsque habitant morbi at molestie.",
-    img: "",
+    img: "/src/assets/connect-icon.svg",
   },
 ];
 
@@ -59,6 +59,12 @@ const HowItWorks = () => {
             return (
               <>
                 <div className={styles.stepContainer}>
+                  <img
+                    className="w-36 h-36 m-auto"
+                    src={step.img}
+                    alt={step.title}
+                  />
+
                   <div className={styles.stepIcon}>
                     <span className={styles.stepIconNumber}>{step.num}</span>
                   </div>
