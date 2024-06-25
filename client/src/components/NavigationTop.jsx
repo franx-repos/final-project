@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const styles = {
   container: `max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-3 border-y-2 border-teal-500 shadow-2xl`,
@@ -69,12 +70,14 @@ const NavigationTop = () => {
             </button>
           ) : (
             <div>
-              <button type="button" className={styles.button}>
+             <Link to='signin'> <button type="button" className={styles.button}>
                 Login
-              </button>
-              <button type="button" className={styles.button}>
+              </button></Link>
+             
+             <Link to='singup'> <button type="button" className={styles.button}>
                 Register
               </button>
+              </Link>
             </div>
           )}
 
