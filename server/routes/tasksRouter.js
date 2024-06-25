@@ -1,19 +1,21 @@
 import { Router } from "express";
 import * as taskController from "../controllers/tasks.js";
+import upload from "../services/upload.js";
 
 const tasksRouter = Router();
 
 tasksRouter
   .route("/")
   .get(taskController.getAllTasks)
-  .post(taskController.addNewTask);
+  .post(taskController.CreateTask);
 
 tasksRouter
   .route("/:id")
   .get(taskController.getTaskById)
-  .put(taskController.updateTask)
+  .put(upload.single("doc"), taskController.updateTask)
   .delete(taskController.deleteTask);
 
 // tasksRouter.patch("/:id", taskController.addTagToTask);
+tasksRouter.route("/:id/:docID").delete(taskController.deleteTaskDocument);
 
 export default tasksRouter;
