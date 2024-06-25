@@ -12,16 +12,17 @@ export const signUp = asyncHandler(async(req,res,next) => {
         last_name, 
         email, 
         password,
-        vat_id,
-        tax_id,
         street,
         zip,
         city },
         industry,
-        languages
+        country,
+        client_countries,
+        languages,
+        specialization
       } = req.body; 
       const existingPromail = await Pro.findOne({ email });
-      if(existingPromail) throw new ErrorResponse("An account with this Email already exists", 409); // Fehlermeldung für existierende Clients
+      if(existingPromail) throw new ErrorResponse("An account with this Email already exists", 409); // Fehlermeldung für existierende Pros
 
 
       const hash = await bcrypt.hash(password, 10); // verschlüssel das passwort im token
@@ -30,13 +31,14 @@ export const signUp = asyncHandler(async(req,res,next) => {
         last_name, 
         email, 
         password: hash,
-        vat_id,
-        tax_id,
         street,
         zip,
         city }, 
         industry,
-        languages
+        country,
+        client_countries,
+        languages,
+        specialization
       });
       const token = jwt.sign({ cid: newPro}, process.env.JWT_SECRET);
       res.status(201).send ({token}) //sendung vom token an die datenbank
@@ -59,7 +61,7 @@ res.send({ status: 'success' });
 })
 //verification
 export const getPro = asyncHandler(async (req, res, next) => {
-  const client = await Client.findById(req.cid);
+  const client = await Pro.findById(req.cid);
   res.json(client);
 });
 

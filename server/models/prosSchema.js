@@ -24,7 +24,6 @@ const proSchema = new mongoose.Schema({
       required: [true, "password is required"],
       select: false,
       minlength: 6,
-      maxlength: 12,
     },
     street: {
       type: String,
