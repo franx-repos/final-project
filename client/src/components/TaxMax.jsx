@@ -1,7 +1,8 @@
-import HeroSection from "./HeroSection";
-import HowItWorks from "./HowItWorks";
+import Footer from "./Footer";
+import HeroSection from "./landing-page/HeroSection";
+import HowItWorks from "./landing-page/HowItWorks";
 import NavigationTop from "./NavigationTop";
-import OurPartners from "./OurPartners";
+import OurPartners from "./landing-page/OurPartners";
 import ThemeToggle from "./ThemeToggle";
 
 function TaxMax() {
@@ -12,6 +13,7 @@ function TaxMax() {
       <HeroSection />
       <HowItWorks />
       <OurPartners />
+      <Footer />
     </>
   );
 }
