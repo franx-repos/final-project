@@ -16,5 +16,6 @@ tasksRouter
   .delete(taskController.deleteTask);
 
 // tasksRouter.patch("/:id", taskController.addTagToTask);
+tasksRouter.route("/:id/:docID").delete(taskController.deleteTaskDocument);
 
 export default tasksRouter;

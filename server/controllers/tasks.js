@@ -1,4 +1,5 @@
 import Task from "../models/tasksSchema.js";
+import { v2 as cloudinary } from "cloudinary";
 
 export const getAllTasks = async (req, res, next) => {
   try {
@@ -70,9 +71,11 @@ export const updateTask = async (req, res, next) => {
   console.log(content);
   try {
     if (req.file) {
+      console.log(req.file);
       const url = req.file.path;
       console.log(url);
       documents.url = url;
+      documents.public_id = req.file.filename;
     }
 
     const task = await Task.findById(id);
@@ -105,6 +108,53 @@ export const deleteTask = async (req, res, next) => {
   try {
     await Task.findByIdAndDelete(id);
     res.json({ message: "Task was deleted" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const deleteTaskDocument = async (req, res, next) => {
+  cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.API_KEY,
+    api_secret: process.env.API_SECRET,
+  });
+
+  const { id, docID } = req.params;
+  console.log(id);
+  console.log(docID);
+  let public_id = "";
+  try {
+    const task = await Task.findById(id);
+    //find document and filter it out
+    const filtered_documents = task.documents.filter(
+      (document) => document._id != docID
+    );
+
+    //delete on cloudinary
+
+    //find document and filter it out
+    const doc = task.documents.filter((document) => document._id == docID);
+
+    console.log(doc[0].public_id);
+
+    const deletedRes = await cloudinary.uploader.destroy(
+      doc[0].public_id,
+      (error, result) => {
+        if (result.result === "ok") {
+          console.log(result); // { result: 'ok' }
+        } else {
+          console.log(error);
+        }
+      }
+    );
+
+    //delete document in DB through updating array in db
+    console.log(filtered_documents);
+    task.documents = filtered_documents;
+    // const updatedTask = await task.save();
+
+    res.json(task);
   } catch (error) {
     next(error);
   }
