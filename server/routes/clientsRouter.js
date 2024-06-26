@@ -1,5 +1,5 @@
 import { Router } from "express";
-import * as clientController from "../controllers/clients.js"
+import * as clientController from "../controllers/clients.js";
 import * as authClient from "../controllers/authclient.js";
 import verifyToken from "../middlewares/verifyToken.js";
 
@@ -15,11 +15,13 @@ clientsRouter
   .get(clientController.getClientById)
   .put(clientController.updateClient)
   .delete(clientController.deleteClient);
-  // clientsRouter.patch("/:id", clientController.addTagToClient);
+// clientsRouter.patch("/:id", clientController.addTagToClient);
 
-  clientsRouter.post("/register", authClient.signUp);
-  clientsRouter.post("/login",authClient.logIn);
-  clientsRouter.post("/me", verifyToken,authClient.getClient);
-  clientsRouter.post("/logout",verifyToken, authClient.logout);
+clientsRouter.route("/email/:email").get(clientController.getClientByEmail);
 
-export default clientsRouter; 
+clientsRouter.post("/register", authClient.signUp);
+clientsRouter.post("/login", authClient.logIn);
+clientsRouter.post("/me", verifyToken, authClient.getClient);
+clientsRouter.post("/logout", verifyToken, authClient.logout);
+
+export default clientsRouter;
