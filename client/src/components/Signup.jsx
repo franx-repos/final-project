@@ -31,81 +31,89 @@ const styles = {
 };
 
 function Signup() {
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
-  const [streetN, setStreetN] = useState("");
+  const [first_name, setfirst_name] = useState("");
+  const [last_name, setlast_name] = useState("");
+  const [street, setStreet] = useState("");
   const [city, setCity] = useState("");
   const [zip, setZip] = useState("");
   const [country, setCountry] = useState("");
-  const [Tax_id, setTax_id] = useState("");
-  const [telefon, setTelefon] = useState("");
+  const [tax_id, settax_id] = useState("");
+  const [phone_number, setphone_number] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [client, setClient] = useState(false);
 
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    const deploy = import.meta.env.VITE_DEPLOY_URL;
+    // const deploy = import.meta.env.VITE_DEPLOY_URL;
     // ${deploy}
-
-    
 if(client === false){
+  if (password !== confirmPassword) {
+    console.log("Passwords do not match");
+    return;
+  }
     try {
-      const response = await axios.post(
-        `http://localhost:8001/clients/`,
-       
+      const response = await axios.post( `http://localhost:8001/clients/register`,
         {
-          firstname,
-          lastname,
-          streetN,
-          city,
-          zip,
-          country,
-          Tax_id,
-          telefon,
-          email,
-          password,
-        },
+         data: {
+            first_name,
+            last_name,
+            email,
+            password,
+            tax_id,
+            street,
+            zip,
+            city,
+            country,
+            phone_number,
+         }
+           },
         // { withCredentials: true }
       );
 
       if (response.status === 201) {
-        navigate("/login");
+        navigate("/signin");
       }
     } catch (error) {
-      toast.error(error.response.data.error || "Registration failed");
-    }}
+      console.log(error);
+      console.log(error.response.data.error || "Registration failed");
+    }
+  }
 
     else{
       handleRegisterprofi(e);
     }
 
-  };
+}
+
 
   const handleRegisterprofi = async (e) => {
     e.preventDefault();
-    const deploy = import.meta.env.VITE_DEPLOY_URL;
+    // const deploy = import.meta.env.VITE_DEPLOY_URL;
     try {
       const response = await axios.post(
-        `${deploy}/pros/`,
+        `http://localhost:8001/pros/register`,
         {
-          firstname,
-          lastname,
-          streetN,
-          city,
-          zip,
-          country,
-          telefon,
-          email,
-          password,
+          data: {
+          first_name,
+            last_name,
+            email,
+            password,
+            street,
+            zip,
+            city,
+            country,
+            phone_number,
+          }
         },
-        { withCredentials: true }
+        // { withCredentials: true }
       );
 
       if (response.status === 201) {
-        navigate("/login");
+        navigate("/signin");
       }
     } catch (error) {
       toast.error(error.response.data.error || "Registration failed");
@@ -113,9 +121,14 @@ if(client === false){
   };
 
 
+  
+  
+    
+  
+  
   // useEffect(() => {
-  //   console.log(client);
-  // }, [client]);
+  //   console.log(first_name, last_name, street, city, zip, country, tax_id, phone_number, email, password, client);
+  // }, [first_name, last_name, street, city, zip, country, tax_id, phone_number, email, password,client ]);
 
   
   return (
@@ -136,7 +149,7 @@ if(client === false){
                   value="1"
                   name="option"
                   id="option-1"
-                  onClick={() => setClient(false)}
+                  onChange={() => setClient(false)}
                   checked={!client}
                 />
                 <label className="segmented-control__label  dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 " htmlFor="option-1">
@@ -176,8 +189,9 @@ if(client === false){
                   id="first-name"
                   autoComplete="given-name"
                   className="block w-full rounded-md px-2 border-0 py-1.5 text-gray-900 shadow-sm shadow-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  value={firstname}
-                  onChange={(e) => setFirstname(e.target.value)}
+                  value={first_name}
+                  required
+                  onChange={(e) =>setfirst_name(e.target.value)}
                 />
               </div>
             </div>
@@ -196,8 +210,9 @@ if(client === false){
                   id="last-name"
                   autoComplete="family-name"
                   className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm shadow-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  value={lastname}
-                  onChange={(e) => setLastname(e.target.value)}
+                  value={last_name}
+                  required
+                  onChange={(e) =>setlast_name(e.target.value)}
                 />
               </div>
             </div>
@@ -217,6 +232,7 @@ if(client === false){
                   autoComplete="email"
                   className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm shadow-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   value={email}
+                  required
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
@@ -234,9 +250,10 @@ if(client === false){
                   id="password"
                   name="password"
                   type="password"
-                  autoComplete="password"
+                  autoComplete="new-password"
                   className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm shadow-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   value={password}
+                  required
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
@@ -253,9 +270,12 @@ if(client === false){
                   id="confirm-password"
                   name="confirm-password"
                   type="password"
-                  autoComplete="password"
+                  autoComplete="new-password"
                   className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm shadow-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
+              value={confirmPassword}
+              required
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              />
               </div>
             </div>
 
@@ -274,8 +294,9 @@ if(client === false){
                     id="tax-id"
                     autoComplete="tax-id"
                     className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm shadow-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    value={Tax_id}
-                    onChange={(e) => setTax_id(e.target.value)}
+                    value={tax_id}
+                    required
+                    onChange={(e) => settax_id(e.target.value)}
                   />
                 </div>
               </div>
@@ -295,8 +316,9 @@ if(client === false){
                   id="phone-number"
                   autoComplete="phone-number"
                   className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm shadow-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  value={telefon}
-                  onChange={(e) => setTelefon(e.target.value)}
+                  value={phone_number}
+                  required
+                  onChange={(e) => setphone_number(e.target.value)}
                 />
               </div>
             </div>
@@ -315,6 +337,7 @@ if(client === false){
                   autoComplete="country-name"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm shadow-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                   value={country}
+                  required
                   onChange={(e) => setCountry(e.target.value)}
                 >
                   <option>Albania</option>
@@ -379,8 +402,9 @@ if(client === false){
                   id="street-address"
                   autoComplete="street-address"
                   className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm shadow-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  value={streetN}
-                  onChange={(e) => setStreetN(e.target.value)}
+                  value={street}
+                  required
+                  onChange={(e) =>setStreet(e.target.value)}
                 />
               </div>
             </div>
@@ -400,11 +424,12 @@ if(client === false){
                   autoComplete="address-level2"
                   className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm shadow-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   value={city}
+                  required
                   onChange={(e) => setCity(e.target.value)}
                 />
               </div>
             </div>
-
+{/* 
             <div className="sm:col-span-2">
               <label
                 htmlFor="region"
@@ -421,7 +446,7 @@ if(client === false){
                   className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm shadow-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
-            </div>
+            </div> */}
 
             <div className="sm:col-span-2">
               <label
@@ -438,6 +463,7 @@ if(client === false){
                   autoComplete="postal-code"
                   className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm shadow-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   value={zip}
+                  required
                   onChange={(e) => setZip(e.target.value)}
                 />
               </div>

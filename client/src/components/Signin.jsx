@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import ResetPassword from "./ResetPassword";
 import ThemeToggle from "./ThemeToggle";
+import { useAuth } from "../context/UserProvider.jsx";
 
 const Signin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const { setIsLoggedIn, checkUser} = useAuth();
   const [client, setClient] = useState(false);
 
 
@@ -16,17 +17,20 @@ const Signin = () => {
 
   const navigate = useNavigate();
 
-  const handleLoginClient = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     if (client === false) {
       try {
         const response = await axios.post(
-          `${deploy}/clients/login`,
-          {
+          `http://localhost:8001/clients/login`,
+          { 
+            data:
+             {
             email,
             password,
+           }
           },
-          { withCredentials: true }
+          // { withCredentials: true }
         );
 
         if (response.status === 200) {
@@ -46,12 +50,14 @@ const Signin = () => {
     e.preventDefault();
       try {
         const response = await axios.post(
-          `${deploy}/profi/login`,
-          {
+          `http://localhost:8001/profi/login`,
+          { 
+            data: {
             email,
             password,
+            }
           },
-          { withCredentials: true }
+          // { withCredentials: true }
         );
 
         if (response.status === 200) {
@@ -64,24 +70,21 @@ const Signin = () => {
       }
   };
 
-//   useEffect(() => { 
-//     console.log(email)
-//     }, [email]);
-//     useEffect(() => { 
-//         console.log(password)
-//         }, [password]);
-    
-//       useEffect(() => {
-//     console.log(client);
-//   }, [client]);
 
+  useEffect(() => { 
+    console.log(email)
+    console.log(password)
+    console.log(client);
+    }, [email,password,client]);
+ 
 
 
   return (
     <>
+    <form className="space-y-6" action="#" method="POST" onSubmit={handleLogin} >
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 shadow shadow-gray-900 bg-slate-300 rounded-3xl p-6 bg-opacity-50 dark:bg-[#111827] dark:bg-opacity-50 ">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <img className="mx-auto h-10 w-auto" src="" alt="TAXMAX" />
+          <img className="mx-auto h-10 w-auto" src="./public/TaxMax-Logo3.svg" alt="TAXMAX" />
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight  text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
             Sign in to your account
           </h2>
@@ -97,7 +100,7 @@ const Signin = () => {
                   value="1"
                   name="option"
                   id="option-1"
-                  onClick={() => setClient(false)}
+                  onChange={() => setClient(false)}
                   checked={!client}
                 />
                 <label className="segmented-control__label text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800" htmlFor="option-1">
@@ -124,7 +127,6 @@ const Signin = () => {
           </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" action="#" method="POST" onSubmit={handleLoginClient} >
           <ThemeToggle />
             <div>
               <label
@@ -141,7 +143,8 @@ const Signin = () => {
                   autoComplete="email"
                   required
                   className="block w-full rounded-md border-0 py-1.5 px-2 shadow-sm shadow-gray-900 text-gray-900  ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                onChange={(e)=> setEmail(e.target.value)}
+               value={email}
+                  onChange={(e)=> setEmail(e.target.value)}
                 />
               </div>
             </div>
@@ -175,7 +178,8 @@ const Signin = () => {
                   autoComplete="current-password"
                   required
                   className="block w-full rounded-md border-0 py-1.5 px-2 shadow-sm shadow-gray-900 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              onChange={(e)=> setPassword(e.target.value)}
+                  value={password}
+                  onChange={(e)=> setPassword(e.target.value)}
               />
               </div>
             </div>
@@ -189,9 +193,9 @@ const Signin = () => {
                 Sign in
               </button>
             </div>
-          </form>
         </div>
       </div>
+          </form>
     </>
   );
 };
