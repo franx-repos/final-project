@@ -13,7 +13,7 @@ export const ThemeToggle = () => {
   };
 
   return (
-    <div className="fixed right-1 top-1 rounded-full bg-yellow-200 dark:bg-teal-500">
+    <div className="fixed right-1 top-1 z-50 rounded-full bg-yellow-200 dark:bg-teal-500">
       <button onClick={() => darkModeHandler()} className=" p-2">
         {dark && <IoSunny />}
         {!dark && <IoMoon />}
