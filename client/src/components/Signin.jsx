@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ThemeToggle from "./ThemeToggle";
 import { useAuth } from "../context/UserProvider.jsx";
+import axios from "axios";
 
 const Signin = () => {
   const [email, setEmail] = useState("");
@@ -50,7 +51,7 @@ const Signin = () => {
     e.preventDefault();
       try {
         const response = await axios.post(
-          `http://localhost:8001/profi/login`,
+          `http://localhost:8001/pros/login`,
           { 
             data: {
             email,
@@ -188,7 +189,7 @@ const Signin = () => {
               <button
                 type="submit"
                 // className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              className="text-white bg-teal-500 hover:bg-teal-700  focus:outline-none font-medium rounded-lg text-sm mx-2 px-4 py-2 text-center dark:bg-teal-500 dark:hover:bg-teal-700"
+              className="text-white bg-teal-500 mt-3 hover:bg-teal-700  focus:outline-none font-medium rounded-lg text-sm mx-2 px-4 py-2 text-center dark:bg-teal-500 dark:hover:bg-teal-700"
               >
                 Sign in
               </button>
