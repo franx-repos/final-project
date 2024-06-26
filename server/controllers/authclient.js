@@ -16,7 +16,10 @@ export const signUp = asyncHandler(async(req,res,next) => {
         tax_id,
         street,
         zip,
-        city },
+        city,
+        country,
+        phone_number
+      },
         industry,
         languages
       } = req.body; 
@@ -34,10 +37,14 @@ export const signUp = asyncHandler(async(req,res,next) => {
         tax_id,
         street,
         zip,
-        city }, 
+        city, 
+        country,
+        phone_number
+      }, 
         industry,
         languages
       });
+      console.log(first_name, last_name, email, password, vat_id, tax_id, street, zip, city, country, phone_number, industry, languages)
       const token = jwt.sign({ cid: newClient}, process.env.JWT_SECRET);
       res.status(201).send ({token}) //sendung vom token an die datenbank
 })
