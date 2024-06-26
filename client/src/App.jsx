@@ -1,14 +1,16 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import TaxMax from "./components/TaxMax";
-import ParticlesBackground from "./components/ParticlesBackground";
+import Dashboard from "./components/user-area/Dashboard";
+import Chat from "./components/user-area/Chat";
 
 function App() {
   return (
     <>
-      <ParticlesBackground />
       <Routes>
         <Route path="/" element={<TaxMax />} />
+        <Route path="Dashboard" element={<Dashboard />} />
+        <Route path="Chat" element={<Chat />} />
       </Routes>
     </>
   );
