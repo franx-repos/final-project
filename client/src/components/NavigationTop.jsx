@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 
 const styles = {
-  container: `max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-3 border-y-2 border-teal-500 shadow-2xl`,
+  container:
+    "flex flex-wrap items-center justify-between mx-auto p-3 border-y-2 border-teal-500 shadow-2xl",
   logo: "flex items-center ml-2 space-x-3 rtl:space-x-reverse",
-  button: `text-white bg-teal-500 hover:bg-teal-700  focus:outline-none font-medium rounded-lg text-sm mx-2 px-4 py-2 text-center dark:bg-teal-500 dark:hover:bg-teal-700`,
+  button:
+    "text-white bg-teal-500 hover:bg-teal-700  focus:outline-none font-medium rounded-lg text-sm mx-2 px-4 py-2 text-center dark:bg-teal-500 dark:hover:bg-teal-700",
   userButton:
     "flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600",
   userImage: "w-8 h-8 rounded-full",
@@ -41,7 +43,7 @@ const NavigationTop = () => {
   };
 
   return (
-    <nav className="bg-white/75 border-gray-200 dark:bg-gray-900/80 relative">
+    <nav className=" w-full bg-white/75 border-gray-200 dark:bg-gray-900/80 relative">
       <div className={styles.container}>
         <a href="#" className={styles.logo}>
           <img
