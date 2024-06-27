@@ -44,7 +44,6 @@ function Dashboard() {
   return isLoggedIn ? (
     <>
       <div className="bg-white border-gray-200 dark:bg-gray-900">
-        <ThemeToggle />
         <NavigationTop />
         <div className="flex">
           <DashboardSidebar />
@@ -57,7 +56,6 @@ function Dashboard() {
   ) : (
     <>
       <ParticlesBackground />
-      <ThemeToggle />
       <NavigationTop />
       <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight  text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
         You are not allowed to enter this page.
