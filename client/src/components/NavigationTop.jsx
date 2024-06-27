@@ -38,7 +38,6 @@ const NavigationTop = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isNavbarOpen, setIsNavbarOpen] = useState(false);
 
-  
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
@@ -48,13 +47,13 @@ const NavigationTop = () => {
   };
 
   const handleLogout = async () => {
-
     try {
       await axios.post(
-        `http://localhost:8001/clients/logout`,{},{ withCredentials: true}     
+        `http://localhost:8001/clients/logout`,
+        {},
+        { withCredentials: true }
       );
       setIsLoggedIn(false);
-     
     } catch (error) {
       console.log("Error:", error.message);
       console.log("Error:", error.response.data);
@@ -64,15 +63,15 @@ const NavigationTop = () => {
         console.log("Response data:", error.response.data);
         console.log("Response status:", error.response.status);
         console.log("Response headers:", error.response.headers);
-      } 
-    } 
+      }
+    }
   };
-useEffect(() => { 
-  console.log(`Userdata:  ${userData.first_name}`)
-  console.log(`isloggedin: ${isLoggedIn}`)
-  console.log('Cookies:', document.cookie);
-  
-  }, [userData,isLoggedIn]);
+  useEffect(() => {
+    console.log(userData);
+    console.log(`Userdata:  ${userData}`);
+    console.log(`isloggedin: ${isLoggedIn}`);
+    console.log("Cookies:", document.cookie);
+  }, [userData, isLoggedIn]);
 
   return (
     <nav className=" w-full bg-white/75 border-gray-200 dark:bg-gray-900/80 relative">
@@ -103,13 +102,18 @@ useEffect(() => {
             </button>
           ) : (
             <div>
-             <Link to='signin'> <button type="button" className={styles.button}>
-                Login
-              </button></Link>
-             
-             <Link to='singup'> <button type="button" className={styles.button}>
-                Register
-              </button>
+              <Link to="signin">
+                {" "}
+                <button type="button" className={styles.button}>
+                  Login
+                </button>
+              </Link>
+
+              <Link to="singup">
+                {" "}
+                <button type="button" className={styles.button}>
+                  Register
+                </button>
               </Link>
             </div>
           )}
@@ -122,8 +126,12 @@ useEffect(() => {
             id="user-dropdown"
           >
             <div className={styles.dropdownInfo}>
-              <span className={styles.dropdownName}>mr:{userData.first_name}</span>
-              <span className={styles.dropdownEmail}>email:{userData.email}</span>
+              <span className={styles.dropdownName}>
+                mr:{userData.first_name}
+              </span>
+              <span className={styles.dropdownEmail}>
+                email:{userData.email}
+              </span>
             </div>
             <ul className="py-2" aria-labelledby="user-menu-button">
               <li>
@@ -142,7 +150,7 @@ useEffect(() => {
                 </a>
               </li>
               <li>
-                <a onClick={handleLogout} className={styles.dropdownItem} >
+                <a onClick={handleLogout} className={styles.dropdownItem}>
                   Sign out
                 </a>
               </li>
