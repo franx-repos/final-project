@@ -34,7 +34,7 @@ const styles = {
 };
 
 const NavigationTop = () => {
-  const { isLoggedIn, setIsLoggedIn, userData } = useAuth();
+  const { isLoggedIn, setIsLoggedIn, userData, setUserData } = useAuth();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isNavbarOpen, setIsNavbarOpen] = useState(false);
 
@@ -54,6 +54,8 @@ const NavigationTop = () => {
         { withCredentials: true }
       );
       setIsLoggedIn(false);
+      setIsDropdownOpen(false);
+      setUserData({});
     } catch (error) {
       console.log("Error:", error.message);
       console.log("Error:", error.response.data);
@@ -67,8 +69,8 @@ const NavigationTop = () => {
     }
   };
   useEffect(() => {
-    console.log(`Userdata:  ${userData}`);
-    console.log(`isloggedin: ${isLoggedIn}`);
+    console.log("Userdata:", userData);
+    console.log("isloggedin:", isLoggedIn);
     console.log("Cookies:", document.cookie);
   }, [userData, isLoggedIn]);
 
@@ -79,7 +81,7 @@ const NavigationTop = () => {
           <img
             src="\src\assets\TaxMax-Logo3.png"
             className="h-8"
-            alt="Flowbite Logo"
+            alt="TaxMax Logo"
           />
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"></span>
         </Link>
@@ -126,10 +128,10 @@ const NavigationTop = () => {
           >
             <div className={styles.dropdownInfo}>
               <span className={styles.dropdownName}>
-                mr:{userData.first_name}
+                {userData?.data?.first_name}
               </span>
               <span className={styles.dropdownEmail}>
-                email:{userData.email}
+                {userData?.data?.email}
               </span>
             </div>
             <ul className="py-2" aria-labelledby="user-menu-button">

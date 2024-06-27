@@ -37,12 +37,14 @@ const tasks = {
 function Dashboard() {
   return (
     <>
-      <ThemeToggle />
-      <NavigationTop />
-      <div className="flex">
-        <DashboardSidebar />
-        <div style={{ width: "100%", height: "500px" }}>
-          <GanttChart tasks={tasks} />
+      <div className="bg-white border-gray-200 dark:bg-gray-900">
+        <ThemeToggle />
+        <NavigationTop />
+        <div className="flex">
+          <DashboardSidebar />
+          <div style={{ width: "100%", height: "500px" }}>
+            <GanttChart tasks={tasks} />
+          </div>
         </div>
       </div>
     </>
