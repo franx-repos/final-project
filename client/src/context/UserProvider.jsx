@@ -8,22 +8,31 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userData, setUserData] = useState({});
-  // const [role, setRole] = useState('');
-  const deploy = import.meta.env.VITE_DEPLOY_URL;
-
   const checkUser = async () => {
     try {
-      const response = await axios.get(`http://localhost:8001/clients/me`, {
+      const responseClient = await axios.get(`http://localhost:8001/clients/me`, {
         withCredentials: true,
       });
 
-      if (response.data && response.data._id) {
+      if (responseClient.data && responseClient.data._id && responseClient.data.data.role === 'Client') {
         setIsLoggedIn(true);
-        setUserData(response.data);
-      } else {
-        setIsLoggedIn(false);
-        setUserData({});
+        setUserData(responseClient.data);
+        return;
       }
+
+      const responsePro = await axios.get(`http://localhost:8001/pros/me`, {
+        withCredentials: true,
+      });
+
+      if (responsePro.data && responsePro.data._id && responsePro.data.data.role === 'pro') {
+        setIsLoggedIn(true);
+        setUserData(responsePro.data);
+        return;
+      }
+
+      setIsLoggedIn(false);
+      setUserData({});
+
     } catch (error) {
       setIsLoggedIn(false);
       setUserData({});
@@ -44,6 +53,7 @@ export const AuthProvider = ({ children }) => {
     setIsLoggedIn,
     setUserData,
     checkUser,
+  
   };
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;

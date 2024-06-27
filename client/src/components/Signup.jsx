@@ -31,6 +31,7 @@ const styles = {
 };
 
 function Signup() {
+  const [role, setRole] = useState("");
   const [first_name, setfirst_name] = useState("");
   const [last_name, setlast_name] = useState("");
   const [street, setStreet] = useState("");
@@ -59,6 +60,7 @@ if(client === false){
       const response = await axios.post( `http://localhost:8001/clients/register`,
         {
          data: {
+          role,
             first_name,
             last_name,
             email,
@@ -98,6 +100,7 @@ if(client === false){
         `http://localhost:8001/pros/register`,
         {
           data: {
+            role,
           first_name,
             last_name,
             email,
@@ -126,9 +129,9 @@ if(client === false){
     
   
   
-  // useEffect(() => {
-  //   console.log(first_name, last_name, street, city, zip, country, tax_id, phone_number, email, password, client);
-  // }, [first_name, last_name, street, city, zip, country, tax_id, phone_number, email, password,client ]);
+  useEffect(() => {
+    console.log(role,first_name, last_name, street, city, zip, country, tax_id, phone_number, email, password,client);
+  }, [ role,first_name, last_name, street, city, zip, country, tax_id, phone_number, email, password,client ]);
 
   
   return (
@@ -152,7 +155,7 @@ if(client === false){
                   value="1"
                   name="option"
                   id="option-1"
-                  onChange={() => setClient(false)}
+                  onChange={() =>{setClient(false),setRole('Client');}}
                   checked={!client}
                 />
                 <label className="segmented-control__label  dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 " htmlFor="option-1">
@@ -168,7 +171,7 @@ if(client === false){
                   value="2"
                   name="option"
                   id="option-2"
-                  onClick={() => setClient(true)}
+                  onClick={() =>{setClient(true),setRole('pro');} }
                 />
                 <label className="segmented-control__label dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800" htmlFor="option-2">
                   Professional

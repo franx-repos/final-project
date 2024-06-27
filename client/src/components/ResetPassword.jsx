@@ -51,7 +51,7 @@ const ResetPassword = () => {
             </button>
             <p className="text-center text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 ">
               Not registered yet?{" "}
-              <Link to="/singup">
+              <Link to="/signup">
                 <p className="text-indigo-600 font-medium inline-flex space-x-1 items-center ">
                   <span>Register now </span>
                   <span>

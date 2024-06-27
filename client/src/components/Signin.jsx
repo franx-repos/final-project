@@ -10,7 +10,7 @@ const Signin = () => {
   const [error, setError] = useState("");
   const { setIsLoggedIn, checkUser} = useAuth();
   const [client, setClient] = useState(false);
-
+  const [role, setRole] = useState('');
 
   const deploy = import.meta.env.VITE_DEPLOY_URL;
   // ${deploy}
@@ -27,6 +27,7 @@ const Signin = () => {
           { 
             data:
              {
+              role,
             email,
             password,
            }
@@ -54,6 +55,7 @@ const Signin = () => {
           `http://localhost:8001/pros/login`,
           { 
             data: {
+              role,
             email,
             password,
             }
@@ -76,7 +78,8 @@ const Signin = () => {
     console.log(`email:  ${email}`)
     console.log(`password: ${password}`)
     console.log(`client: ${client}`);
-    }, [email,password,client]);
+    console.log(`role: ${role}`);
+    }, [email,password,client,role]);
  
 
 
@@ -103,7 +106,7 @@ const Signin = () => {
                   value="1"
                   name="option"
                   id="option-1"
-                  onChange={() => setClient(false)}
+                  onChange={() => {setRole('Client'),setClient(false);}}
                   checked={!client}
                 />
                 <label className="segmented-control__label text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800" htmlFor="option-1">
@@ -119,7 +122,7 @@ const Signin = () => {
                   value="2"
                   name="option"
                   id="option-2"
-                  onClick={() => setClient(true)}
+                  onClick={() => {setRole('pro'),setClient(true)}}
                 />
                 <label className="segmented-control__label text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800" htmlFor="option-2">
                   Professional
@@ -197,7 +200,7 @@ const Signin = () => {
               </button>
               <p className='mt-4 dark:text-white'>
           Not registered yet?{' '}
-          <Link to='/singup' className='text-blue-500 underline'>
+          <Link to='/signup' className='text-blue-500 underline'>
             Register here
           </Link>
         </p>

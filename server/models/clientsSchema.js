@@ -2,6 +2,9 @@ import mongoose from "mongoose";
 //trim, maxlength, lowercase
 const clientSchema = new mongoose.Schema({
   data: {
+    role: {
+      type: String,
+    },
     first_name: {
       type: String,
       required: [true, "first name is required"],
