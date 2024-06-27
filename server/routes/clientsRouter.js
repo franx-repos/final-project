@@ -4,7 +4,7 @@ import * as authClient from "../controllers/authclient.js";
 import verifyToken from "../middlewares/verifyToken.js";
 
 const clientsRouter = Router();
- 
+
 clientsRouter.get("/me", verifyToken, authClient.getClient); // Route overlap
 clientsRouter
   .route("/")

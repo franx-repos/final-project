@@ -76,21 +76,17 @@ if(client === false){
         { withCredentials: true }
       );
 
-      if (response.status === 201) {
-        navigate("/signin");
+        if (response.status === 201) {
+          navigate("/signin");
+        }
+      } catch (error) {
+        console.log(error);
+        console.log(error.response.data.error || "Registration failed");
       }
-    } catch (error) {
-      console.log(error);
-      console.log(error.response.data.error || "Registration failed");
-    }
-  }
-
-    else{
+    } else {
       handleRegisterprofi(e);
     }
-
-}
-
+  };
 
   const handleRegisterprofi = async (e) => {
     e.preventDefault();
@@ -110,7 +106,7 @@ if(client === false){
             city,
             country,
             phone_number,
-          }
+          },
         },
         { withCredentials: true }
       );
@@ -135,15 +131,22 @@ if(client === false){
 
   
   return (
-    <form onSubmit={handleRegister} className="bg-slate-300 rounded-3xl p-6 bg-opacity-50 dark:bg-[#4b566e] dark:bg-opacity-50">
-      <ThemeToggle />
+    <form
+      onSubmit={handleRegister}
+      className="w-fit m-auto rounded-lg p-6 bg-opacity-50 bg-white/75 dark:bg-gray-900/80"
+    >
+      {/* <ThemeToggle /> */}
       <div className="space-y-12">
         <div className="border-b border-gray-900/10 pb-12">
-        <Link to='/'>
-          <img className="mx-auto h-10 w-auto mb-6" src="./public/TaxMax-Logo3.svg" alt="TAXMAX" />
+          <Link to="/">
+            <img
+              className="mx-auto h-10 w-auto mb-6"
+              src="./public/TaxMax-Logo3.svg"
+              alt="TAXMAX"
+            />
           </Link>
           <h2 className="text-base font-semibold leading-7 text-gray-900  dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800mb-2">
-          Personal Registrierung
+            Personal Registrierung
           </h2>
 
           <ul className="segmented-control shadow-sm shadow-gray-900 ">
@@ -158,7 +161,10 @@ if(client === false){
                   onChange={() =>{setClient(false),setRole('Client');}}
                   checked={!client}
                 />
-                <label className="segmented-control__label  dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 " htmlFor="option-1">
+                <label
+                  className="segmented-control__label  dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 "
+                  htmlFor="option-1"
+                >
                   Client
                 </label>
               </a>
@@ -173,7 +179,10 @@ if(client === false){
                   id="option-2"
                   onClick={() =>{setClient(true),setRole('pro');} }
                 />
-                <label className="segmented-control__label dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800" htmlFor="option-2">
+                <label
+                  className="segmented-control__label dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
+                  htmlFor="option-2"
+                >
                   Professional
                 </label>
               </a>
@@ -197,7 +206,7 @@ if(client === false){
                   className="block w-full rounded-md px-2 border-0 py-1.5 text-gray-900 shadow-sm shadow-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   value={first_name}
                   required
-                  onChange={(e) =>setfirst_name(e.target.value)}
+                  onChange={(e) => setfirst_name(e.target.value)}
                 />
               </div>
             </div>
@@ -218,12 +227,12 @@ if(client === false){
                   className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm shadow-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   value={last_name}
                   required
-                  onChange={(e) =>setlast_name(e.target.value)}
+                  onChange={(e) => setlast_name(e.target.value)}
                 />
               </div>
             </div>
 
-            <div className="sm:col-span-4">
+            <div className="sm:col-span-6">
               <label
                 htmlFor="email"
                 className="block text-sm font-medium leading-6 text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
@@ -244,7 +253,7 @@ if(client === false){
               </div>
             </div>
 
-            <div className="sm:col-span-4">
+            <div className="sm:col-span-3">
               <label
                 htmlFor="password"
                 className="block text-sm font-medium leading-6 text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
@@ -264,7 +273,7 @@ if(client === false){
                 />
               </div>
             </div>
-            <div className="sm:col-span-4">
+            <div className="sm:col-span-3">
               <label
                 htmlFor="confirm-password"
                 className="block text-sm font-medium leading-6 text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
@@ -278,10 +287,10 @@ if(client === false){
                   type="password"
                   autoComplete="new-password"
                   className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm shadow-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              value={confirmPassword}
-              required
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              />
+                  value={confirmPassword}
+                  required
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
               </div>
             </div>
 
@@ -329,7 +338,88 @@ if(client === false){
               </div>
             </div>
             <br />
-            <div className="sm:col-span-3">
+
+            <div className="col-span-full">
+              <label
+                htmlFor="street-address"
+                className="block text-sm font-medium leading-6 text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
+              >
+                Street
+              </label>
+              <div className="mt-2">
+                <input
+                  type="text"
+                  name="street-address"
+                  id="street-address"
+                  autoComplete="street-address"
+                  className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm shadow-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  value={street}
+                  required
+                  onChange={(e) => setStreet(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div className="sm:col-span-2 sm:col-start-1">
+              <label
+                htmlFor="city"
+                className="block text-sm font-medium leading-6 text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
+              >
+                City
+              </label>
+              <div className="mt-2">
+                <input
+                  type="text"
+                  name="city"
+                  id="city"
+                  autoComplete="address-level2"
+                  className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm shadow-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  value={city}
+                  required
+                  onChange={(e) => setCity(e.target.value)}
+                />
+              </div>
+            </div>
+            {/* 
+            <div className="sm:col-span-2">
+              <label
+                htmlFor="region"
+                className="block text-sm font-medium leading-6 text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
+              >
+                State / Province
+              </label>
+              <div className="mt-2">
+                <input
+                  type="text"
+                  name="region"
+                  id="region"
+                  autoComplete="address-level1"
+                  className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm shadow-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div> */}
+
+            <div className="sm:col-span-2">
+              <label
+                htmlFor="postal-code"
+                className="block text-sm font-medium leading-6 text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
+              >
+                ZIP / Postal code
+              </label>
+              <div className="mt-2">
+                <input
+                  type="text"
+                  name="postal-code"
+                  id="postal-code"
+                  autoComplete="postal-code"
+                  className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm shadow-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  value={zip}
+                  required
+                  onChange={(e) => setZip(e.target.value)}
+                />
+              </div>
+            </div>
+            <div className="sm:col-span-2">
               <label
                 htmlFor="country"
                 className="block text-sm font-medium leading-6 text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
@@ -393,87 +483,6 @@ if(client === false){
                 </select>
               </div>
             </div>
-
-            <div className="col-span-full">
-              <label
-                htmlFor="street-address"
-                className="block text-sm font-medium leading-6 text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
-              >
-                Street address
-              </label>
-              <div className="mt-2">
-                <input
-                  type="text"
-                  name="street-address"
-                  id="street-address"
-                  autoComplete="street-address"
-                  className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm shadow-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  value={street}
-                  required
-                  onChange={(e) =>setStreet(e.target.value)}
-                />
-              </div>
-            </div>
-
-            <div className="sm:col-span-2 sm:col-start-1">
-              <label
-                htmlFor="city"
-                className="block text-sm font-medium leading-6 text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
-              >
-                City
-              </label>
-              <div className="mt-2">
-                <input
-                  type="text"
-                  name="city"
-                  id="city"
-                  autoComplete="address-level2"
-                  className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm shadow-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  value={city}
-                  required
-                  onChange={(e) => setCity(e.target.value)}
-                />
-              </div>
-            </div>
-{/* 
-            <div className="sm:col-span-2">
-              <label
-                htmlFor="region"
-                className="block text-sm font-medium leading-6 text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
-              >
-                State / Province
-              </label>
-              <div className="mt-2">
-                <input
-                  type="text"
-                  name="region"
-                  id="region"
-                  autoComplete="address-level1"
-                  className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm shadow-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div> */}
-
-            <div className="sm:col-span-2">
-              <label
-                htmlFor="postal-code"
-                className="block text-sm font-medium leading-6 text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
-              >
-                ZIP / Postal code
-              </label>
-              <div className="mt-2">
-                <input
-                  type="text"
-                  name="postal-code"
-                  id="postal-code"
-                  autoComplete="postal-code"
-                  className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm shadow-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  value={zip}
-                  required
-                  onChange={(e) => setZip(e.target.value)}
-                />
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -489,7 +498,7 @@ if(client === false){
             type="button"
             // className="inline-block rounded shadow-gray-900 bg-blue-500 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
             className={styles.button}
-         >
+          >
             Cancel
           </button>
         </Link>
@@ -497,7 +506,7 @@ if(client === false){
         <button
           type="submit"
           // className="inline-block rounded shadow-gray-900 bg-blue-500 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
-        className={styles.button}
+          className={styles.button}
         >
           REGISTER
         </button>

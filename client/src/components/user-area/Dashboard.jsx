@@ -2,6 +2,10 @@ import NavigationTop from "../NavigationTop";
 import ThemeToggle from "../ThemeToggle";
 import GanttChart from "./GanttChart";
 import DashboardSidebar from "./Sidebar";
+import { useAuth } from "../../context/UserProvider";
+import ParticlesBackground from "../ParticlesBackground";
+import Signin from "../Signin";
+import { Footer } from "flowbite-react";
 
 const tasks = {
   data: [
@@ -35,10 +39,11 @@ const tasks = {
 };
 
 function Dashboard() {
-  return (
+  const { isLoggedIn, setIsLoggedIn, userData, setUserData } = useAuth();
+
+  return isLoggedIn ? (
     <>
       <div className="bg-white border-gray-200 dark:bg-gray-900">
-        <ThemeToggle />
         <NavigationTop />
         <div className="flex">
           <DashboardSidebar />
@@ -47,6 +52,18 @@ function Dashboard() {
           </div>
         </div>
       </div>
+    </>
+  ) : (
+    <>
+      <ParticlesBackground />
+      <NavigationTop />
+      <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight  text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
+        You are not allowed to enter this page.
+      </h2>
+      <p className=" m-6 text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400 text-center">
+        Please login first!
+      </p>
+      <Signin />
     </>
   );
 }

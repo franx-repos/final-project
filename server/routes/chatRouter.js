@@ -13,4 +13,6 @@ chatRouter
   .get(chatController.getChatById)
   .put(chatController.updateChat);
 
+chatRouter.get("/client_chat/:client_id", chatController.getChatByClientID);
+
 export default chatRouter;
