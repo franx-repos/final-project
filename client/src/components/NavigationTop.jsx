@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/UserProvider";
 import axios from "axios";
+import ThemeToggle from "./ThemeToggle";
 // import { useAuth } from "../context/UserProvider.jsx";
 
 const styles = {
@@ -11,7 +12,7 @@ const styles = {
   button:
     "text-white bg-teal-500 hover:bg-teal-700  focus:outline-none font-medium rounded-lg text-sm mx-2 px-4 py-2 text-center dark:bg-teal-500 dark:hover:bg-teal-700",
   userButton:
-    "flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600",
+    "flex text-sm bg-gray-800 rounded-full md:me-3 p-1 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600",
   userImage: "w-8 h-8 rounded-full",
   dropdown:
     "z-50 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600",
@@ -34,7 +35,7 @@ const styles = {
 };
 
 const NavigationTop = () => {
-  const { isLoggedIn, setIsLoggedIn, userData } = useAuth();
+  const { isLoggedIn, setIsLoggedIn, userData, setUserData } = useAuth();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isNavbarOpen, setIsNavbarOpen] = useState(false);
 
@@ -54,6 +55,8 @@ const NavigationTop = () => {
         { withCredentials: true }
       );
       setIsLoggedIn(false);
+      setIsDropdownOpen(false);
+      setUserData({});
     } catch (error) {
       console.log("Error:", error.message);
       console.log("Error:", error.response.data);
@@ -68,9 +71,8 @@ const NavigationTop = () => {
   };
 
   useEffect(() => {
-    console.log(userData);
-    console.log(`Userdata:  ${userData}`);
-    console.log(`isloggedin: ${isLoggedIn}`);
+    console.log("Userdata:", userData);
+    console.log("isloggedin:", isLoggedIn);
     console.log("Cookies:", document.cookie);
   }, [userData, isLoggedIn]);
 
@@ -81,28 +83,31 @@ const NavigationTop = () => {
           <img
             src="\src\assets\TaxMax-Logo3.png"
             className="h-8"
-            alt="Flowbite Logo"
+            alt="TaxMax Logo"
           />
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"></span>
         </Link>
         <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse relative">
           {isLoggedIn ? (
-            <button
-              type="button"
-              className={styles.userButton}
-              id="user-menu-button"
-              aria-expanded={isDropdownOpen}
-              onClick={toggleDropdown}
-            >
-              <span className="sr-only">Open user menu</span>
-              <img
-                className={styles.userImage}
-                src="/docs/images/people/profile-picture-3.jpg"
-                alt="user photo"
-              />
-            </button>
+            <div className="flex">
+              <button
+                type="button"
+                className={styles.userButton}
+                id="user-menu-button"
+                aria-expanded={isDropdownOpen}
+                onClick={toggleDropdown}
+              >
+                <span className="sr-only">Open user menu</span>
+                <img
+                  className={styles.userImage}
+                  src="/docs/images/people/profile-picture-3.jpg"
+                  alt="user photo"
+                />
+              </button>
+              <ThemeToggle />
+            </div>
           ) : (
-            <div>
+            <div className="flex">
               <Link to="signin">
                 {" "}
                 <button type="button" className={styles.button}>
@@ -116,6 +121,7 @@ const NavigationTop = () => {
                   Register
                 </button>
               </Link>
+              <ThemeToggle />
             </div>
           )}
 
@@ -128,10 +134,10 @@ const NavigationTop = () => {
           >
             <div className={styles.dropdownInfo}>
               <span className={styles.dropdownName}>
-                mr:{userData.first_name}
+                {userData?.data?.first_name}
               </span>
               <span className={styles.dropdownEmail}>
-                email:{userData.email}
+                {userData?.data?.email}
               </span>
             </div>
             <ul className="py-2" aria-labelledby="user-menu-button">
