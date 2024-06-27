@@ -7,7 +7,7 @@ import { useAuth } from "../../context/UserProvider";
 import ChatWindow from "./ChatWindow";
 
 function Chat() {
-  const { isLoggedIn, userData } = useAuth();
+  const { isLoggedIn, setIsLoggedIn, userData, setUserData } = useAuth();
 
   useEffect(() => {
     console.log(userData._id);
@@ -26,11 +26,14 @@ function Chat() {
 
   return (
     <>
-      <ThemeToggle />
-      <NavigationTop />
-      <div className="flex">
-        <DashboardSidebar />
-        <ChatWindow />
+      {" "}
+      <div className="bg-white border-gray-200 dark:bg-gray-900">
+        {/* <ThemeToggle /> */}
+        <NavigationTop />
+        <div className="flex">
+          <DashboardSidebar />
+          <ChatWindow />
+        </div>
       </div>
     </>
   );

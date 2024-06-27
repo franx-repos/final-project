@@ -28,7 +28,7 @@ const ChatWindow = ({ socket }) => {
         <ChatSideBar />
       </div>
       <div className="flex flex-col  w-full mx-9 shadow-lg rounded-lg">
-        <div className="flex-1 overflow-y-scroll border-gray-200 dark:bg-gray-900/80"></div>
+        <div className="flex-1 overflow-y-scroll border-gray-200 dark:bg-gray-800"></div>
         <ChatInput />
       </div>
     </section>
