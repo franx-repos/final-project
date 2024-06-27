@@ -30,6 +30,15 @@ export const updateChat = async (req, res, next) => {
   } catch (error) {}
 };
 
+export const getChatByClientID = async (req, res, next) => {
+  const { client_id } = req.params;
+  try {
+    const chat = await Chat.find({ client_id: client_id });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const getChatById = async (req, res, next) => {
   const { id } = req.params;
   try {
