@@ -1,5 +1,6 @@
 import NavigationTop from "../NavigationTop";
 import ThemeToggle from "../ThemeToggle";
+import GanttChart from "./GanttChart";
 import DashboardSidebar from "./Sidebar";
 
 function Dashboard() {
@@ -7,7 +8,10 @@ function Dashboard() {
     <>
       <ThemeToggle />
       <NavigationTop />
-      <DashboardSidebar />
+      <div className="flex">
+        <DashboardSidebar />
+        <GanttChart />
+      </div>
     </>
   );
 }
