@@ -5,7 +5,7 @@ import verifyToken from "../middlewares/verifyToken.js";
 
 const prosRouter = Router();
 
-prosRouter.get("/me", verifyToken, authPro.getPro);
+prosRouter.get("/me", verifyToken, authPro.getPro); // Route overlap
 prosRouter
   .route("/")
   .get(proController.getAllPros)
