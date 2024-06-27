@@ -6,6 +6,7 @@ import tasksRouter from "./routes/tasksRouter.js";
 import chatRouter from "./routes/chatRouter.js";
 import { errorHandler } from "./middlewares/ErrorHandler.js";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import { instrument } from "@socket.io/admin-ui";
@@ -17,8 +18,7 @@ const PORT = 8001;
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: ["http://localhost:5173", "https://admin.socket.io/"],
-  },
+    origin: ["http://localhost:5173", "https://admin.socket.io/"],credentials: true }   ,
 });
 
 io.on("connection", (socket) => {
@@ -68,8 +68,9 @@ instrument(io, {
   mode: "development",
 });
 
-app.use(cors());
+app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
 app.use(express.json());
+app.use(cookieParser());
 
 //ROUTES
 

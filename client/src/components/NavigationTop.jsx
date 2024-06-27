@@ -1,5 +1,8 @@
-import React, { useState } from "react";
-import { NavLink, Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { NavLink, Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/UserProvider";
+import axios from "axios";
+// import { useAuth } from "../context/UserProvider.jsx";
 
 const styles = {
   container:
@@ -31,7 +34,7 @@ const styles = {
 };
 
 const NavigationTop = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const { isLoggedIn, setIsLoggedIn, userData } = useAuth();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isNavbarOpen, setIsNavbarOpen] = useState(false);
 
@@ -42,6 +45,32 @@ const NavigationTop = () => {
   const toggleNavbar = () => {
     setIsNavbarOpen(!isNavbarOpen);
   };
+
+  const handleLogout = async () => {
+    try {
+      await axios.post(
+        `http://localhost:8001/clients/logout`,
+        {},
+        { withCredentials: true }
+      );
+      setIsLoggedIn(false);
+    } catch (error) {
+      console.log("Error:", error.message);
+      console.log("Error:", error.response.data);
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.log("Response data:", error.response.data);
+        console.log("Response status:", error.response.status);
+        console.log("Response headers:", error.response.headers);
+      }
+    }
+  };
+  useEffect(() => {
+    console.log(`Userdata:  ${userData}`);
+    console.log(`isloggedin: ${isLoggedIn}`);
+    console.log("Cookies:", document.cookie);
+  }, [userData, isLoggedIn]);
 
   return (
     <nav className=" w-full bg-white/75 border-gray-200 dark:bg-gray-900/80 relative">
@@ -72,12 +101,19 @@ const NavigationTop = () => {
             </button>
           ) : (
             <div>
-              <button type="button" className={styles.button}>
-                Login
-              </button>
-              <button type="button" className={styles.button}>
-                Register
-              </button>
+              <Link to="signin">
+                {" "}
+                <button type="button" className={styles.button}>
+                  Login
+                </button>
+              </Link>
+
+              <Link to="singup">
+                {" "}
+                <button type="button" className={styles.button}>
+                  Register
+                </button>
+              </Link>
             </div>
           )}
 
@@ -89,8 +125,12 @@ const NavigationTop = () => {
             id="user-dropdown"
           >
             <div className={styles.dropdownInfo}>
-              <span className={styles.dropdownName}>Bonnie Green</span>
-              <span className={styles.dropdownEmail}>name@flowbite.com</span>
+              <span className={styles.dropdownName}>
+                mr:{userData.first_name}
+              </span>
+              <span className={styles.dropdownEmail}>
+                email:{userData.email}
+              </span>
             </div>
             <ul className="py-2" aria-labelledby="user-menu-button">
               <li>
@@ -109,7 +149,7 @@ const NavigationTop = () => {
                 </a>
               </li>
               <li>
-                <a href="#" className={styles.dropdownItem}>
+                <a onClick={handleLogout} className={styles.dropdownItem}>
                   Sign out
                 </a>
               </li>
