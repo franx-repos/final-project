@@ -71,7 +71,7 @@ if(client === false){
             phone_number,
          }
            },
-        // { withCredentials: true }
+        { withCredentials: true }
       );
 
       if (response.status === 201) {
@@ -109,7 +109,7 @@ if(client === false){
             phone_number,
           }
         },
-        // { withCredentials: true }
+        { withCredentials: true }
       );
 
       if (response.status === 201) {
@@ -132,10 +132,13 @@ if(client === false){
 
   
   return (
-    <form onSubmit={handleRegister} className="bg-slate-300 rounded-3xl p-6 bg-opacity-50 dark:bg-[#111827] dark:bg-opacity-50">
+    <form onSubmit={handleRegister} className="bg-slate-300 rounded-3xl p-6 bg-opacity-50 dark:bg-[#4b566e] dark:bg-opacity-50">
       <ThemeToggle />
       <div className="space-y-12">
         <div className="border-b border-gray-900/10 pb-12">
+        <Link to='/'>
+          <img className="mx-auto h-10 w-auto mb-6" src="./public/TaxMax-Logo3.svg" alt="TAXMAX" />
+          </Link>
           <h2 className="text-base font-semibold leading-7 text-gray-900  dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800mb-2">
           Personal Registrierung
           </h2>
@@ -471,10 +474,10 @@ if(client === false){
           </div>
         </div>
       </div>
-      <div className="mt-6 flex items-center justify-end gap-x-6">
+      <div className="mt-6 flex items-center justify-end gap-x-6 dark:text-white">
         <p className="mt-2">
           Already have an account?{" "}
-          <Link to="/signin" className="text-blue underline">
+          <Link to="/signin" className="text-blue underline text-blue-800">
             Login here
           </Link>
         </p>

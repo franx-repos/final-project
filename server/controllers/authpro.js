@@ -8,15 +8,17 @@ import asyncHandler from "../utils/asyncHandler.js";
 // Funktion für Sign up
 export const signUp = asyncHandler(async(req,res,next) => {
     const { data: {
-        first_name, 
-        last_name, 
-        email, 
+      first_name,
+        last_name,
+        email,
         password,
         street,
         zip,
-        city },
-        industry,
+        city,
         country,
+        phone_number,
+      },
+        industry,
         client_countries,
         languages,
         specialization
@@ -27,20 +29,22 @@ export const signUp = asyncHandler(async(req,res,next) => {
 
       const hash = await bcrypt.hash(password, 10); // verschlüssel das passwort im token
       const newPro = await Pro.create({ data: {
-        first_name, 
-        last_name, 
-        email, 
-        password: hash,
-        street,
-        zip,
-        city }, 
+        first_name,
+          last_name,
+          email,
+          password : hash,
+          street,
+          zip,
+          city,
+          country,
+          phone_number,
+        } ,
         industry,
-        country,
         client_countries,
         languages,
         specialization
       });
-      const token = jwt.sign({ cid: newPro}, process.env.JWT_SECRET);
+      const token = jwt.sign({ cid: newPro._id}, process.env.JWT_SECRET);
       res.status(201).send ({token}) //sendung vom token an die datenbank
 })
 

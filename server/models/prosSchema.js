@@ -34,6 +34,12 @@ const proSchema = new mongoose.Schema({
     city: {
       type: String,
     },
+    country: {
+      type: String,
+    },
+    phone_number: {
+      type: String,
+    },
   },
   image_url: {
     type: String,
@@ -48,9 +54,7 @@ const proSchema = new mongoose.Schema({
   industry: {
     type: [String],
   },
-  country: {
-    type: String,
-  },
+  
   client_countries: {
     type: [String],
   },

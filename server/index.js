@@ -18,8 +18,7 @@ const PORT = 8001;
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: ["http://localhost:5173", "https://admin.socket.io/"],
-  },
+    origin: ["http://localhost:5173", "https://admin.socket.io/"],credentials: true }   ,
 });
 
 io.on("connection", (socket) => {
@@ -69,7 +68,7 @@ instrument(io, {
   mode: "development",
 });
 
-app.use(cors());
+app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 

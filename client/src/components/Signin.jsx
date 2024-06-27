@@ -31,7 +31,7 @@ const Signin = () => {
             password,
            }
           },
-          // { withCredentials: true }
+          { withCredentials: true }
         );
 
         if (response.status === 200) {
@@ -58,7 +58,7 @@ const Signin = () => {
             password,
             }
           },
-          // { withCredentials: true }
+          { withCredentials: true }
         );
 
         if (response.status === 200) {
@@ -73,9 +73,9 @@ const Signin = () => {
 
 
   useEffect(() => { 
-    console.log(email)
-    console.log(password)
-    console.log(client);
+    console.log(`email:  ${email}`)
+    console.log(`password: ${password}`)
+    console.log(`client: ${client}`);
     }, [email,password,client]);
  
 
@@ -83,9 +83,11 @@ const Signin = () => {
   return (
     <>
     <form className="space-y-6" action="#" method="POST" onSubmit={handleLogin} >
-      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 shadow shadow-gray-900 bg-slate-300 rounded-3xl p-6 bg-opacity-50 dark:bg-[#111827] dark:bg-opacity-50 ">
+      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 shadow shadow-gray-900 bg-slate-300 rounded-3xl p-6 bg-opacity-50 dark:bg-[#4b566e] dark:bg-opacity-50 ">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+          <Link to='/'>
           <img className="mx-auto h-10 w-auto" src="./public/TaxMax-Logo3.svg" alt="TAXMAX" />
+          </Link>
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight  text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
             Sign in to your account
           </h2>
@@ -163,7 +165,7 @@ const Signin = () => {
                  
                  <Link to='/reset-pass'><a
                     href="#"
-                    className="font-semibold text-indigo-600 hover:text-indigo-500  dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
+                    className="font-semibold text-indigo-600 hover:text-indigo-500  dark:text-blue-500 dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
                   >
                     Forgot password?
                   </a>
@@ -193,6 +195,12 @@ const Signin = () => {
               >
                 Sign in
               </button>
+              <p className='mt-4 dark:text-white'>
+          Not registered yet?{' '}
+          <Link to='/singup' className='text-blue-500 underline'>
+            Register here
+          </Link>
+        </p>
             </div>
         </div>
       </div>
