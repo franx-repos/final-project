@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/UserProvider";
 import axios from "axios";
 // import { useAuth } from "../context/UserProvider.jsx";
@@ -38,7 +38,6 @@ const NavigationTop = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isNavbarOpen, setIsNavbarOpen] = useState(false);
 
-  
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
@@ -48,13 +47,13 @@ const NavigationTop = () => {
   };
 
   const handleLogout = async () => {
-
     try {
       await axios.post(
-        `http://localhost:8001/clients/logout`,{},{ withCredentials: true}     
+        `http://localhost:8001/clients/logout`,
+        {},
+        { withCredentials: true }
       );
       setIsLoggedIn(false);
-     
     } catch (error) {
       console.log("Error:", error.message);
       console.log("Error:", error.response.data);
@@ -64,27 +63,26 @@ const NavigationTop = () => {
         console.log("Response data:", error.response.data);
         console.log("Response status:", error.response.status);
         console.log("Response headers:", error.response.headers);
-      } 
-    } 
+      }
+    }
   };
-useEffect(() => { 
-  console.log(`Userdata:  ${userData.first_name}`)
-  console.log(`isloggedin: ${isLoggedIn}`)
-  console.log('Cookies:', document.cookie);
-  
-  }, [userData,isLoggedIn]);
+  useEffect(() => {
+    console.log(`Userdata:  ${userData}`);
+    console.log(`isloggedin: ${isLoggedIn}`);
+    console.log("Cookies:", document.cookie);
+  }, [userData, isLoggedIn]);
 
   return (
     <nav className=" w-full bg-white/75 border-gray-200 dark:bg-gray-900/80 relative">
       <div className={styles.container}>
-        <a href="#" className={styles.logo}>
+        <Link to="/" className={styles.logo}>
           <img
             src="\src\assets\TaxMax-Logo3.png"
             className="h-8"
             alt="Flowbite Logo"
           />
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"></span>
-        </a>
+        </Link>
         <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse relative">
           {isLoggedIn ? (
             <button
@@ -103,13 +101,18 @@ useEffect(() => {
             </button>
           ) : (
             <div>
-             <Link to='signin'> <button type="button" className={styles.button}>
-                Login
-              </button></Link>
-             
-             <Link to='singup'> <button type="button" className={styles.button}>
-                Register
-              </button>
+              <Link to="signin">
+                {" "}
+                <button type="button" className={styles.button}>
+                  Login
+                </button>
+              </Link>
+
+              <Link to="singup">
+                {" "}
+                <button type="button" className={styles.button}>
+                  Register
+                </button>
               </Link>
             </div>
           )}
@@ -122,14 +125,18 @@ useEffect(() => {
             id="user-dropdown"
           >
             <div className={styles.dropdownInfo}>
-              <span className={styles.dropdownName}>mr:{userData.first_name}</span>
-              <span className={styles.dropdownEmail}>email:{userData.email}</span>
+              <span className={styles.dropdownName}>
+                mr:{userData.first_name}
+              </span>
+              <span className={styles.dropdownEmail}>
+                email:{userData.email}
+              </span>
             </div>
             <ul className="py-2" aria-labelledby="user-menu-button">
               <li>
-                <a href="#" className={styles.dropdownItem}>
+                <NavLink to="Dashboard" className={styles.dropdownItem}>
                   Dashboard
-                </a>
+                </NavLink>
               </li>
               <li>
                 <a href="#" className={styles.dropdownItem}>
@@ -142,7 +149,7 @@ useEffect(() => {
                 </a>
               </li>
               <li>
-                <a onClick={handleLogout} className={styles.dropdownItem} >
+                <a onClick={handleLogout} className={styles.dropdownItem}>
                   Sign out
                 </a>
               </li>
