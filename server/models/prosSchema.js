@@ -24,7 +24,6 @@ const proSchema = new mongoose.Schema({
       required: [true, "password is required"],
       select: false,
       minlength: 6,
-      maxlength: 12,
     },
     street: {
       type: String,
@@ -33,6 +32,12 @@ const proSchema = new mongoose.Schema({
       type: String,
     },
     city: {
+      type: String,
+    },
+    country: {
+      type: String,
+    },
+    phone_number: {
       type: String,
     },
   },
@@ -49,9 +54,7 @@ const proSchema = new mongoose.Schema({
   industry: {
     type: [String],
   },
-  country: {
-    type: String,
-  },
+  
   client_countries: {
     type: [String],
   },

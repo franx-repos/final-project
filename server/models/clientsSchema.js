@@ -24,17 +24,18 @@ const clientSchema = new mongoose.Schema({
       required: [true, "password is required"],
       select: false,
       minlength: 6,
-      maxlength: 12,
     },
     vat_id: {
       type: String,
-      unique: true,
+      //unique: true,
       trim: true,
+      sparse: true
     },
     tax_id: {
       type: String,
-      unique: true,
+      //unique: true,
       trim: true,
+      sparse: true
     },
     street: {
       type: String,
@@ -45,6 +46,11 @@ const clientSchema = new mongoose.Schema({
     city: {
       type: String,
     },
+    country: {
+      type: String,
+    },
+    phone_number: { 
+    type: String },
   },
   image_url: {
     type: String,
@@ -58,9 +64,6 @@ const clientSchema = new mongoose.Schema({
   },
   industry: {
     type: [String],
-  },
-  country: {
-    type: String,
   },
   languages: {
     type: [String],

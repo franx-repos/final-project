@@ -23,6 +23,21 @@ export const getProById = async (req, res, next) => {
   } catch (error) {}
 };
 
+export const getProByEmail = async (req, res, next) => {
+  const { email } = req.params;
+  console.log(email);
+  try {
+    const pro = await Pro.find({ "data.email": email });
+    if (!pro) {
+      throw { statusCode: 404, message: "Client not found" };
+    }
+    console.log(pro);
+    res.json(pro);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const addNewPro = async (req, res, next) => {
   const { role, ...data } = req.body;
 
