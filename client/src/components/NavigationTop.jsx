@@ -38,7 +38,7 @@ const NavigationTop = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isNavbarOpen, setIsNavbarOpen] = useState(false);
 
-  
+  const navigate = useNavigate();
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
@@ -54,7 +54,7 @@ const NavigationTop = () => {
         `http://localhost:8001/clients/logout`,{},{ withCredentials: true}     
       );
       setIsLoggedIn(false);
-     
+     navigate("/");
     } catch (error) {
       console.log("Error:", error.message);
       console.log("Error:", error.response.data);
@@ -68,10 +68,10 @@ const NavigationTop = () => {
     } 
   };
 useEffect(() => { 
-  console.log(`Userdata:  ${userData.first_name}`)
+  console.log(`UserData:  ${userData.data}`)
   console.log(`isloggedin: ${isLoggedIn}`)
   console.log('Cookies:', document.cookie);
-  
+
   }, [userData,isLoggedIn]);
 
   return (
