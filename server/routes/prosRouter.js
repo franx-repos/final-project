@@ -5,6 +5,7 @@ import verifyToken from "../middlewares/verifyToken.js";
 
 const prosRouter = Router();
 
+prosRouter.get("/me", verifyToken, authPro.getPro);
 prosRouter
   .route("/")
   .get(proController.getAllPros)
@@ -20,7 +21,6 @@ prosRouter.route("/email/:email").get(proController.getProByEmail);
 
 prosRouter.post("/register", authPro.signUp);
 prosRouter.post("/login", authPro.logIn);
-prosRouter.post("/me", verifyToken, authPro.getPro);
 prosRouter.post("/logout", verifyToken, authPro.logout);
 // prosRouter.patch("/:id", proController.addTagToPro);
 

@@ -5,6 +5,7 @@ import verifyToken from "../middlewares/verifyToken.js";
 
 const clientsRouter = Router();
 
+clientsRouter.get("/me", verifyToken, authClient.getClient);
 clientsRouter
   .route("/")
   .get(clientController.getAllClients)
@@ -21,7 +22,6 @@ clientsRouter.route("/email/:email").get(clientController.getClientByEmail);
 
 clientsRouter.post("/register", authClient.signUp);
 clientsRouter.post("/login", authClient.logIn);
-clientsRouter.post("/me", verifyToken, authClient.getClient);
 clientsRouter.post("/logout", verifyToken, authClient.logout);
 
 export default clientsRouter;
