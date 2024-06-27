@@ -24,7 +24,7 @@ const sbItems = [
 
 function DashboardSidebar() {
   return (
-    <Sidebar className="fixed h-screen bg-gray-50 dark:bg-gray-800">
+    <Sidebar className="w-52 h-screen bg-gray-50 dark:bg-gray-800">
       <Sidebar.Items className="h-screen">
         <Sidebar.ItemGroup>
           {sbItems.map((item, index) => (
