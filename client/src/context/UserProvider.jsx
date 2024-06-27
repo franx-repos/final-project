@@ -8,17 +8,19 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userData, setUserData] = useState({});
+  // const [role, setRole] = useState('');
   const deploy=import.meta.env.VITE_DEPLOY_URL;
   
   const checkUser = async () => {
     try {
       const response = await axios.get(`http://localhost:8001/clients/me`,
-        // {  withCredentials: true,}
+        {  withCredentials: true,}
     );
 
       if (response.data && response.data._id) {
         setIsLoggedIn(true);
-        setUserData(response.data);
+        setUserData(response);
+
       } else {
         setIsLoggedIn(false);
         setUserData({});
