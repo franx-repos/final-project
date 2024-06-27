@@ -82,7 +82,8 @@ const Signin = () => {
         method="POST"
         onSubmit={handleLogin}
       >
-        <div className="flex flex-1 flex-col w-fit m-auto justify-center px-6 py-12 lg:px-8 shadow shadow-gray-900  rounded-lg p-6 bg-white/75 border-gray-200 dark:bg-gray-900/80">
+        <div className="flex flex-1 flex-col w-fit m-auto justify-center px-6 py-12 lg:px-8 shadow shadow-gray-900  rounded-lg p-6 border-gray-200 bg-white/75 dark:bg-gray-900/80">
+          {/* <ThemeToggle /> */}
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             <Link to="/">
               <img
@@ -92,7 +93,7 @@ const Signin = () => {
               />
             </Link>
             <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight  text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
-              Sign in to your account
+              Sign in!
             </h2>
           </div>
 
@@ -139,7 +140,6 @@ const Signin = () => {
           </div>
 
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <ThemeToggle />
             <div>
               <label
                 htmlFor="email"
