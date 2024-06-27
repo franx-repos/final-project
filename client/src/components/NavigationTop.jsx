@@ -69,6 +69,7 @@ const NavigationTop = () => {
       }
     }
   };
+
   useEffect(() => {
     console.log("Userdata:", userData);
     console.log("isloggedin:", isLoggedIn);
