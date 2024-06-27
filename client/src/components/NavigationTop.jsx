@@ -34,7 +34,7 @@ const styles = {
 };
 
 const NavigationTop = () => {
-  const { isLoggedIn, setIsLoggedIn, userData } = useAuth();
+  const { isLoggedIn, setIsLoggedIn, userData, setUserData } = useAuth();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isNavbarOpen, setIsNavbarOpen] = useState(false);
 
@@ -54,6 +54,8 @@ const NavigationTop = () => {
         { withCredentials: true }
       );
       setIsLoggedIn(false);
+      setIsDropdownOpen(false);
+      setUserData({});
     } catch (error) {
       console.log("Error:", error.message);
       console.log("Error:", error.response.data);
@@ -126,10 +128,10 @@ const NavigationTop = () => {
           >
             <div className={styles.dropdownInfo}>
               <span className={styles.dropdownName}>
-                mr:{userData.first_name}
+                {userData?.data?.first_name}
               </span>
               <span className={styles.dropdownEmail}>
-                email:{userData.email}
+                {userData?.data?.email}
               </span>
             </div>
             <ul className="py-2" aria-labelledby="user-menu-button">
