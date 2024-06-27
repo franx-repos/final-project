@@ -1,6 +1,6 @@
-import {createContext, useContext, useEffect, useState } from 'react';
-import axios from 'axios';
-import Cookies from 'js-cookie';
+import { createContext, useContext, useEffect, useState } from "react";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 const AuthContext = createContext();
 export const useAuth = () => useContext(AuthContext);
@@ -9,18 +9,17 @@ export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userData, setUserData] = useState({});
   // const [role, setRole] = useState('');
-  const deploy=import.meta.env.VITE_DEPLOY_URL;
-  
+  const deploy = import.meta.env.VITE_DEPLOY_URL;
+
   const checkUser = async () => {
     try {
-      const response = await axios.get(`http://localhost:8001/clients/me`,
-        {  withCredentials: true,}
-    );
+      const response = await axios.get(`http://localhost:8001/clients/me`, {
+        withCredentials: true,
+      });
 
       if (response.data && response.data._id) {
         setIsLoggedIn(true);
-        setUserData(response);
-
+        setUserData(response.data);
       } else {
         setIsLoggedIn(false);
         setUserData({});
@@ -33,7 +32,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const token = Cookies.get('token');
+    const token = Cookies.get("token");
     if (token) {
       checkUser();
     }

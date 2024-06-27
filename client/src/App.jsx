@@ -12,10 +12,10 @@ import ResetPassword from "./components/ResetPassword";
 function App() {
   return (
     <>
-    {/* <Signup /> */}
-  {/* <Signin /> */}
-  {/* <ResetPassword /> */}
-      <ParticlesBackground />
+      {/* <Signup /> */}
+      {/* <Signin /> */}
+      {/* <ResetPassword /> */}
+
       <Routes>
         <Route path="/" element={<TaxMax />} />
         <Route path="Dashboard" element={<Dashboard />} />
