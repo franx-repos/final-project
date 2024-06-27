@@ -20,7 +20,7 @@ function App() {
         <Route path="/" element={<TaxMax />} />
         <Route path="Dashboard" element={<Dashboard />} />
         <Route path="Chat" element={<Chat />} />
-        <Route path="/singup" element={<Signup />} />
+        <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/reset-pass" element={<ResetPassword />} />
       </Routes>

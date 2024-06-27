@@ -31,6 +31,7 @@ const styles = {
 };
 
 function Signup() {
+  const [role, setRole] = useState("");
   const [first_name, setfirst_name] = useState("");
   const [last_name, setlast_name] = useState("");
   const [street, setStreet] = useState("");
@@ -50,30 +51,30 @@ function Signup() {
     e.preventDefault();
     // const deploy = import.meta.env.VITE_DEPLOY_URL;
     // ${deploy}
-    if (client === false) {
-      if (password !== confirmPassword) {
-        console.log("Passwords do not match");
-        return;
-      }
-      try {
-        const response = await axios.post(
-          `http://localhost:8001/clients/register`,
-          {
-            data: {
-              first_name,
-              last_name,
-              email,
-              password,
-              tax_id,
-              street,
-              zip,
-              city,
-              country,
-              phone_number,
-            },
-          },
-          { withCredentials: true }
-        );
+if(client === false){
+  if (password !== confirmPassword) {
+    console.log("Passwords do not match");
+    return;
+  }
+    try {
+      const response = await axios.post( `http://localhost:8001/clients/register`,
+        {
+         data: {
+          role,
+            first_name,
+            last_name,
+            email,
+            password,
+            tax_id,
+            street,
+            zip,
+            city,
+            country,
+            phone_number,
+         }
+           },
+        { withCredentials: true }
+      );
 
         if (response.status === 201) {
           navigate("/signin");
@@ -95,7 +96,8 @@ function Signup() {
         `http://localhost:8001/pros/register`,
         {
           data: {
-            first_name,
+            role,
+          first_name,
             last_name,
             email,
             password,
@@ -117,10 +119,17 @@ function Signup() {
     }
   };
 
-  // useEffect(() => {
-  //   console.log(first_name, last_name, street, city, zip, country, tax_id, phone_number, email, password, client);
-  // }, [first_name, last_name, street, city, zip, country, tax_id, phone_number, email, password,client ]);
 
+  
+  
+    
+  
+  
+  useEffect(() => {
+    console.log(role,first_name, last_name, street, city, zip, country, tax_id, phone_number, email, password,client);
+  }, [ role,first_name, last_name, street, city, zip, country, tax_id, phone_number, email, password,client ]);
+
+  
   return (
     <form
       onSubmit={handleRegister}
@@ -149,7 +158,7 @@ function Signup() {
                   value="1"
                   name="option"
                   id="option-1"
-                  onChange={() => setClient(false)}
+                  onChange={() =>{setClient(false),setRole('Client');}}
                   checked={!client}
                 />
                 <label
@@ -168,7 +177,7 @@ function Signup() {
                   value="2"
                   name="option"
                   id="option-2"
-                  onClick={() => setClient(true)}
+                  onClick={() =>{setClient(true),setRole('pro');} }
                 />
                 <label
                   className="segmented-control__label dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
