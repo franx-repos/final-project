@@ -67,8 +67,8 @@ const NavigationTop = () => {
     }
   };
   useEffect(() => {
-    console.log(`Userdata:  ${userData}`);
-    console.log(`isloggedin: ${isLoggedIn}`);
+    console.log("Userdata:", userData);
+    console.log("isloggedin:", isLoggedIn);
     console.log("Cookies:", document.cookie);
   }, [userData, isLoggedIn]);
 
@@ -79,7 +79,7 @@ const NavigationTop = () => {
           <img
             src="\src\assets\TaxMax-Logo3.png"
             className="h-8"
-            alt="Flowbite Logo"
+            alt="TaxMax Logo"
           />
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"></span>
         </Link>
