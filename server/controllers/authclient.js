@@ -45,7 +45,7 @@ export const signUp = asyncHandler(async(req,res,next) => {
         languages
       });
       console.log(first_name, last_name, email, password, vat_id, tax_id, street, zip, city, country, phone_number, industry, languages)
-      const token = jwt.sign({ cid: newClient}, process.env.JWT_SECRET);
+      const token = jwt.sign({ cid: newClient._id}, process.env.JWT_SECRET);
       res.status(201).send ({token}) //sendung vom token an die datenbank
 })
 
@@ -60,7 +60,7 @@ if (!existingClient) throw new ErrorResponse("Email does not exists", 404);
   const match = await bcrypt.compare(password, existingClient.data.password);
   if (!match) throw new ErrorResponse('Password is incorrect', 401);
 // Passwort überprüfung
-const token = jwt.sign({ cid: existingClient._id}, process.env.JWT_SECRET, { expiresIn: "30min",});
+const token = jwt.sign({ cid: existingClient._id}, process.env.JWT_SECRET, { expiresIn: "30m",});
 res.cookie('token', token, { maxAge: 1800000 }); // 30mn
 res.send({ status: 'success' });
 })
