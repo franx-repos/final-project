@@ -8,7 +8,7 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userData, setUserData] = useState({});
-  // const [role, setRole] = useState('');
+  const [role, setRole] = useState("");
   // const deploy = import.meta.env.VITE_DEPLOY_URL;
 
   const checkUser = async () => {
@@ -20,7 +20,7 @@ export const AuthProvider = ({ children }) => {
       if (response.data && response.data._id) {
         console.log(response);
         setIsLoggedIn(true);
-        setUserData(response);
+        setUserData(response.data);
       } else {
         setIsLoggedIn(false);
         setUserData({});

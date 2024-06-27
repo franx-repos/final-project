@@ -66,11 +66,9 @@ const NavigationTop = () => {
       }
     }
   };
+
   useEffect(() => {
-<<<<<<< HEAD
     console.log(userData);
-=======
->>>>>>> dev
     console.log(`Userdata:  ${userData}`);
     console.log(`isloggedin: ${isLoggedIn}`);
     console.log("Cookies:", document.cookie);
