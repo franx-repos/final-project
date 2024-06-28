@@ -57,7 +57,7 @@ const proSchema = new mongoose.Schema({
   industry: {
     type: [String],
   },
-  
+
   client_countries: {
     type: [String],
   },
@@ -75,6 +75,9 @@ const proSchema = new mongoose.Schema({
     min: 0,
     max: 5,
     default: 0,
+  },
+  tasks: {
+    type: [String],
   },
   comments: [
     {
