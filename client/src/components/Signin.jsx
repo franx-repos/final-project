@@ -72,12 +72,12 @@ const Signin = () => {
     }
   };
 
-  useEffect(() => {
-    console.log(`email:  ${email}`);
-    console.log(`password: ${password}`);
-    console.log(`client: ${client}`);
-    console.log(`role: ${role}`);
-    }, [email,password,client,role]);
+  // useEffect(() => {
+  //   console.log(`email:  ${email}`);
+  //   console.log(`password: ${password}`);
+  //   console.log(`client: ${client}`);
+  //   console.log(`role: ${role}`);
+  //   }, [email,password,client,role]);
  
 
 
@@ -114,7 +114,7 @@ const Signin = () => {
                   value="1"
                   name="option"
                   id="option-1"
-                  onChange={() => {setRole('Client'),setClient(false);}}
+                  onChange={() => {setRole('client'),setClient(false);}}
                   checked={!client}
                 />
                 <label className="segmented-control__label text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800" htmlFor="option-1">

@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
         withCredentials: true,
       });
 
-      if (responseClient.data && responseClient.data._id && responseClient.data.data.role === 'Client') {
+      if (responseClient.data && responseClient.data._id && responseClient.data.data.role === 'client') {
         setIsLoggedIn(true);
         setUserData(responseClient.data);
         return;

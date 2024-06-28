@@ -12,12 +12,12 @@ const ResetPassword = () => {
           Fill up the form to reset the password
         </p>
 
-        <ThemeToggle />
+        {/* <ThemeToggle /> */}
         <form action="" className="my-10 ">
           <div className="flex flex-col space-y-5">
             <label for="email">
-              <p className="font-bold text-lg  pb-2 text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 ">
-                Email address
+              <p className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight  text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
+              Email address
               </p>
               <input
                 id="email"

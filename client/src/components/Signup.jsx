@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ThemeToggle from "./ThemeToggle";
+import NavigationTop from "./NavigationTop";
 
 const styles = {
   container: `max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-3 border-y-2 border-teal-500 shadow-2xl`,
@@ -53,7 +54,7 @@ function Signup() {
     // ${deploy}
 if(client === false){
   if (password !== confirmPassword) {
-    console.log("Passwords do not match");
+    // console.log("Passwords do not match");
     return;
   }
     try {
@@ -80,8 +81,8 @@ if(client === false){
           navigate("/signin");
         }
       } catch (error) {
-        console.log(error);
-        console.log(error.response.data.error || "Registration failed");
+        // console.log(error);
+        // console.log(error.response.data.error || "Registration failed");
       }
     } else {
       handleRegisterprofi(e);
@@ -125,9 +126,9 @@ if(client === false){
     
   
   
-  useEffect(() => {
-    console.log(role,first_name, last_name, street, city, zip, country, tax_id, phone_number, email, password,client);
-  }, [ role,first_name, last_name, street, city, zip, country, tax_id, phone_number, email, password,client ]);
+  // useEffect(() => {
+  //   console.log(role,first_name, last_name, street, city, zip, country, tax_id, phone_number, email, password,client);
+  // }, [ role,first_name, last_name, street, city, zip, country, tax_id, phone_number, email, password,client ]);
 
   
   return (
@@ -158,7 +159,7 @@ if(client === false){
                   value="1"
                   name="option"
                   id="option-1"
-                  onChange={() =>{setClient(false),setRole('Client');}}
+                  onChange={() =>{setClient(false),setRole('client');}}
                   checked={!client}
                 />
                 <label
@@ -489,7 +490,7 @@ if(client === false){
       <div className="mt-6 flex items-center justify-end gap-x-6 dark:text-white">
         <p className="mt-2">
           Already have an account?{" "}
-          <Link to="/signin" className="text-blue underline text-blue-800">
+          <Link to="/signin" className="text-blue-500 underline">
             Login here
           </Link>
         </p>
