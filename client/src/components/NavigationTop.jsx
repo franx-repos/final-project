@@ -39,6 +39,7 @@ const NavigationTop = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isNavbarOpen, setIsNavbarOpen] = useState(false);
 
+
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
@@ -57,6 +58,7 @@ const NavigationTop = () => {
       setIsLoggedIn(false);
       setIsDropdownOpen(false);
       setUserData({});
+    
     } catch (error) {
       console.log("Error:", error.message);
       console.log("Error:", error.response.data);
@@ -69,6 +71,7 @@ const NavigationTop = () => {
       }
     }
   };
+
   useEffect(() => {
     console.log("Userdata:", userData);
     console.log("isloggedin:", isLoggedIn);
@@ -114,7 +117,7 @@ const NavigationTop = () => {
                 </button>
               </Link>
 
-              <Link to="singup">
+              <Link to="signup">
                 {" "}
                 <button type="button" className={styles.button}>
                   Register

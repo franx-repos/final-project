@@ -2,6 +2,9 @@ import mongoose from "mongoose";
 //trim, maxlength, lowercase
 const clientSchema = new mongoose.Schema({
   data: {
+    role: {
+      type: String,
+    },
     first_name: {
       type: String,
       required: [true, "first name is required"],
@@ -29,13 +32,13 @@ const clientSchema = new mongoose.Schema({
       type: String,
       //unique: true,
       trim: true,
-      sparse: true
+      sparse: true,
     },
     tax_id: {
       type: String,
       //unique: true,
       trim: true,
-      sparse: true
+      sparse: true,
     },
     street: {
       type: String,
@@ -49,8 +52,9 @@ const clientSchema = new mongoose.Schema({
     country: {
       type: String,
     },
-    phone_number: { 
-    type: String },
+    phone_number: {
+      type: String,
+    },
   },
   image_url: {
     type: String,
@@ -66,6 +70,9 @@ const clientSchema = new mongoose.Schema({
     type: [String],
   },
   languages: {
+    type: [String],
+  },
+  tasks: {
     type: [String],
   },
 });

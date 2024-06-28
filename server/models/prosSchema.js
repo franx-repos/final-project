@@ -2,6 +2,9 @@ import mongoose from "mongoose";
 
 const proSchema = new mongoose.Schema({
   data: {
+    role: {
+      type: String,
+    },
     first_name: {
       type: String,
       required: [true, "first name is required"],
@@ -54,7 +57,7 @@ const proSchema = new mongoose.Schema({
   industry: {
     type: [String],
   },
-  
+
   client_countries: {
     type: [String],
   },
@@ -72,6 +75,9 @@ const proSchema = new mongoose.Schema({
     min: 0,
     max: 5,
     default: 0,
+  },
+  tasks: {
+    type: [String],
   },
   comments: [
     {

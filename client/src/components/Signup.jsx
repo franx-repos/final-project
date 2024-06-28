@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ThemeToggle from "./ThemeToggle";
+import NavigationTop from "./NavigationTop";
 
 const styles = {
   container: `max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-3 border-y-2 border-teal-500 shadow-2xl`,
@@ -31,6 +32,7 @@ const styles = {
 };
 
 function Signup() {
+  const [role, setRole] = useState("");
   const [first_name, setfirst_name] = useState("");
   const [last_name, setlast_name] = useState("");
   const [street, setStreet] = useState("");
@@ -50,37 +52,37 @@ function Signup() {
     e.preventDefault();
     // const deploy = import.meta.env.VITE_DEPLOY_URL;
     // ${deploy}
-    if (client === false) {
-      if (password !== confirmPassword) {
-        console.log("Passwords do not match");
-        return;
-      }
-      try {
-        const response = await axios.post(
-          `http://localhost:8001/clients/register`,
-          {
-            data: {
-              first_name,
-              last_name,
-              email,
-              password,
-              tax_id,
-              street,
-              zip,
-              city,
-              country,
-              phone_number,
-            },
-          },
-          { withCredentials: true }
-        );
+if(client === false){
+  if (password !== confirmPassword) {
+    // console.log("Passwords do not match");
+    return;
+  }
+    try {
+      const response = await axios.post( `http://localhost:8001/clients/register`,
+        {
+         data: {
+          role,
+            first_name,
+            last_name,
+            email,
+            password,
+            tax_id,
+            street,
+            zip,
+            city,
+            country,
+            phone_number,
+         }
+           },
+        { withCredentials: true }
+      );
 
         if (response.status === 201) {
           navigate("/signin");
         }
       } catch (error) {
-        console.log(error);
-        console.log(error.response.data.error || "Registration failed");
+        // console.log(error);
+        // console.log(error.response.data.error || "Registration failed");
       }
     } else {
       handleRegisterprofi(e);
@@ -95,7 +97,8 @@ function Signup() {
         `http://localhost:8001/pros/register`,
         {
           data: {
-            first_name,
+            role,
+          first_name,
             last_name,
             email,
             password,
@@ -117,10 +120,17 @@ function Signup() {
     }
   };
 
-  // useEffect(() => {
-  //   console.log(first_name, last_name, street, city, zip, country, tax_id, phone_number, email, password, client);
-  // }, [first_name, last_name, street, city, zip, country, tax_id, phone_number, email, password,client ]);
 
+  
+  
+    
+  
+  
+  // useEffect(() => {
+  //   console.log(role,first_name, last_name, street, city, zip, country, tax_id, phone_number, email, password,client);
+  // }, [ role,first_name, last_name, street, city, zip, country, tax_id, phone_number, email, password,client ]);
+
+  
   return (
     <form
       onSubmit={handleRegister}
@@ -149,7 +159,7 @@ function Signup() {
                   value="1"
                   name="option"
                   id="option-1"
-                  onChange={() => setClient(false)}
+                  onChange={() =>{setClient(false),setRole('client');}}
                   checked={!client}
                 />
                 <label
@@ -168,7 +178,7 @@ function Signup() {
                   value="2"
                   name="option"
                   id="option-2"
-                  onClick={() => setClient(true)}
+                  onClick={() =>{setClient(true),setRole('pro');} }
                 />
                 <label
                   className="segmented-control__label dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
@@ -480,7 +490,7 @@ function Signup() {
       <div className="mt-6 flex items-center justify-end gap-x-6 dark:text-white">
         <p className="mt-2">
           Already have an account?{" "}
-          <Link to="/signin" className="text-blue underline text-blue-800">
+          <Link to="/signin" className="text-blue-500 underline">
             Login here
           </Link>
         </p>

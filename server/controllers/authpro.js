@@ -8,6 +8,7 @@ import asyncHandler from "../utils/asyncHandler.js";
 // Funktion für Sign up
 export const signUp = asyncHandler(async(req,res,next) => {
     const { data: {
+      role,
       first_name,
         last_name,
         email,
@@ -29,6 +30,7 @@ export const signUp = asyncHandler(async(req,res,next) => {
 
       const hash = await bcrypt.hash(password, 10); // verschlüssel das passwort im token
       const newPro = await Pro.create({ data: {
+        role,
         first_name,
           last_name,
           email,
