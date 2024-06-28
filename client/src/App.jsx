@@ -3,7 +3,6 @@ import { Routes, Route } from "react-router-dom";
 import TaxMax from "./components/TaxMax";
 import Dashboard from "./components/user-area/Dashboard";
 import Chat from "./components/user-area/Chat";
-import ParticlesBackground from "./components/ParticlesBackground";
 import Signup from "./components/Signup";
 import Register from "./components/Signup";
 import Signin from "./components/Signin";
