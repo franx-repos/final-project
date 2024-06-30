@@ -14,5 +14,6 @@ chatRouter
   .put(chatController.updateChat);
 
 chatRouter.get("/client_chat/:client_id", chatController.getChatByClientID);
+chatRouter.get("/pro_chat/:pro_id", chatController.getChatByProID);
 
 export default chatRouter;

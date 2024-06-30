@@ -40,6 +40,16 @@ export const getChatByClientID = async (req, res, next) => {
   }
 };
 
+export const getChatByProID = async (req, res, next) => {
+  const { pro_id } = req.params;
+  try {
+    const chat = await Chat.find({ pro_id: pro_id });
+    res.status(200).json(chat);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const getChatById = async (req, res, next) => {
   const { id } = req.params;
   try {

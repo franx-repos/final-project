@@ -14,7 +14,7 @@ prosRouter
 prosRouter
   .route("/:id")
   .get(proController.getProById)
-  .put(proController.updatePro)
+  .patch(proController.updatePro)
   .delete(proController.deletePro);
 
 prosRouter.route("/email/:email").get(proController.getProByEmail);
