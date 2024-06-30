@@ -63,9 +63,9 @@ const clientSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  role: {
-    type: String,
-  },
+  // role: {
+  //   type: String,
+  // },
   industry: {
     type: [String],
   },

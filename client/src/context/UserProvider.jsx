@@ -10,11 +10,19 @@ export const AuthProvider = ({ children }) => {
   const [userData, setUserData] = useState({});
   const checkUser = async () => {
     try {
-      const responseClient = await axios.get(`http://localhost:8001/clients/me`, {
-        withCredentials: true,
-      });
+      const responseClient = await axios.get(
+        `http://localhost:8001/clients/me`,
+        {
+          withCredentials: true,
+        }
+      );
 
-      if (responseClient.data && responseClient.data._id && responseClient.data.data.role === 'client') {
+      if (
+        responseClient.data &&
+        responseClient.data._id &&
+        responseClient.data.data.role === "client"
+      ) {
+        console.log(responseClient);
         setIsLoggedIn(true);
         setUserData(responseClient.data);
         return;
@@ -24,7 +32,12 @@ export const AuthProvider = ({ children }) => {
         withCredentials: true,
       });
 
-      if (responsePro.data && responsePro.data._id && responsePro.data.data.role === 'pro') {
+      if (
+        responsePro.data &&
+        responsePro.data._id &&
+        responsePro.data.data.role === "pro"
+      ) {
+        console.log(responseClient);
         setIsLoggedIn(true);
         setUserData(responsePro.data);
         return;
@@ -32,7 +45,6 @@ export const AuthProvider = ({ children }) => {
 
       setIsLoggedIn(false);
       setUserData({});
-
     } catch (error) {
       setIsLoggedIn(false);
       setUserData({});
@@ -53,7 +65,6 @@ export const AuthProvider = ({ children }) => {
     setIsLoggedIn,
     setUserData,
     checkUser,
-  
   };
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
