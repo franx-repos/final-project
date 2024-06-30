@@ -6,6 +6,7 @@ import verifyToken from "../middlewares/verifyToken.js";
 const clientsRouter = Router();
 
 clientsRouter.get("/me", verifyToken, authClient.getClient); // Route overlap
+
 clientsRouter
   .route("/")
   .get(clientController.getAllClients)
@@ -14,8 +15,9 @@ clientsRouter
 clientsRouter
   .route("/:id")
   .get(clientController.getClientById)
-  .put(clientController.updateClient)
-  .delete(clientController.deleteClient);
+  // .put(clientController.updateClient)
+  .delete(clientController.deleteClient)
+  .patch(clientController.updateClient);
 // clientsRouter.patch("/:id", clientController.addTagToClient);
 
 clientsRouter.route("/email/:email").get(clientController.getClientByEmail);
