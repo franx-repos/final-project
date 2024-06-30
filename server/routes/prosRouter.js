@@ -23,5 +23,6 @@ prosRouter.post("/register", authPro.signUp);
 prosRouter.post("/login", authPro.logIn);
 prosRouter.post("/logout", verifyToken, authPro.logout);
 // prosRouter.patch("/:id", proController.addTagToPro);
+// prosRouter.post('/forgotpassword', authPro.forgotpassword);
 
 export default prosRouter;
