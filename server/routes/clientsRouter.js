@@ -23,5 +23,5 @@ clientsRouter.route("/email/:email").get(clientController.getClientByEmail);
 clientsRouter.post("/register", authClient.signUp);
 clientsRouter.post("/login", authClient.logIn);
 clientsRouter.post("/logout", verifyToken, authClient.logout);
-
+// clientsRouter.post('/forgotpassword', authClient.forgotpassword);	
 export default clientsRouter;
