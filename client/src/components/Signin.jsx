@@ -10,7 +10,7 @@ const Signin = () => {
   const [error, setError] = useState("");
   const { setIsLoggedIn, checkUser } = useAuth();
   const [client, setClient] = useState(false);
-  const [role, setRole] = useState('');
+  const [role, setRole] = useState('client');
 
   const deploy = import.meta.env.VITE_DEPLOY_URL;
   // ${deploy}

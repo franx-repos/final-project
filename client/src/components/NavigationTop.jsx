@@ -39,7 +39,7 @@ const NavigationTop = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isNavbarOpen, setIsNavbarOpen] = useState(false);
 
-
+const navigate = useNavigate();
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
@@ -58,7 +58,7 @@ const NavigationTop = () => {
       setIsLoggedIn(false);
       setIsDropdownOpen(false);
       setUserData({});
-    
+      navigate("/");
     } catch (error) {
       console.log("Error:", error.message);
       console.log("Error:", error.response.data);
@@ -154,9 +154,9 @@ const NavigationTop = () => {
                 </a>
               </li>
               <li>
-                <a href="#" className={styles.dropdownItem}>
-                  Earnings
-                </a>
+                <Link to="/order"  className={styles.dropdownItem}>
+                My Task
+                </Link>
               </li>
               <li>
                 <a onClick={handleLogout} className={styles.dropdownItem}>
