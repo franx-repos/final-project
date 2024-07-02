@@ -48,9 +48,10 @@ export const updateChat = async (req, res, next) => {
 };
 export const getChatByClientID = async (req, res, next) => {
   const { cid } = req;
-
+  console.log(cid);
   try {
     const chat = await Chat.find({ client: cid });
+
     res.status(200).json(chat);
   } catch (error) {
     console.log(error);
@@ -60,8 +61,10 @@ export const getChatByClientID = async (req, res, next) => {
 
 export const getChatByProID = async (req, res, next) => {
   const { cid } = req;
+  console.log(cid);
   try {
     const chat = await Chat.find({ pro: cid });
+
     res.status(200).json(chat);
   } catch (error) {
     console.log(error);
@@ -125,8 +128,8 @@ export const deleteChat = asyncHandler(async (req, res, next) => {
 
   try {
     const found = await Chat.findById(id);
-    console.log(found);
-    console.log(cid);
+    // console.log(found);
+    // console.log(cid);
 
     if (!found) throw new ErrorResponse(`Post ${id} does not exist`, 404);
 

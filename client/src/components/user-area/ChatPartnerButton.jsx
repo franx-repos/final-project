@@ -11,12 +11,12 @@ const ChatPartnerButton = ({ chat }) => {
       let url = "";
       if (userData.data && userData.data.role === "client") {
         //pros als chatpartner fetchen
-        url = `http://localhost:8001/pros/${chat.pro_id}`;
+        url = `http://localhost:8001/pros/${chat.pro}`;
       } else {
         //clients als chatpartner fetchen
-        url = `http://localhost:8001/clients/${chat.client_id}`;
+        url = `http://localhost:8001/clients/${chat.client}`;
       }
-
+      console.log(url);
       try {
         const response = await axios.get(url);
         // console.log(response);
@@ -41,7 +41,6 @@ const ChatPartnerButton = ({ chat }) => {
           src={entry.image_url && entry.image_url}
           width="32"
           height="32"
-          
         />
         <div>
           {entry.data && (
@@ -49,11 +48,11 @@ const ChatPartnerButton = ({ chat }) => {
               {entry.data.first_name} {entry.data.last_name}
             </h4>
           )}
-          {chat.messages && (
+          {/* {chat.messages && (
             <div className="text-[13px]">
               {chat.messages[chat.messages.length - 1].text}
             </div>
-          )}
+          )} */}
         </div>
       </div>
     </button>

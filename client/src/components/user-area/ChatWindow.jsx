@@ -20,8 +20,9 @@ const ChatWindow = ({ socket }) => {
         }
         console.log(url);
         try {
-          const response = await axios.get(url,{withCredentials: true});
-          // console.log(response);
+          const response = await axios.get(url, { withCredentials: true });
+          console.log(response);
+
           setChats(response.data);
         } catch (error) {
           console.log(error);
@@ -33,6 +34,7 @@ const ChatWindow = ({ socket }) => {
 
   useEffect(() => {
     console.log(chats);
+    // console.log(chats[0].messages);
   }, [chats]);
 
   return (

@@ -9,20 +9,20 @@ import ChatWindow from "./ChatWindow";
 function Chat() {
   const { isLoggedIn, setIsLoggedIn, userData, setUserData } = useAuth();
 
-  useEffect(() => {
-    console.log(userData._id);
-    const fetchChat = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:8001/chats/client_chat/${userData._id}`
-        );
-        console.log(response);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchChat();
-  }, [userData]);
+  // useEffect(() => {
+  //   console.log(userData._id);
+  //   const fetchChat = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         `http://localhost:8001/chats/client_chat/${userData._id}`
+  //       );
+  //       console.log(response);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   fetchChat();
+  // }, [userData]);
 
   return (
     <>
