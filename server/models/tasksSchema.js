@@ -43,6 +43,7 @@ const taskSchema = new mongoose.Schema({
     created_by: {
       type: mongoose.Schema.ObjectId,
       ref: "Client",
+      // required: true,
     },
   },
   documents: [
