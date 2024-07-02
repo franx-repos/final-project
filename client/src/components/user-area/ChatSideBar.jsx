@@ -82,7 +82,7 @@ const ChatSideBar = ({ chats }) => {
         <div className="divide-y divide-gray-200">
           {/* Render chat partner buttons previews */}
           {chats.map((chat, index) => {
-            return <ChatPartnerButton key={index} chat={chat} />;
+            return <ChatPartnerButton key={chat._id} chat={chat} />;
           })}
         </div>
       </div>
