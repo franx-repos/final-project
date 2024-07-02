@@ -76,3 +76,14 @@ export const logout = asyncHandler(async (req, res, next) => {
   res.clearCookie('token');
   res.send({ status: 'success' });
 });
+
+
+// export const forgotpassword = asyncHandler(async (req, res, next) => {
+//   const { email } = req.body;
+//   const existingPro = await Pro.findOne({ 'data.email': email });
+//   if (!existingPro) throw new ErrorResponse('Email does not exists', 404);  
+//   const token = jwt.sign({ cid: existingPro._id}, process.env.JWT_SECRET, { expiresIn: "30min",});
+//   res.cookie('token', token, { maxAge: 1800000 }); // 30mn
+//   res.send({ token });
+// });
+

@@ -52,13 +52,15 @@ export const addNewPro = async (req, res, next) => {
 
 export const updatePro = async (req, res, next) => {
   const { id } = req.params;
-  const { data, email_verified, role, industry, languages } = req.body;
+  const { data, email_verified, role, industry, languages, image_url } =
+    req.body;
 
   try {
     const updatedPro = await Pro.findByIdAndUpdate(
       id,
       {
         data,
+        image_url,
         email_verified,
         role,
         industry,

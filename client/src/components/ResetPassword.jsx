@@ -1,11 +1,49 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ThemeToggle from "./ThemeToggle";
+import NavigationTop from "./NavigationTop";
 
 const ResetPassword = () => {
 
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+
+
+  useEffect(() => {
+    console.log(`email: ${email}, error: ${error}, message: ${message}`);
+  }, [email, error, message]);
+
+
+  const handelREsetPassword = async (e) => {
+    e.preventDefult();
+    setError("") ;
+    setMessage("");
+    if (!email) {
+      return setError("Email is required");
+    }
+    try {
+      setLoading(true);
+      const response = await fetch("http://localhost:8001/api/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+      const data = await response.json();
+      setLoading(false);
+      setMessage(data.data);
+    } catch (error) {
+      setError("Something went wrong");
+      setLoading(false);
+    }
+  }
+  
   return (
     <div className="antialiased ">
+    <NavigationTop/>
       <div className="max-w-lg mx-auto my-10  p-8  shadow shadow-gray-900 bg-slate-300 bg-opacity-[60%] rounded-3xl dark:bg-[#111827] dark:bg-opacity-[60%]">
         <h1 className="text-4xl font-medium text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 ">Reset password</h1>
         <p className=" font-semibold text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
@@ -25,6 +63,8 @@ const ResetPassword = () => {
                 type="email"
                 className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
                 placeholder="Enter email address"
+                value={email}
+                onChange={(e)=>setEmail(e.target.value)}
               />
             </label>
 

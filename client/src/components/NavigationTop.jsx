@@ -4,6 +4,7 @@ import { useAuth } from "../context/UserProvider";
 import axios from "axios";
 import ThemeToggle from "./ThemeToggle";
 // import { useAuth } from "../context/UserProvider.jsx";
+import Modalsignin from "./signinmodal/Modalsignin";
 
 const styles = {
   container:
@@ -38,14 +39,18 @@ const NavigationTop = () => {
   const { isLoggedIn, setIsLoggedIn, userData, setUserData } = useAuth();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isNavbarOpen, setIsNavbarOpen] = useState(false);
-
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
+const navigate = useNavigate();
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
   const toggleNavbar = () => {
     setIsNavbarOpen(!isNavbarOpen);
+  };
+
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
   };
 
   const handleLogout = async () => {
@@ -58,7 +63,7 @@ const NavigationTop = () => {
       setIsLoggedIn(false);
       setIsDropdownOpen(false);
       setUserData({});
-    
+      navigate("/");
     } catch (error) {
       console.log("Error:", error.message);
       console.log("Error:", error.response.data);
@@ -110,12 +115,12 @@ const NavigationTop = () => {
             </div>
           ) : (
             <div className="flex">
-              <Link to="signin">
+              {/* <Link to="modalsignin"> */}
                 {" "}
-                <button type="button" className={styles.button}>
+                <button onClick={toggleModal} type="button" className={styles.button}>
                   Login
                 </button>
-              </Link>
+              {/* </Link> */}
 
               <Link to="signup">
                 {" "}
@@ -144,7 +149,7 @@ const NavigationTop = () => {
             </div>
             <ul className="py-2" aria-labelledby="user-menu-button">
               <li>
-                <NavLink to="Dashboard" className={styles.dropdownItem}>
+                <NavLink to="/Dashboard" className={styles.dropdownItem}>
                   Dashboard
                 </NavLink>
               </li>
@@ -154,9 +159,9 @@ const NavigationTop = () => {
                 </a>
               </li>
               <li>
-                <a href="#" className={styles.dropdownItem}>
-                  Earnings
-                </a>
+                <Link to="/order"  className={styles.dropdownItem}>
+                My Task
+                </Link>
               </li>
               <li>
                 <a onClick={handleLogout} className={styles.dropdownItem}>
@@ -224,6 +229,9 @@ const NavigationTop = () => {
           </ul>
         </div>
       </div>
+      {/* <Modalsignin isModalOpen={isModalOpen} toggleModal={toggleModal} /> */}
+    <Modalsignin isModalOpen={isModalOpen} toggleModal={toggleModal} /> 
+    
     </nav>
   );
 };

@@ -14,7 +14,7 @@ prosRouter
 prosRouter
   .route("/:id")
   .get(proController.getProById)
-  .put(proController.updatePro)
+  .patch(proController.updatePro)
   .delete(proController.deletePro);
 
 prosRouter.route("/email/:email").get(proController.getProByEmail);
@@ -23,5 +23,6 @@ prosRouter.post("/register", authPro.signUp);
 prosRouter.post("/login", authPro.logIn);
 prosRouter.post("/logout", verifyToken, authPro.logout);
 // prosRouter.patch("/:id", proController.addTagToPro);
+// prosRouter.post('/forgotpassword', authPro.forgotpassword);
 
 export default prosRouter;

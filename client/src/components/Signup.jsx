@@ -32,7 +32,7 @@ const styles = {
 };
 
 function Signup() {
-  const [role, setRole] = useState("");
+  const [role, setRole] = useState("client");
   const [first_name, setfirst_name] = useState("");
   const [last_name, setlast_name] = useState("");
   const [street, setStreet] = useState("");

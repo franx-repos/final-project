@@ -85,3 +85,19 @@ export const logout = asyncHandler(async (req, res, next) => {
   res.clearCookie("token");
   res.send({ status: "success" });
 });
+
+// // Funktion für Passwort zurücksetzen
+// export const forgotpassword = asyncHandler(async (req, res, next) => {
+//   const { email } = req.body;
+//   const existingClient = await Client.findOne({ "data.email": email });
+//   if (!existingClient) throw new ErrorResponse("Email does not exists", 404); // Fehlermeldung für nicht existierende Clients
+//   const token = jwt.sign({ cid: existingClient._id }, process.env.JWT_SECRET, {
+//     expiresIn: "30m",
+//   });
+//   res.cookie("token", token, {
+//     maxAge: 1800000,
+//     // httpOnly: true,
+//     // sameSite: "Lax",
+//   }); // 30mn 
+//   res.send({ token });  
+// });
