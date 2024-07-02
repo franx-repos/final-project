@@ -1,19 +1,23 @@
 import { Router } from "express";
 import * as chatController from "../controllers/chats.js";
+import verifyToken from "../middlewares/verifyToken.js";
 
 const chatRouter = Router();
+
+
+chatRouter.route("/client_chat/").get(verifyToken,chatController.getChatByClientID);
+chatRouter.route("/pro_chat/").get(verifyToken, chatController.getChatByProID);
 
 chatRouter
   .route("/")
   .get(chatController.getAllChats)
-  .post(chatController.createNewChat);
+  .post(verifyToken,chatController.createNewChat);
 
 chatRouter
   .route("/:id")
-  .get(chatController.getChatById)
-  .put(chatController.updateChat);
+  .get(verifyToken,chatController.getChatById)
+  .patch(verifyToken,chatController.updateChat);
 
-chatRouter.get("/client_chat/:client_id", chatController.getChatByClientID);
-chatRouter.get("/pro_chat/:pro_id", chatController.getChatByProID);
+
 
 export default chatRouter;

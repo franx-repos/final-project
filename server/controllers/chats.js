@@ -1,24 +1,17 @@
 import Chat from "../models/chatSchema.js";
-
-//Über die Task Id werden die messages geholt
-//Wenn ein user einem Chatroom joined
-// export const getChatRoomByTaskId = async (req, res, next) => {
-//   const { task_id } = req.params;
-
-//   try {
-//     const room = await Chat.find({ task_id: task_id });
-//   } catch (error) {
-//     console.log(error.message);
-//   }
-// };
+import ErrorResponse from "../utils/ErrorResponse.js";
+import asyncHandler from "../utils/asyncHandler.js";
 
 export const updateChat = async (req, res, next) => {
-  const { id } = req.params;
-  const { client_name, pro_name, task_name, messages } = req.body;
+  const {id} = req.params;
+  const { cid, body } = req;
+  const { messages } = body;
+  console.log(cid)
+  console.log(messages)
   try {
     const updateChat = await Chat.findByIdAndUpdate(
       id,
-      { client_name, pro_name, task_name, messages },
+      {messages:messages },
       { new: true }
     );
 
@@ -27,23 +20,27 @@ export const updateChat = async (req, res, next) => {
     }
 
     res.json(updateChat);
-  } catch (error) {}
+  } catch (error) {
+    next(error)
+  }
 };
 
 export const getChatByClientID = async (req, res, next) => {
-  const { client_id } = req.params;
+  const { cid } = req;
+  
   try {
-    const chat = await Chat.find({ client_id: client_id });
+    const chat = await Chat.find({ client: cid });
     res.status(200).json(chat);
   } catch (error) {
     console.log(error);
+    next(error)
   }
 };
 
 export const getChatByProID = async (req, res, next) => {
-  const { pro_id } = req.params;
+  const { cid } = req;
   try {
-    const chat = await Chat.find({ pro_id: pro_id });
+    const chat = await Chat.find({ pro: cid });
     res.status(200).json(chat);
   } catch (error) {
     console.log(error);
@@ -74,13 +71,36 @@ export const getAllChats = async (req, res, next) => {
 };
 
 //Create a Chatroom this happens automatically as a professional and client connect
-export const createNewChat = async (req, res, next) => {
-  const { client_id, pro_id, task_id } = req.body;
-  try {
-    const newChat = new Chat({ client_id, pro_id, task_id });
-    const savedChat = await newChat.save();
-    res.status(201).json(savedChat);
-  } catch (error) {
-    next(error.message);
-  }
-};
+export const createNewChat = asyncHandler(async (req, res, next) => {
+  const {cid, body} = req;
+  const {client, task} = body;
+  // const { client_id, pro_id, task_id } = req.body;
+
+  const newChat = await Chat.create({task:task, client: client, pro: cid})
+
+  const populatedChat = await Chat.findById(newChat._id)
+  .populate('client')
+  .populate('task')
+  .populate('pro');
+
+  res.status(201).json(populatedChat);
+
+});
+
+export const deleteChat = asyncHandler(async (req, res, next)=>{
+  const {
+    params : {id},
+    cid
+  } = req;
+
+  const found = Chat.findById(id);
+
+  if (!found) throw new ErrorResponse(`Post ${id} does not exist`, 404);
+
+  if (cid !== found.client_id.toString())
+    throw new ErrorResponse('You have no permission to delete this post', 401);
+
+  await Chat.findByIdAndDelete(id, body, {new:true}).populate('client');
+  res.json({success: `Post ${id} was deleted`});
+
+})
