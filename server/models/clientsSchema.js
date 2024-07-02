@@ -32,13 +32,13 @@ const clientSchema = new mongoose.Schema({
       type: String,
       //unique: true,
       trim: true,
-      sparse: true
+      sparse: true,
     },
     tax_id: {
       type: String,
       //unique: true,
       trim: true,
-      sparse: true
+      sparse: true,
     },
     street: {
       type: String,
@@ -52,8 +52,9 @@ const clientSchema = new mongoose.Schema({
     country: {
       type: String,
     },
-    phone_number: { 
-    type: String },
+    phone_number: {
+      type: String,
+    },
   },
   image_url: {
     type: String,
@@ -62,13 +63,16 @@ const clientSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  role: {
-    type: String,
-  },
+  // role: {
+  //   type: String,
+  // },
   industry: {
     type: [String],
   },
   languages: {
+    type: [String],
+  },
+  tasks: {
     type: [String],
   },
 });
