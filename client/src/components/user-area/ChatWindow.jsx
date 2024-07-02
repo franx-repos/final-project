@@ -14,13 +14,13 @@ const ChatWindow = ({ socket }) => {
       const fetchChat = async () => {
         let url = "";
         if (userData.data && userData.data.role === "client") {
-          url = `http://localhost:8001/chats/client_chat/${userData._id}`;
+          url = `http://localhost:8001/chats/client_chat/`;
         } else {
-          url = `http://localhost:8001/chats/pro_chat/${userData._id}`;
+          url = `http://localhost:8001/chats/pro_chat/`;
         }
         console.log(url);
         try {
-          const response = await axios.get(url);
+          const response = await axios.get(url,{withCredentials: true});
           // console.log(response);
           setChats(response.data);
         } catch (error) {
