@@ -4,6 +4,7 @@ import { v2 as cloudinary } from "cloudinary";
 export const getAllTasks = async (req, res, next) => {
   try {
     const task = await Task.find();
+    // const task = await Task.find({content:req.cid});
     if (!task.length) {
       throw { statusCode: 404, message: "Task not found" };
     }

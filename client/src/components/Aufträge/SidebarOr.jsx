@@ -2,23 +2,28 @@ import { Sidebar } from "flowbite-react";
 import { IoSettingsSharp } from "react-icons/io5";
 import { FaClipboardUser } from "react-icons/fa6";
 import { BsClipboardPlus } from "react-icons/bs";
+import { useState } from "react";
 const styles = {
   sidebarItem: "justify-start text-xl px-6 py-4",
 };
 
 const sbItems = [
-  { title: "Task overview", path: "#", icon: FaClipboardUser , label: "" },
-  // { title: "Kanban", path: "#", icon: HiViewBoards, label: "" },
-  // { title: "Inbox", path: "#", icon: HiInbox, label: "3" },
-  // { title: "Users", path: "#", icon: IoAdd , label: "" },
+  { title: "Task Overview", path: "", icon: FaClipboardUser , label: "" },
   { title: "Create Task", path: "#", icon: BsClipboardPlus , label: "" },
   { title: "Settings", path: "#", icon: IoSettingsSharp, label: "" },
 ];
+// const [CreatTask, setCreatTask] = useState(false);
+// const [Settings, setSettings] = useState(false);
+// const [TaskOverview, setTaskOverview] = useState(false);
+
+
 
 function AuftragÜbersichtSidebar() {
+
+
   return (
-    <Sidebar className="w-52 h-screen bg-gray-50 dark:bg-gray-800">
-      <Sidebar.Items className="h-screen">
+    <Sidebar className="w-60 h-screen bg-gray-50 dark:bg-gray-800">
+      <Sidebar.Items className="h-full overflow-hidden w-full">
         <Sidebar.ItemGroup>
           {sbItems.map((item, index) => (
             <Sidebar.Item
