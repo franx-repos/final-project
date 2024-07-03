@@ -24,8 +24,8 @@ const NewPost = () => {
   ];
 
   const types = [
-    { value: 'tax_declaration', label: 'tax declaration' },
-    { value: 'insolvency_law', label: 'insolvency law' },
+    { value: 'tax declaration', label: 'tax declaration' },
+    { value: 'insolvency law', label: 'insolvency law' },
   ];
 
   const fileInputRef = useRef(null);
