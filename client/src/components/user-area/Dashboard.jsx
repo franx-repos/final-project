@@ -7,8 +7,11 @@ import ParticlesBackground from "../ParticlesBackground";
 import Signin from "../Signin";
 import { Footer } from "flowbite-react";
 import { useState } from "react";
+
 import DashboardContainer from "./DashboardContainer";
 import DashboardHeader from "./DashboardHeader";
+
+
 
 const tasks = {
   data: [
@@ -43,7 +46,9 @@ const tasks = {
 
 function Dashboard() {
   const { isLoggedIn, setIsLoggedIn, userData, setUserData } = useAuth();
+
   const [currentLocation, setCurrentLocation] = useState("Dashboard");
+
 
   return isLoggedIn ? (
     <>
@@ -55,10 +60,14 @@ function Dashboard() {
             currentLocation={currentLocation}
             setCurrentLocation={setCurrentLocation}
           />
+
           <div className="flex w-full flex-col bg-white p-3 rounded-md dark:text-white dark:bg-gray-900">
             <DashboardHeader currentLocation={currentLocation} />
             <DashboardContainer currentLocation={currentLocation} />
             {/* <div style={{ width: "100%", height: "500px" }}>
+
+          <div style={{ width: "100%", height: "500px" }}>
+
             <GanttChart tasks={tasks} />
           </div> */}
           </div>
