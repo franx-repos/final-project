@@ -75,6 +75,9 @@ const clientSchema = new mongoose.Schema({
   tasks: {
     type: [String],
   },
+  chats:{
+    type:[String],
+  },
 });
 
 export default mongoose.model("Client", clientSchema);

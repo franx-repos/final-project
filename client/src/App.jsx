@@ -8,6 +8,8 @@ import Signin from "./components/Signin";
 import ResetPassword from "./components/ResetPassword";
 import Modalsignin from "./components/signinmodal/Modalsignin";
 import Taskoverview from "./components/Aufträge/Taskoverview";
+import MatchingPage from "./components/Aufträge/MatchingPage";
+
 function App() {
   return (
     <>
@@ -20,6 +22,7 @@ function App() {
         <Route path="/reset-pass" element={<ResetPassword />} />
         {/* <Route path ="/order" element={<AuftragÜbersicht />} /> */}
         <Route path="/modalsignin" element={<Modalsignin />} />
+        <Route path="/Match" element={<MatchingPage /> }/>
       </Routes>
     </>
   );
