@@ -1,5 +1,6 @@
-import axios from "axios";
-import { useState, useRef, useEffect } from "react";
+import axios from 'axios';
+import { useState, useRef, useEffect } from 'react';
+import Select from 'react-select';
 
 const NewPost = () => {
   const [images, setImages] = useState([]);
@@ -14,6 +15,19 @@ const NewPost = () => {
   const [error, setError] = useState("");
   const [file, setFile] = useState([]);
 
+  const options = [
+    { value: 'craft', label: 'craft' },
+    { value: 'it', label: 'IT' },
+    { value: 'gastronomy', label: 'gastronomy' },
+    { value: 'privat', label: 'privat' },
+    { value: 'other', label: 'other' },
+  ];
+
+  const types = [
+    { value: 'tax declaration', label: 'tax declaration' },
+    { value: 'insolvency law', label: 'insolvency law' },
+  ];
+
   const fileInputRef = useRef(null);
 
   const handleFileChange = (event) => {
@@ -21,9 +35,7 @@ const NewPost = () => {
     const filePreviews = files.map((file) => ({
       url: URL.createObjectURL(file),
       name: file.name,
-      preview: ["jpg", "jpeg", "png", "gif", "pdf", "webp"].includes(
-        file.name.split(".").pop().toLowerCase()
-      ),
+      preview: ['jpg', 'jpeg', 'png', 'gif', 'pdf'].includes(file.name.split('.').pop().toLowerCase()),
       size:
         file.size > 1024
           ? file.size > 1048576
@@ -150,12 +162,14 @@ const NewPost = () => {
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
+          onChange={(e) => setTitle(e.target.value)}
         />
         <textarea
           className="description bg-gray-100 sec p-3 h-60 border border-gray-300 outline-none"
           spellCheck="false"
           placeholder="Describe everything about this post here"
           value={description}
+          onChange={(e) => setDescription(e.target.value)}
           onChange={(e) => setDescription(e.target.value)}
         ></textarea>
 
@@ -167,20 +181,58 @@ const NewPost = () => {
             Industry
           </label>
           <div className="mt-2">
-            <input
-              type="text"
-              name="industry"
-              id="industry"
-              autoComplete="address-level2"
-              className="block px-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm shadow-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              value={industry}
-              required
-              onChange={(e) => setIndustry(e.target.value)}
+            <Select
+              options={options}
+              value={options.find(option => option.value === industry)}
+              onChange={(selectedOption) => setIndustry(selectedOption.value)}
+              placeholder="Choose one of the following"
             />
           </div>
         </div>
 
-        {/* Preview image here */}
+        <div className="sm:col-span-2 sm:col-start-1">
+          <label
+            htmlFor="task_type"
+            className="block text-sm font-medium leading-6 text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
+          >
+            Type
+          </label>
+          <div className="mt-2">
+            <Select
+              options={types}
+              value={types.find(type => type.value === task_type)}
+              onChange={(selectedOption) => setTask_type(selectedOption.value)}
+              placeholder="Choose one of the following"
+            />
+          </div>
+        </div>
+
+        <div className="icons flex text-gray-500 m-2">
+          <label id="select-image">
+            <svg
+              className="mr-2 cursor-pointer hover:text-gray-700 border rounded-full p-1 h-7"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"
+              />
+            </svg>
+            <input
+              hidden
+              type="file"
+              multiple
+              onChange={handleFileChange}
+              ref={fileInputRef}
+            />
+          </label>
+        </div>
+
         <div id="preview" className="my-4 flex">
           {images.map((image, index) => (
             <div
@@ -225,12 +277,9 @@ const NewPost = () => {
             </div>
           ))}
         </div>
-        {/* Buttons */}
+
         <div className="buttons flex justify-end">
-          <button
-            type="submit"
-            className="text-white bg-teal-500 hover:bg-teal-700  focus:outline-none font-medium rounded-lg text-sm mx-2 px-4 py-2 text-center dark:bg-teal-500 dark:hover:bg-teal-700"
-          >
+          <button type='submit' className="text-white bg-teal-500 hover:bg-teal-700 focus:outline-none font-medium rounded-lg text-sm mx-2 px-4 py-2 text-center dark:bg-teal-500 dark:hover:bg-teal-700">
             Post
           </button>
         </div>

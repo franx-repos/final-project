@@ -41,7 +41,7 @@ const ChatPartnerButton = ({ chat }) => {
           src={entry.image_url && entry.image_url}
           width="32"
           height="32"
-          alt="Marie Zulfikar"
+          
         />
         <div>
           {entry.data && (

@@ -79,6 +79,9 @@ const proSchema = new mongoose.Schema({
   tasks: {
     type: [String],
   },
+  chats:{
+    type:[String],
+  },
   comments: [
     {
       client_id: {

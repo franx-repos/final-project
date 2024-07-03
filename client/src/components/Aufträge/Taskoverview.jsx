@@ -1,7 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { format } from "date-fns";
-
+import TruncatedText from "./TruncatedText";
+import GanttChart from "../user-area/GanttChart";
 
 const Taskoverview = () => {
   const [entries, setEntries] = useState([]);
@@ -49,25 +50,11 @@ const Taskoverview = () => {
   }, [error]);
 
   return (
-    <div className="mt-10 dark:text-white dark:bg-[#1f2937]">
-      <div className="bg-white p-8 rounded-md w-full dark:text-white dark:bg-[#1f2937]">
-        <div className="flex items-center justify-between pb-6">
-          <div>
-            <h2 className="heading text-center font-bold text-2xl m-5 text-gray-800 bg-white dark:text-white dark:bg-[#1f2937]">
-              Task Overview
-            </h2>
-          </div>
-          <div className="flex items-center justify-between">
-            <div className="lg:ml-40 ml-10 space-x-8">
-              <button className="text-white bg-teal-500 hover:bg-teal-700  focus:outline-none font-medium rounded-lg text-sm mx-2 px-4 py-2 text-center dark:bg-teal-500 dark:hover:bg-teal-700">
-                Create New Post
-              </button>
-            </div>
-          </div>
-        </div>
+    <div className="w-full dark:text-white dark:bg-[#1f2937] ">
+      <div className="bg-white p-4 w-full dark:text-white dark:bg-[#1f2937]">
         <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
-          <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
-            <table className="min-w-full leading-normal ">
+          <div className="inline-block min-w-full shadow rounded-md overflow-hidden">
+            <table className="min-w-full leading-normal">
               <thead>
                 <tr>
                   <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
@@ -144,7 +131,7 @@ const Taskoverview = () => {
             <div className="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between">
               <div className="inline-flex mt-2 xs:mt-0">
                 <button className="text-white bg-teal-500 hover:bg-teal-700  focus:outline-none font-medium rounded-lg text-sm mx-2 px-4 py-2 text-center dark:bg-teal-500 dark:hover:bg-teal-700">
-                  Create New Post
+                  Create New Task
                 </button>
               </div>
             </div>
