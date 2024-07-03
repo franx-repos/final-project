@@ -52,30 +52,31 @@ function Signup() {
     e.preventDefault();
     // const deploy = import.meta.env.VITE_DEPLOY_URL;
     // ${deploy}
-if(client === false){
-  if (password !== confirmPassword) {
-    // console.log("Passwords do not match");
-    return;
-  }
-    try {
-      const response = await axios.post( `http://localhost:8001/clients/register`,
-        {
-         data: {
-          role,
-            first_name,
-            last_name,
-            email,
-            password,
-            tax_id,
-            street,
-            zip,
-            city,
-            country,
-            phone_number,
-         }
-           },
-        { withCredentials: true }
-      );
+    if (client === false) {
+      if (password !== confirmPassword) {
+        // console.log("Passwords do not match");
+        return;
+      }
+      try {
+        const response = await axios.post(
+          `http://localhost:8001/clients/register`,
+          {
+            data: {
+              role,
+              first_name,
+              last_name,
+              email,
+              password,
+              tax_id,
+              street,
+              zip,
+              city,
+              country,
+              phone_number,
+            },
+          },
+          { withCredentials: true }
+        );
 
         if (response.status === 201) {
           navigate("/signin");
@@ -98,7 +99,7 @@ if(client === false){
         {
           data: {
             role,
-          first_name,
+            first_name,
             last_name,
             email,
             password,
@@ -120,17 +121,10 @@ if(client === false){
     }
   };
 
-
-  
-  
-    
-  
-  
   // useEffect(() => {
   //   console.log(role,first_name, last_name, street, city, zip, country, tax_id, phone_number, email, password,client);
   // }, [ role,first_name, last_name, street, city, zip, country, tax_id, phone_number, email, password,client ]);
 
-  
   return (
     <form
       onSubmit={handleRegister}
@@ -159,7 +153,9 @@ if(client === false){
                   value="1"
                   name="option"
                   id="option-1"
-                  onChange={() =>{setClient(false),setRole('client');}}
+                  onChange={() => {
+                    setClient(false), setRole("client");
+                  }}
                   checked={!client}
                 />
                 <label
@@ -178,7 +174,9 @@ if(client === false){
                   value="2"
                   name="option"
                   id="option-2"
-                  onClick={() =>{setClient(true),setRole('pro');} }
+                  onClick={() => {
+                    setClient(true), setRole("pro");
+                  }}
                 />
                 <label
                   className="segmented-control__label dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
