@@ -18,7 +18,11 @@ const GanttChart = ({ tasks }) => {
   }, [tasks]);
 
   return (
-    <div ref={ganttContainer} style={{ width: "100%", height: "100%" }}></div>
+    <div
+      className="m-auto py-10"
+      ref={ganttContainer}
+      style={{ width: "95%", height: "100%" }}
+    ></div>
   );
 };
 

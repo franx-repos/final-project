@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import ThemeToggle from "./ThemeToggle";
+// import ThemeTogDie gle from "./ThemeToggle";
 import { useAuth } from "../context/UserProvider.jsx";
 import axios from "axios";
 
@@ -10,7 +10,7 @@ const Signin = () => {
   const [error, setError] = useState("");
   const { setIsLoggedIn, checkUser } = useAuth();
   const [client, setClient] = useState(false);
-  const [role, setRole] = useState('client');
+  const [role, setRole] = useState("client");
 
   const deploy = import.meta.env.VITE_DEPLOY_URL;
   // ${deploy}
@@ -23,13 +23,12 @@ const Signin = () => {
       try {
         const response = await axios.post(
           `http://localhost:8001/clients/login`,
-          { 
-            data:
-             {
+          {
+            data: {
               role,
-            email,
-            password,
-           }
+              email,
+              password,
+            },
           },
           { withCredentials: true }
         );
@@ -49,12 +48,12 @@ const Signin = () => {
 
   const handleLoginprofi = async (e) => {
     e.preventDefault();
-      try {
-        const response = await axios.post(
-          `http://localhost:8001/pros/login`,
-          { 
-            data: {
-              role,
+    try {
+      const response = await axios.post(
+        `http://localhost:8001/pros/login`,
+        {
+          data: {
+            role,
             email,
             password,
           },
@@ -78,8 +77,6 @@ const Signin = () => {
   //   console.log(`client: ${client}`);
   //   console.log(`role: ${role}`);
   //   }, [email,password,client,role]);
- 
-
 
   return (
     <>
@@ -104,40 +101,50 @@ const Signin = () => {
             </h2>
           </div>
 
-        <div className="mt-4">
-        <ul className="segmented-control shadow-sm shadow-gray-900">
-            <li className="segmented-control__item">
-              <a href="#">
-                <input
-                  className="segmented-control__input"
-                  type="radio"
-                  value="1"
-                  name="option"
-                  id="option-1"
-                  onChange={() => {setRole('client'),setClient(false);}}
-                  checked={!client}
-                />
-                <label className="segmented-control__label text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800" htmlFor="option-1">
-                  Client
-                </label>
-              </a>
-            </li>
-            <li className="segmented-control__item">
-              <a href="#">
-                <input
-                  className="segmented-control__input"
-                  type="radio"
-                  value="2"
-                  name="option"
-                  id="option-2"
-                  onClick={() => {setRole('pro'),setClient(true)}}
-                />
-                <label className="segmented-control__label text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800" htmlFor="option-2">
-                  Professional
-                </label>
-              </a>
-            </li>
-          </ul>
+          <div className="mt-4">
+            <ul className="segmented-control shadow-sm shadow-gray-900">
+              <li className="segmented-control__item">
+                <a href="#">
+                  <input
+                    className="segmented-control__input"
+                    type="radio"
+                    value="1"
+                    name="option"
+                    id="option-1"
+                    onChange={() => {
+                      setRole("client"), setClient(false);
+                    }}
+                    checked={!client}
+                  />
+                  <label
+                    className="segmented-control__label text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
+                    htmlFor="option-1"
+                  >
+                    Client
+                  </label>
+                </a>
+              </li>
+              <li className="segmented-control__item">
+                <a href="#">
+                  <input
+                    className="segmented-control__input"
+                    type="radio"
+                    value="2"
+                    name="option"
+                    id="option-2"
+                    onClick={() => {
+                      setRole("pro"), setClient(true);
+                    }}
+                  />
+                  <label
+                    className="segmented-control__label text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
+                    htmlFor="option-2"
+                  >
+                    Professional
+                  </label>
+                </a>
+              </li>
+            </ul>
           </div>
 
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -205,12 +212,12 @@ const Signin = () => {
               >
                 Sign in
               </button>
-              <p className='mt-4 dark:text-white'>
-          Not registered yet?{' '}
-          <Link to='/signup' className='text-blue-500 underline'>
-            Register here
-          </Link>
-        </p>
+              <p className="mt-4 dark:text-white">
+                Not registered yet?{" "}
+                <Link to="/signup" className="text-blue-500 underline">
+                  Register here
+                </Link>
+              </p>
             </div>
           </div>
         </div>

@@ -1,6 +1,5 @@
 import { Sidebar } from "flowbite-react";
 import {
-  HiArrowSmRight,
   HiChartPie,
   HiInbox,
   HiShoppingBag,
@@ -8,21 +7,65 @@ import {
   HiUser,
   HiViewBoards,
 } from "react-icons/hi";
+import { useCallback } from "react";
 
 const styles = {
   sidebarItem: "justify-start text-xl px-6 py-4",
 };
 
-const sbItems = [
-  { title: "Dashboard", path: "#", icon: HiChartPie, label: "" },
-  { title: "Kanban", path: "#", icon: HiViewBoards, label: "" },
-  { title: "Inbox", path: "#", icon: HiInbox, label: "3" },
-  { title: "Users", path: "#", icon: HiUser, label: "" },
-  { title: "Products", path: "#", icon: HiShoppingBag, label: "" },
-  { title: "Sign In", path: "#", icon: HiTable, label: "" },
-];
+function DashboardSidebar(currentLocation, setCurrentLocation) {
+  const handleLocation = useCallback((location) => (e) => {
+    e.preventDefault();
+    setCurrentLocation(location);
+    console.log(`Current location: ${currentLocation}`);
+  });
 
-function DashboardSidebar() {
+  const sbItems = [
+    {
+      title: "Dashboard",
+      path: "#",
+      icon: HiChartPie,
+      label: "",
+      onclick: handleLocation("dashboard"),
+    },
+    {
+      title: "Kanban",
+      path: "#",
+      icon: HiViewBoards,
+      label: "",
+      onclick: handleLocation("kanban"),
+    },
+    {
+      title: "Chat",
+      path: "#",
+      icon: HiInbox,
+      label: "3",
+      onclick: handleLocation("chat"),
+    },
+    {
+      title: "Users",
+      path: "#",
+      icon: HiUser,
+      label: "",
+      onclick: handleLocation("users"),
+    },
+    {
+      title: "Products",
+      path: "#",
+      icon: HiShoppingBag,
+      label: "",
+      onclick: handleLocation("products"),
+    },
+    {
+      title: "Sign In",
+      path: "#",
+      location: "signIn",
+      icon: HiTable,
+      label: "",
+      onclick: handleLocation("signin"),
+    },
+  ];
+
   return (
     <Sidebar className="w-52 h-screen bg-gray-50 dark:bg-gray-800">
       <Sidebar.Items className="h-screen">
@@ -31,9 +74,10 @@ function DashboardSidebar() {
             <Sidebar.Item
               key={index}
               className={styles.sidebarItem}
-              href={item.path}
+              href={item.onclick ? "#" : item.path}
               icon={item.icon}
               label={item.label}
+              onClick={item.onclick}
             >
               {item.title}
             </Sidebar.Item>
