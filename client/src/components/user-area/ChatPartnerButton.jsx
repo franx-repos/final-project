@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../../context/UserProvider";
 import axios from "axios";
+import { useChat } from "../../context/ChatProvider";
 
 const ChatPartnerButton = ({ chat }) => {
   const { userData } = useAuth();
+  const {socket}=useChat();
+const {messages, setMessages, room, setRoom}= useChat()
   const [entry, setEntry] = useState([]);
 
   useEffect(() => {
@@ -29,12 +32,18 @@ const ChatPartnerButton = ({ chat }) => {
     fetchChatPartner();
   }, [chat]);
 
-  // useEffect(() => {
-  //   console.log(entry);
-  // }, [entry]);
+  useEffect(() => {
+    console.log(room);
+  }, [room]);
+
+  function joinChat(){
+    setMessages(chat.messages)
+    setRoom(chat._id)
+    
+  }
 
   return (
-    <button className="w-full text-left py-2 focus:outline-none focus-visible:bg-indigo-50">
+    <button className="w-full text-left py-2 focus:outline-none focus-visible:bg-indigo-50" onClick={joinChat}>
       <div className="flex items-center">
         <img
           className="rounded-full items-start flex-shrink-0 mr-3"
@@ -48,11 +57,11 @@ const ChatPartnerButton = ({ chat }) => {
               {entry.data.first_name} {entry.data.last_name}
             </h4>
           )}
-          {/* {chat.messages && (
+          {chat.messages && (
             <div className="text-[13px]">
               {chat.messages[chat.messages.length - 1].text}
             </div>
-          )} */}
+          )}
         </div>
       </div>
     </button>

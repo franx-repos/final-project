@@ -25,13 +25,13 @@ export const getClientById = async (req, res, next) => {
 
 export const getClientByEmail = async (req, res, next) => {
   const { email } = req.params;
-  console.log(email);
+ 
   try {
     const client = await Client.find({ "data.email": email });
     if (!client) {
       throw { statusCode: 404, message: "Client not found" };
     }
-    console.log(client);
+  
     res.json(client);
   } catch (error) {
     next(error);
@@ -40,8 +40,7 @@ export const getClientByEmail = async (req, res, next) => {
 
 export const addNewClient = async (req, res, next) => {
   const { role, ...data } = req.body;
-  // console.log(data);
-  // console.log(role);
+
   try {
     const newClient = new Client({ data, role });
     const savedClient = await newClient.save();

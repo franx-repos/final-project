@@ -23,7 +23,10 @@ const io = new Server(httpServer, {
 
 io.on("connection", (socket) => {
   console.log(`${socket.id} user just connected`);
-  console.log(`${io.engine.clientCount} user are connected`);
+  console.log(`${io.engine.clientsCount} user are connected`);
+  // may or may not be similar to the count of Socket instances in the main namespace, depending on your usage
+  const count2 = io.of("/").sockets.size;
+  console.log(count2)
 
   socket.emit("connectionStatus", `Connection under socket ID ${socket.id}`);
 
@@ -43,13 +46,14 @@ io.on("connection", (socket) => {
 
   socket.on("send-message", (message, room) => {
     console.log(message);
-    console.log(room);
+    console.log(`Message from Room: ${room}`);
     if (room === "" || room === undefined) {
       socket.broadcast.emit("recieve-message", message);
       socket.to("Room1").emit("some event", message);
       console.log(message);
     } else {
-      socket.to(room).emit("recieve-message", message);
+      console.log("recieve-message")
+      socket.to(room).emit("recieve-message", "hey there");
     }
   });
 

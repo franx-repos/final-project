@@ -31,7 +31,7 @@ export const CreateTask = async (req, res, next) => {
   // const {title,deadline,task_type,industry,description,created_by,...documents} = req.body;
   // const {content,...documents} = req.body;
   const { content } = req.body;
-  console.log(content);
+  // console.log(content);
   // console.log(documents)
   try {
     // const newTask = new Task({title,deadline,task_type,industry,description,created_by,documents} );
@@ -68,8 +68,8 @@ export const updateTask = async (req, res, next) => {
   const { documentstitle, icon, title } = req.body;
   const documents = { documentstitle, icon };
   const content = { title };
-  console.log(documents);
-  console.log(content);
+  // console.log(documents);
+  // console.log(content);
   try {
     if (req.file) {
       console.log(req.file);
@@ -122,8 +122,7 @@ export const deleteTaskDocument = async (req, res, next) => {
   });
 
   const { id, docID } = req.params;
-  console.log(id);
-  console.log(docID);
+;
   let public_id = "";
   try {
     const task = await Task.findById(id);
@@ -151,7 +150,7 @@ export const deleteTaskDocument = async (req, res, next) => {
     );
 
     //delete document in DB through updating array in db
-    console.log(filtered_documents);
+    // console.log(filtered_documents);
     task.documents = filtered_documents;
     const updatedTask = await task.save();
 

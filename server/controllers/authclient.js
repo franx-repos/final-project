@@ -45,7 +45,7 @@ export const signUp = asyncHandler(async(req,res,next) => {
         industry,
         languages
       });
-      console.log(role, first_name, last_name, email, password, vat_id, tax_id, street, zip, city, country, phone_number, industry, languages)
+      // console.log(role, first_name, last_name, email, password, vat_id, tax_id, street, zip, city, country, phone_number, industry, languages)
       const token = jwt.sign({ cid: newClient._id}, process.env.JWT_SECRET);
       res.status(201).send ({token}) //sendung vom token an die datenbank
 })
@@ -74,9 +74,9 @@ export const logIn = asyncHandler(async (req, res, next) => {
 });
 //verification
 export const getClient = asyncHandler(async (req, res, next) => {
-  console.log(req);
+  // console.log(req);
   const client = await Client.findById(req.cid);
-  console.log(client);
+  // console.log(client);
   res.json(client);
 });
 
