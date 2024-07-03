@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { format } from "date-fns";
-import TruncatedText from "./TruncatedText";
+
 
 const Taskoverview = () => {
   const [entries, setEntries] = useState([]);

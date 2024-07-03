@@ -3,7 +3,7 @@ import { v2 as cloudinary } from "cloudinary";
 
 export const getAllTasks = async (req, res, next) => {
   try {
-    const task = await Task.find();
+    const task = await Task.find().populate("content.created_by");
     // const task = await Task.find({content:req.cid});
     if (!task.length) {
       throw { statusCode: 404, message: "Task not found" };
@@ -17,7 +17,7 @@ export const getAllTasks = async (req, res, next) => {
 export const getTaskById = async (req, res, next) => {
   const { id } = req.params;
   try {
-    const task = await Task.findById(id);
+    const task = await Task.findById(id).populate("content.created_by");
     if (!task) {
       throw { statusCode: 404, message: "Task not found" };
     }
@@ -35,7 +35,7 @@ export const CreateTask = async (req, res, next) => {
   // console.log(documents)
   try {
     // const newTask = new Task({title,deadline,task_type,industry,description,created_by,documents} );
-    const newTask = new Task({ content });
+    const newTask = new Task({ content,created_by:req._id, });
     const savedTask = await newTask.save();
     res.status(201).json(savedTask);
   } catch (error) {
@@ -78,8 +78,8 @@ export const updateTask = async (req, res, next) => {
       documents.url = url;
       documents.public_id = req.file.filename;
     }
-
-    const task = await Task.findById(id);
+    
+    const task = await Task.findById(id).populate("content.created_by");
 
     if (!task) {
       throw { statusCode: 404, message: "Task not found" };
@@ -153,7 +153,7 @@ export const deleteTaskDocument = async (req, res, next) => {
     //delete document in DB through updating array in db
     console.log(filtered_documents);
     task.documents = filtered_documents;
-    const updatedTask = await task.save();
+    const updateTask = (await task.save()).populate("content.created_by");
 
     res.json(updateTask);
   } catch (error) {
