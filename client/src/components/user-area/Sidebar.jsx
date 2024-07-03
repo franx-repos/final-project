@@ -13,6 +13,7 @@ const styles = {
   sidebarItem: "justify-start text-left text-xl p-4",
 };
 
+
 function DashboardSidebar({ currentLocation, setCurrentLocation }) {
   const handleLocation = (location) => (e) => {
     e.preventDefault();
@@ -25,6 +26,7 @@ function DashboardSidebar({ currentLocation, setCurrentLocation }) {
       path: "#",
       icon: HiChartPie,
       label: "",
+
       onclick: handleLocation("Dashboard"),
     },
     {
