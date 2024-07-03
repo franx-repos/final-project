@@ -18,7 +18,9 @@ const PORT = 8001;
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: ["http://localhost:5173", "https://admin.socket.io/"],credentials: true }   ,
+    origin: ["http://localhost:5173", "https://admin.socket.io/"],
+    credentials: true,
+  },
 });
 
 io.on("connection", (socket) => {
@@ -26,7 +28,7 @@ io.on("connection", (socket) => {
   console.log(`${io.engine.clientsCount} user are connected`);
   // may or may not be similar to the count of Socket instances in the main namespace, depending on your usage
   const count2 = io.of("/").sockets.size;
-  console.log(count2)
+  console.log(count2);
 
   socket.emit("connectionStatus", `Connection under socket ID ${socket.id}`);
 
@@ -40,7 +42,7 @@ io.on("connection", (socket) => {
 
   //room is the task id later
   socket.on("join-room", (room) => {
-    console.log(`join room: ${room}`);
+    console.log(`${socket.id} join room: ${room}`);
     socket.join(room);
   });
 
@@ -52,8 +54,8 @@ io.on("connection", (socket) => {
       socket.to("Room1").emit("some event", message);
       console.log(message);
     } else {
-      console.log("recieve-message")
-      socket.to(room).emit("recieve-message", "hey there");
+      socket.to(room).emit("recieve-message", message);
+      console.log("Emitting recieve-message event");
     }
   });
 
@@ -72,7 +74,7 @@ instrument(io, {
   mode: "development",
 });
 
-app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 

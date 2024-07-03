@@ -5,8 +5,7 @@ import { useChat } from "../../context/ChatProvider";
 
 const ChatPartnerButton = ({ chat }) => {
   const { userData } = useAuth();
-  const {socket}=useChat();
-const {messages, setMessages, room, setRoom}= useChat()
+  const { messages, setMessages, room, setRoom, socket } = useChat();
   const [entry, setEntry] = useState([]);
 
   useEffect(() => {
@@ -19,7 +18,7 @@ const {messages, setMessages, room, setRoom}= useChat()
         //clients als chatpartner fetchen
         url = `http://localhost:8001/clients/${chat.client}`;
       }
-      console.log(url);
+      // console.log(url);
       try {
         const response = await axios.get(url);
         // console.log(response);
@@ -33,17 +32,21 @@ const {messages, setMessages, room, setRoom}= useChat()
   }, [chat]);
 
   useEffect(() => {
-    console.log(room);
+    if (socket && socket.connected && room !== "") {
+      socket.emit("join-room", room);
+    }
   }, [room]);
 
-  function joinChat(){
-    setMessages(chat.messages)
-    setRoom(chat._id)
-    
+  function joinChat() {
+    setMessages(chat.messages);
+    setRoom(chat._id);
   }
 
   return (
-    <button className="w-full text-left py-2 focus:outline-none focus-visible:bg-indigo-50" onClick={joinChat}>
+    <button
+      className="w-full text-left py-2 focus:outline-none focus-visible:bg-indigo-50"
+      onClick={joinChat}
+    >
       <div className="flex items-center">
         <img
           className="rounded-full items-start flex-shrink-0 mr-3"

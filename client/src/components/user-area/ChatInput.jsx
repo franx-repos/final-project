@@ -2,36 +2,39 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useChat } from "../../context/ChatProvider";
 
-
-
 const ChatInput = () => {
   const [input, setInput] = useState("");
-  const {room, socket}= useChat();
+  const { room, socket } = useChat();
 
-  useEffect(()=>{
-    console.log(socket)
-  },[])
+  // useEffect(() => {
+  //   console.log(socket);
+  // }, []);
 
-useEffect(()=>{
-      console.log(input);
-    },[input]);
+  // useEffect(() => {
+  //   console.log(input);
+  // }, [input]);
 
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-      console.log("send message");
-      console.log("Room:", room); // Add this line
-      if(input.trim() && room){
-        //send input
-        socket.emit("send-message", input,room);
-        // try {
-        //   await axios.patch(`http://localhost:8001/chats/${room}`, {  input  }, { withCredentials: true })
-        // } catch (error) {
-        //   console.log(error);
-        // }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log("send message");
+    console.log("Room:", room); // Add this line
+    console.log(socket);
+    if (input.trim() && room !== "" && socket.connected) {
+      //send input
+      try {
+        await socket.emit("send-message", input, room);
+      } catch (error) {
+        console.log(error);
       }
-      setInput("");
-    }
 
+      // try {
+      //   await axios.patch(`http://localhost:8001/chats/${room}`, {  input  }, { withCredentials: true })
+      // } catch (error) {
+      //   console.log(error);
+      // }
+    }
+    setInput("");
+  };
 
   return (
     <form onSubmit={handleSubmit}>
@@ -98,11 +101,11 @@ useEffect(()=>{
           className="block mx-4 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="Your input..."
           onChange={(e) => setInput(e.target.value)}
+          value={input}
         ></textarea>
         <button
           type="submit"
           className="inline-flex justify-center p-2 text-teal-500 hover:text-teal-700 rounded-full cursor-pointer hover:bg-blue-100 dark:text-teal-500 dark:hover:text-teal-700 dark:hover:bg-gray-600"
-          
         >
           <svg
             className="w-5 h-5 rotate-90 rtl:-rotate-90"

@@ -3,126 +3,128 @@ import { useAuth } from "../../context/UserProvider";
 import axios from "axios";
 
 const ChatBubble = ({ message }) => {
-    const { userData } = useAuth();
+  const { userData } = useAuth();
 
-    const [entry, setEntry] = useState([]);
+  const [entry, setEntry] = useState([]);
 
-    useEffect(() => {
-        const fetchChatPartner = async () => {
-          let url = "";
-          if (userData.data && userData.data.role === "client") {
-            //pros als chatpartner fetchen
-            url = `http://localhost:8001/pros/${message.author_id}`;
-          } else {
-            //clients als chatpartner fetchen
-            url = `http://localhost:8001/clients/${message.author_id}`;
-          }
-          console.log(url);
-          try {
-            const response = await axios.get(url);
-            // console.log(response);
-            setEntry(response.data);
-          } catch (error) {
-            console.log(error);
-          }
-        };
-    
-        fetchChatPartner();
-      }, [message]);
+  useEffect(() => {
+    const fetchChatPartner = async () => {
+      let url = "";
+      if (userData.data && userData.data.role === "client") {
+        //pros als chatpartner fetchen
+        url = `http://localhost:8001/pros/${message.author_id}`;
+      } else {
+        //clients als chatpartner fetchen
+        url = `http://localhost:8001/clients/${message.author_id}`;
+      }
+      // console.log(url);
+      try {
+        const response = await axios.get(url);
+        // console.log(response);
+        setEntry(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
+    fetchChatPartner();
+  }, [message]);
 
-       useEffect(() => {
-    console.log(entry);
-  }, [entry]);
+  // useEffect(() => {
+  //   console.log(entry);
+  // }, [entry]);
 
-  function bubble(){
-
-    if(userData._id === message.author_id){
-        return (<div className="flex items-start justify-end gap-2.5 m-3">
-            <div className="flex flex-col w-full max-w-[320px] leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-xl dark:bg-gray-700">
-              <div className="flex items-center space-x-2 rtl:space-x-reverse">
-               <span className="text-sm font-semibold text-gray-900 dark:text-white">
+  function bubble() {
+    if (userData._id === message.author_id) {
+      return (
+        <div className="flex items-start justify-end gap-2.5 m-3">
+          <div className="flex flex-col w-full max-w-[320px] leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-xl dark:bg-gray-700">
+            <div className="flex items-center space-x-2 rtl:space-x-reverse">
+              <span className="text-sm font-semibold text-gray-900 dark:text-white">
                 Me
-                </span>
-                <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
+              </span>
+              <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
                 {message.timestamp}
-                </span>
-              </div>
-              {<p className="text-sm font-normal py-2.5 text-gray-900 dark:text-white">
+              </span>
+            </div>
+            {
+              <p className="text-sm font-normal py-2.5 text-gray-900 dark:text-white">
                 {message.text}
-              </p>}
-           
-            </div>
-      
-            <div
-              id="dropdownDots"
-              className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-40 dark:bg-gray-700 dark:divide-gray-600"
-            >
-              <ul
-                className="py-2 text-sm text-gray-700 dark:text-gray-200"
-                aria-labelledby="dropdownMenuIconButton"
-              >
-                <li>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                  >
-                    Reply
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                  >
-                    Forward
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                  >
-                    Copy
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                  >
-                    Report
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                  >
-                    Delete
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>)
-    }else{
-        return ( <div className="flex items-start gap-2.5 m-3">
-        <div className="flex flex-col w-full max-w-[320px] leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-xl dark:bg-gray-700">
-          <div className="flex items-center space-x-2 rtl:space-x-reverse">
-            {entry.data &&
-                (<span className="text-sm font-semibold text-gray-900 dark:text-white">
-            {entry.data.first_name} {entry.data.last_name}
-            </span>)}
-            <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
-              {message.timestamp}
-            </span>
+              </p>
+            }
           </div>
-          <p className="text-sm font-normal py-2.5 text-gray-900 dark:text-white">
-            {message.text}
-          </p>
-         
+
+          <div
+            id="dropdownDots"
+            className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-40 dark:bg-gray-700 dark:divide-gray-600"
+          >
+            <ul
+              className="py-2 text-sm text-gray-700 dark:text-gray-200"
+              aria-labelledby="dropdownMenuIconButton"
+            >
+              <li>
+                <a
+                  href="#"
+                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                >
+                  Reply
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                >
+                  Forward
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                >
+                  Copy
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                >
+                  Report
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                >
+                  Delete
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
-        {/* <button
+      );
+    } else {
+      return (
+        <div className="flex items-start gap-2.5 m-3">
+          <div className="flex flex-col w-full max-w-[320px] leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-xl dark:bg-gray-700">
+            <div className="flex items-center space-x-2 rtl:space-x-reverse">
+              {entry.data && (
+                <span className="text-sm font-semibold text-gray-900 dark:text-white">
+                  {entry.data.first_name} {entry.data.last_name}
+                </span>
+              )}
+              <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
+                {message.timestamp}
+              </span>
+            </div>
+            <p className="text-sm font-normal py-2.5 text-gray-900 dark:text-white">
+              {message.text}
+            </p>
+          </div>
+          {/* <button
           id="dropdownMenuIconButton"
           data-dropdown-toggle="dropdownDots"
           data-dropdown-placement="bottom-start"
@@ -139,67 +141,62 @@ const ChatBubble = ({ message }) => {
             <path d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" />
           </svg>
         </button> */}
-        <div
-          id="dropdownDots"
-          className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-40 dark:bg-gray-700 dark:divide-gray-600"
-        >
-          <ul
-            className="py-2 text-sm text-gray-700 dark:text-gray-200"
-            aria-labelledby="dropdownMenuIconButton"
+          <div
+            id="dropdownDots"
+            className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-40 dark:bg-gray-700 dark:divide-gray-600"
           >
-            <li>
-              <a
-                href="#"
-                className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-              >
-                Reply
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-              >
-                Forward
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-              >
-                Copy
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-              >
-                Report
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-              >
-                Delete
-              </a>
-            </li>
-          </ul>
+            <ul
+              className="py-2 text-sm text-gray-700 dark:text-gray-200"
+              aria-labelledby="dropdownMenuIconButton"
+            >
+              <li>
+                <a
+                  href="#"
+                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                >
+                  Reply
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                >
+                  Forward
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                >
+                  Copy
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                >
+                  Report
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                >
+                  Delete
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>)
+      );
     }
-   
   }
 
+  return <>{bubble()}</>;
+};
 
-    return (
-      <>
-      {bubble()}</>
-    );
-  };
-  
-  export default ChatBubble;
-  
+export default ChatBubble;
