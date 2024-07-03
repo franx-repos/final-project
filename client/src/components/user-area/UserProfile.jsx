@@ -1,5 +1,4 @@
 import { useAuth } from "../../context/UserProvider";
-import ThemeToggle from "../ThemeToggle";
 
 const styles = {
   input:
