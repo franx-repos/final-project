@@ -6,6 +6,7 @@ import { useAuth } from "../../context/UserProvider";
 import ParticlesBackground from "../ParticlesBackground";
 import Signin from "../Signin";
 import { Footer } from "flowbite-react";
+import { useState } from "react";
 
 const tasks = {
   data: [
@@ -40,13 +41,17 @@ const tasks = {
 
 function Dashboard() {
   const { isLoggedIn, setIsLoggedIn, userData, setUserData } = useAuth();
+  const [currentLocation, setCurrentLocation] = useState();
 
   return isLoggedIn ? (
     <>
       <div className="bg-white border-gray-200 dark:bg-gray-900">
         <NavigationTop />
         <div className="flex">
-          <DashboardSidebar />
+          <DashboardSidebar
+            currentLocation={currentLocation}
+            setCurrentLocation={setCurrentLocation}
+          />
           <div style={{ width: "100%", height: "500px" }}>
             <GanttChart tasks={tasks} />
           </div>

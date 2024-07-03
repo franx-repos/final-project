@@ -40,7 +40,8 @@ const NavigationTop = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isNavbarOpen, setIsNavbarOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-const navigate = useNavigate();
+
+  const navigate = useNavigate();
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
@@ -115,13 +116,15 @@ const navigate = useNavigate();
             </div>
           ) : (
             <div className="flex">
-              {/* <Link to="modalsignin"> */}
-                {" "}
-                <button onClick={toggleModal} type="button" className={styles.button}>
-                  Login
-                </button>
+              {/* <Link to="modalsignin"> */}{" "}
+              <button
+                onClick={toggleModal}
+                type="button"
+                className={styles.button}
+              >
+                Login
+              </button>
               {/* </Link> */}
-
               <Link to="signup">
                 {" "}
                 <button type="button" className={styles.button}>
@@ -159,8 +162,8 @@ const navigate = useNavigate();
                 </a>
               </li>
               <li>
-                <Link to="/order"  className={styles.dropdownItem}>
-                My Task
+                <Link to="/order" className={styles.dropdownItem}>
+                  My Task
                 </Link>
               </li>
               <li>
@@ -230,8 +233,7 @@ const navigate = useNavigate();
         </div>
       </div>
       {/* <Modalsignin isModalOpen={isModalOpen} toggleModal={toggleModal} /> */}
-    <Modalsignin isModalOpen={isModalOpen} toggleModal={toggleModal} /> 
-    
+      <Modalsignin isModalOpen={isModalOpen} toggleModal={toggleModal} />
     </nav>
   );
 };
