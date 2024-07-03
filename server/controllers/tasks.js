@@ -175,7 +175,7 @@ export const getTasksByOpen = async (req, res, next) => {
 
 export const getTaskbyPro = async (req, res, next) => {
   try {
-    const tasks = await Task.find({ "content.assigned_to": [req.cid]});
+    const tasks = await Task.find({ "content.assigned_to": req.cid});
     if (!tasks.length) {
       return res.status(404).json({ message: "No tasks found" });
     } 
