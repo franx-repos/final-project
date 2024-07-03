@@ -9,12 +9,15 @@ tasksRouter
   .route("/")
   .get(verifyToken,taskController.getAllTasks)
   .post(verifyToken,taskController.CreateTask);
-
+  tasksRouter.route("/yourtask").get(verifyToken,taskController.getTaskbyPro);
+  tasksRouter.route("/yourorder").get(verifyToken,taskController.getTaskbycid);
+  tasksRouter.route("/open").get(verifyToken,taskController.getTasksByOpen);
 tasksRouter
   .route("/:id")
   .get(verifyToken,taskController.getTaskById)
   .put(upload.single("doc"),verifyToken,taskController.updateTask)
   .delete(verifyToken,taskController.deleteTask);
+
 
 // tasksRouter.patch("/:id", taskController.addTagToTask);
 tasksRouter.route("/:id/:docID").delete(verifyToken,taskController.deleteTaskDocument);
