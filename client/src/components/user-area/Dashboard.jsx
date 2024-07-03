@@ -1,5 +1,5 @@
 import NavigationTop from "../NavigationTop";
-import ThemeToggle from "../ThemeToggle";
+
 import GanttChart from "./GanttChart";
 import DashboardSidebar from "./Sidebar";
 import { useAuth } from "../../context/UserProvider";
@@ -7,6 +7,8 @@ import ParticlesBackground from "../ParticlesBackground";
 import Signin from "../Signin";
 import { Footer } from "flowbite-react";
 import { useState } from "react";
+import DashboardContainer from "./DashboardContainer";
+import DashboardHeader from "./DashboardHeader";
 
 const tasks = {
   data: [
@@ -41,19 +43,24 @@ const tasks = {
 
 function Dashboard() {
   const { isLoggedIn, setIsLoggedIn, userData, setUserData } = useAuth();
-  const [currentLocation, setCurrentLocation] = useState();
+  const [currentLocation, setCurrentLocation] = useState("Dashboard");
 
   return isLoggedIn ? (
     <>
-      <div className="bg-white border-gray-200 dark:bg-gray-900">
-        <NavigationTop />
+      <div className="h-screen bg-white border-gray-200 dark:bg-gray-900 ">
+        {/* overflow-hidden */}
+        {/* <NavigationTop /> */}
         <div className="flex">
           <DashboardSidebar
             currentLocation={currentLocation}
             setCurrentLocation={setCurrentLocation}
           />
-          <div style={{ width: "100%", height: "500px" }}>
+          <div className="flex w-full flex-col bg-white p-3 rounded-md dark:text-white dark:bg-gray-900">
+            <DashboardHeader currentLocation={currentLocation} />
+            <DashboardContainer currentLocation={currentLocation} />
+            {/* <div style={{ width: "100%", height: "500px" }}>
             <GanttChart tasks={tasks} />
+          </div> */}
           </div>
         </div>
       </div>

@@ -85,7 +85,7 @@ const NavigationTop = () => {
   }, [userData, isLoggedIn]);
 
   return (
-    <nav className=" w-full bg-white/75 border-gray-200 dark:bg-gray-900/80 relative">
+    <nav className="w-full bg-white/75 border-gray-200 dark:bg-gray-900/80">
       <div className={styles.container}>
         <Link to="/" className={styles.logo}>
           <img

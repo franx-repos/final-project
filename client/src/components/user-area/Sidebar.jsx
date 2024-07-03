@@ -7,18 +7,17 @@ import {
   HiUser,
   HiViewBoards,
 } from "react-icons/hi";
-import { useCallback } from "react";
+import { Link } from "react-router-dom";
 
 const styles = {
-  sidebarItem: "justify-start text-xl px-6 py-4",
+  sidebarItem: "justify-start text-left text-xl p-4",
 };
 
-function DashboardSidebar(currentLocation, setCurrentLocation) {
-  const handleLocation = useCallback((location) => (e) => {
+function DashboardSidebar({ currentLocation, setCurrentLocation }) {
+  const handleLocation = (location) => (e) => {
     e.preventDefault();
     setCurrentLocation(location);
-    console.log(`Current location: ${currentLocation}`);
-  });
+  };
 
   const sbItems = [
     {
@@ -26,28 +25,28 @@ function DashboardSidebar(currentLocation, setCurrentLocation) {
       path: "#",
       icon: HiChartPie,
       label: "",
-      onclick: handleLocation("dashboard"),
+      onclick: handleLocation("Dashboard"),
     },
     {
-      title: "Kanban",
+      title: "Tasks",
       path: "#",
       icon: HiViewBoards,
       label: "",
-      onclick: handleLocation("kanban"),
+      onclick: handleLocation("Task Overview"),
     },
     {
       title: "Chat",
       path: "#",
       icon: HiInbox,
       label: "3",
-      onclick: handleLocation("chat"),
+      onclick: handleLocation("Chat"),
     },
     {
-      title: "Users",
+      title: "User Profile",
       path: "#",
       icon: HiUser,
       label: "",
-      onclick: handleLocation("users"),
+      onclick: handleLocation("User Profile"),
     },
     {
       title: "Products",
@@ -56,19 +55,22 @@ function DashboardSidebar(currentLocation, setCurrentLocation) {
       label: "",
       onclick: handleLocation("products"),
     },
-    {
-      title: "Sign In",
-      path: "#",
-      location: "signIn",
-      icon: HiTable,
-      label: "",
-      onclick: handleLocation("signin"),
-    },
   ];
 
   return (
-    <Sidebar className="w-52 h-screen bg-gray-50 dark:bg-gray-800">
-      <Sidebar.Items className="h-screen">
+    <Sidebar className="h-screen sticky top-0 w-48 bg-gray-50 dark:bg-gray-800">
+      <Link
+        to="/"
+        className="flex items-center ml-2 space-x-3 rtl:space-x-reverse"
+      >
+        <img
+          src="\src\assets\TaxMax-Logo3.png"
+          className="h-8"
+          alt="TaxMax Logo"
+        />
+        <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"></span>
+      </Link>
+      <Sidebar.Items>
         <Sidebar.ItemGroup>
           {sbItems.map((item, index) => (
             <Sidebar.Item
