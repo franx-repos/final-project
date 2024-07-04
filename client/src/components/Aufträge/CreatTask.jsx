@@ -97,12 +97,12 @@ const NewPost = ({ isModalOpen, toggleModal }) => {
           },
           { withCredentials: true }
         )
-        .populate("content.created_by");
+        // .populate("content.created_by");
 
-        if (response.status === 200) {
-          setIsLoggedIn(true);
+       
+         
           toggleModal();
-      }
+      
     } catch (error) {
       setError(error.message || "Something went wrong with Login");
       console.log("Error:", error.message);
@@ -136,7 +136,8 @@ const NewPost = ({ isModalOpen, toggleModal }) => {
       "documents:",
       documents
     );
-    console.log(error);
+   
+    
   }, [
     title,
     description,
@@ -146,7 +147,6 @@ const NewPost = ({ isModalOpen, toggleModal }) => {
     create_date,
     payment,
     documents,
-    error,
   ]);
 
 if (!isModalOpen) return null;
@@ -321,7 +321,7 @@ if (!isModalOpen) return null;
 
             <div className="buttons flex justify-end mt-3">
               <button
-                onClick={toggleModal}
+                // onClick={toggleModal}
                 type="submit"
                 className="text-white bg-teal-500 hover:bg-teal-700 focus:outline-none font-medium rounded-lg text-sm mx-2 px-4 py-2 text-center dark:bg-teal-500 dark:hover:bg-teal-700"
               >

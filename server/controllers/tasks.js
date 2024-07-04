@@ -55,23 +55,6 @@ export const CreateTask = async (req, res, next) => {
 // );
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // export const updateTask = async (req, res, next) => {
 //   const { id } = req.params;
 //   const { content, documents } = req.body;
@@ -98,6 +81,7 @@ export const updateTask = async (req, res, next) => {
    } = req.body;
   const documents = { documentstitle, icon };
   const content = { title ,industry, task_type,description};
+  res.status(200).json(updateTask);
   console.log(documents);
   console.log(content);
   try {
