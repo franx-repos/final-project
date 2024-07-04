@@ -13,7 +13,6 @@ const styles = {
   sidebarItem: "justify-start text-left text-xl p-4",
 };
 
-
 function DashboardSidebar({ currentLocation, setCurrentLocation }) {
   const handleLocation = (location) => (e) => {
     e.preventDefault();
@@ -49,13 +48,6 @@ function DashboardSidebar({ currentLocation, setCurrentLocation }) {
       icon: HiUser,
       label: "",
       onclick: handleLocation("User Profile"),
-    },
-    {
-      title: "Products",
-      path: "#",
-      icon: HiShoppingBag,
-      label: "",
-      onclick: handleLocation("products"),
     },
   ];
 

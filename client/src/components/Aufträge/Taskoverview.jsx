@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { format } from "date-fns";
-import TruncatedText from "./TruncatedText";
 import GanttChart from "../user-area/GanttChart";
 import { useAuth } from "../../context/UserProvider";
 
@@ -59,6 +58,10 @@ const Taskoverview = () => {
   useEffect(() => {
     console.log("Error:", error.message);
   }, [error]);
+
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
 
   return (
     <div className="w-full dark:text-white dark:bg-[#1f2937] ">
@@ -133,6 +136,7 @@ const Taskoverview = () => {
           </div>
         </div>
       </div>
+      <NewPost isModalOpen={isModalOpen} toggleModal={toggleModal} />
     </div>
   );
 };
