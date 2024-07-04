@@ -7,13 +7,13 @@ import asyncHandler from "../utils/asyncHandler.js";
 export const updateChat = async (req, res, next) => {
   const { id } = req.params;
   const { cid, body } = req;
-  const { input } = body;
+  const { inputMessage } = body;
   console.log("update Chat");
   console.log(body);
   try {
     const newMessage = {
       author_id: cid,
-      text: input,
+      text: inputMessage.text,
     };
 
     const updateChat = await Chat.findByIdAndUpdate(

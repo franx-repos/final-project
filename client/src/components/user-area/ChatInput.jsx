@@ -36,13 +36,14 @@ const ChatInput = () => {
       };
       // setMessage((prevMessage) => [...prevMessage, inputMessage]);
       try {
-        await socket.emit("send-message", inputMessage, room);
+        const send=await socket.emit("send-message", inputMessage, room);
+        const response=await axios.patch(`http://localhost:8001/chats/${room}`, {  inputMessage  }, { withCredentials: true })
       } catch (error) {
         console.log(error);
       }
 
       // try {
-      //   await axios.patch(`http://localhost:8001/chats/${room}`, {  input  }, { withCredentials: true })
+      //   await axios.patch(`http://localhost:8001/chats/${room}`, {  inputMessage  }, { withCredentials: true })
       // } catch (error) {
       //   console.log(error);
       // }
