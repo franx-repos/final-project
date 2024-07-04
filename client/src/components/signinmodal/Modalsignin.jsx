@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/UserProvider.jsx";
 import axios from "axios";
 
-const Modalsignin = ({isModalOpen,toggleModal}) => {
+const Modalsignin = ({ isModalOpen, toggleModal }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -72,12 +72,10 @@ const Modalsignin = ({isModalOpen,toggleModal}) => {
     }
   };
 
-
-
   if (!isModalOpen) return null;
 
   return (
-     <>
+    <>
       {/* Main modal */}
       <div
         id="authentication-modal"
@@ -123,15 +121,14 @@ const Modalsignin = ({isModalOpen,toggleModal}) => {
                 <Link to="/">
                   <img
                     className="mx-auto h-10 w-auto"
-                    src="./public/TaxMax-Logo3.svg"
+                    src=".\src\assets\TaxMax-Logo3.svg"
                     alt="TAXMAX"
                   />
                 </Link>
 
                 {error && (
                   <div className="text-sm text-red-500 mt-3">
-                    <p>{ 'your email or password is incorrect'}</p>
-                    
+                    <p>{"your email or password is incorrect"}</p>
                   </div>
                 )}
 
@@ -255,7 +252,11 @@ const Modalsignin = ({isModalOpen,toggleModal}) => {
                   </button>
                   <p className="mt-4 dark:text-white">
                     Not registered ?{" "}
-                    <Link to="/signup" onClick={toggleModal} className="text-blue-500 underline">
+                    <Link
+                      to="/signup"
+                      onClick={toggleModal}
+                      className="text-blue-500 underline"
+                    >
                       Register here
                     </Link>
                   </p>
