@@ -1,6 +1,7 @@
 import Task from "../models/tasksSchema.js";
 import { v2 as cloudinary } from "cloudinary";
 import asyncHandler from "../utils/asyncHandler.js";
+import Client from "../models/clientsSchema.js";
 
 export const getAllTasks = async (req, res, next) => {
   try {
@@ -31,13 +32,19 @@ export const getTaskById = async (req, res, next) => {
 export const CreateTask = async (req, res, next) => {
   // const {title,deadline,task_type,industry,description,created_by,...documents} = req.body;
   // const {content,...documents} = req.body;
+  const {cid} = req;
   const { content } = req.body;
   console.log(content);
   // console.log(documents)
   try {
     // const newTask = new Task({title,deadline,task_type,industry,description,created_by,documents} );
-    const newTask = new Task({ content,created_by:req._id, });
+    const newTask = new Task({ content,created_by: cid, });
     const savedTask = await newTask.save();
+
+    //Update the client's chat array
+    const clientUpdate = await Client.findByIdAndUpdate(cid, {
+    $push: { tasks: newTask._id },
+  }); 
     res.status(201).json(savedTask);
   } catch (error) {
     next(error);

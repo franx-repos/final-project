@@ -9,12 +9,13 @@ prosRouter.get("/me", verifyToken, authPro.getPro); // Route overlap
 prosRouter
   .route("/")
   .get(proController.getAllPros)
-  .post(proController.addNewPro);
+  .post(proController.addNewPro)
+  .patch(verifyToken,proController.updatePro);
 
 prosRouter
   .route("/:id")
   .get(proController.getProById)
-  .patch(proController.updatePro)
+ 
   .delete(proController.deletePro);
 
 prosRouter.route("/email/:email").get(proController.getProByEmail);
