@@ -8,7 +8,11 @@ const DashboardContainer = (currentLocation) => {
 
   switch (currentLocation.currentLocation) {
     case "Dashboard":
-      return <OpenTasksSlider />;
+      return (
+        <>
+          <OpenTasksSlider />
+        </>
+      );
     case "Chat":
       return <Chat />;
     case "Task Overview":

@@ -60,11 +60,11 @@ const Taskoverview = () => {
   };
 
   return (
-    <div className="w-full dark:text-white dark:bg-[#1f2937] ">
-      <div className="bg-white p-4 w-full dark:text-white dark:bg-[#1f2937]">
-        <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+    <div className="w-full dark:text-white dark:bg-[#1f2937]">
+      <div className="bg-white p-4 w-full dark:text-white dark:bg-[#1f2937] rounded-md">
+        <div className="sm:-mx-8 px-4 sm:px-8 overflow-x-auto rounded-md">
           <div className="inline-block min-w-full shadow rounded-md overflow-hidden">
-            <table className="min-w-full leading-normal">
+            <table className="w-full leading-normal">
               <thead>
                 <tr>
                   <th className={styles.th}>Order Title</th>
@@ -86,8 +86,6 @@ const Taskoverview = () => {
                         </div>
                       </div>
                     </td>
-
-                 
 
                     <td className={styles.td}>
                       <p className="text-gray-900 whitespace-no-wrap truncate ">
@@ -127,7 +125,10 @@ const Taskoverview = () => {
             </table>
             <div className="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between">
               <div className="inline-flex mt-2 xs:mt-0">
-                <button  onClick={toggleModal} className="text-white bg-teal-500 hover:bg-teal-700  focus:outline-none font-medium rounded-lg text-sm mx-2 px-4 py-2 text-center dark:bg-teal-500 dark:hover:bg-teal-700">
+                <button
+                  onClick={toggleModal}
+                  className="text-white bg-teal-500 hover:bg-teal-700  focus:outline-none font-medium rounded-lg text-sm mx-2 px-4 py-2 text-center dark:bg-teal-500 dark:hover:bg-teal-700"
+                >
                   Create New Task
                 </button>
               </div>
