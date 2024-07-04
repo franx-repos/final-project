@@ -187,7 +187,7 @@ export const getTasksByOpen = async (req, res, next) => {
   }
 };
 
-export const getTaskbyPro = async (req, res, next) => {
+export const getTaskByPro = async (req, res, next) => {
   try {
     const tasks = await Task.find({ "content.assigned_to": req.cid});
     if (!tasks.length) {
@@ -198,7 +198,7 @@ export const getTaskbyPro = async (req, res, next) => {
     next(error);
   }
 }
-export const getTaskbycid = async (req, res, next) => {
+export const getTaskByCid = async (req, res, next) => {
   try {
     const tasks = await Task.find({ "content.created_by": req.cid});
     if (!tasks.length) {
