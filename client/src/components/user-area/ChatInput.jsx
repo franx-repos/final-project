@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useChat } from "../../context/ChatProvider";
+import { useAuth } from "../../context/UserProvider";
 
 const ChatInput = () => {
   const [input, setInput] = useState("");
-  const { room, socket } = useChat();
+  const { room, socket, message, setMessage } = useChat();
+  const {userData} = useAuth();
 
   // useEffect(() => {
   //   console.log(socket);
@@ -19,10 +21,22 @@ const ChatInput = () => {
     console.log("send message");
     console.log("Room:", room); // Add this line
     console.log(socket);
+    const d = new Date();
+
+    // console.log(socket.rooms)
     if (input.trim() && room !== "" && socket.connected) {
       //send input
+      //Message array anpassen
+      let formatDate = d.toUTCString();
+      let inputMessage = {
+        author_id: userData._id,
+        text: input,
+        timestamp: formatDate
+
+      };
+      // setMessage((prevMessage) => [...prevMessage, inputMessage]);
       try {
-        await socket.emit("send-message", input, room);
+        await socket.emit("send-message", inputMessage, room);
       } catch (error) {
         console.log(error);
       }

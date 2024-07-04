@@ -11,7 +11,7 @@ const ChatWindow = () => {
   const { isLoggedIn, setIsLoggedIn, userData, setUserData } = useAuth();
   const [chats, setChats] = useState([]);
   const { messages, setMessages, socket, setSocket, room } = useChat();
-
+  const [entry, setEntry] = useState([]);
   useEffect(() => {
     if (!socket) {
       let s = socketIO.connect("http://localhost:8001");
@@ -19,20 +19,19 @@ const ChatWindow = () => {
     }
   }, []);
 
+
   useEffect(() => {
     if (socket && socket.connected) {
       console.log("Socket is connected");
       socket
-        .on("recieve-message", (message) => {
-          console.log(`Message received! It says ${message}`);
-        })
+        .on("recieve-message", (message) => setMessages([...messages, message]))
         .on("error", (error) => {
           console.error("Error handling recieve-message event:", error);
         });
     } else {
       console.log("Socket is not connected");
     }
-  }, [socket, chats]);
+  }, [socket, chats, messages]);
 
   useEffect(() => {
     if (userData) {
@@ -58,14 +57,16 @@ const ChatWindow = () => {
     }
   }, [userData]);
 
-  useEffect(() => {
-    // console.log(chats);
-    // console.log(chats[0].messages);
-  }, [chats]);
 
-  useEffect(() => {
-    console.log(messages);
-  }, [messages]);
+
+  // useEffect(() => {
+  //   console.log(chats);
+   
+  // }, [chats]);
+
+  // useEffect(() => {
+  //   console.log(messages);
+  // }, [messages]);
 
   return (
     <section className="flex w-full h-screen justify-start antialiased text-gray-600 p-4 pb-24 ">
@@ -74,10 +75,10 @@ const ChatWindow = () => {
       </div>
       <div className="flex flex-col  w-full mx-9 shadow-lg rounded-lg">
         <div className="flex-1 overflow-y-scroll border-gray-200 dark:bg-gray-800">
-          {messages.map((message) => {
+          {messages.map((message, index) => {
             // console.log(message);
             return (
-              <ChatBubble key={message._id} message={message}></ChatBubble>
+              <ChatBubble key={index} message={message}></ChatBubble>
             );
           })}
         </div>
@@ -88,3 +89,12 @@ const ChatWindow = () => {
 };
 
 export default ChatWindow;
+
+
+// console.log(message);
+//           // setMessages([...messages, message]);
+//           setMessages((prevMessages) => {
+//             const newMessages = [...prevMessages, message];
+//             console.log("New messages:", newMessages);
+//             return newMessages;
+//           });

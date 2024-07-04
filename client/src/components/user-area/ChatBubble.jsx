@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../../context/UserProvider";
 import axios from "axios";
 
-const ChatBubble = ({ message }) => {
+const ChatBubble = ({message}) => {
   const { userData } = useAuth();
 
   const [entry, setEntry] = useState([]);
@@ -17,7 +17,7 @@ const ChatBubble = ({ message }) => {
         //clients als chatpartner fetchen
         url = `http://localhost:8001/clients/${message.author_id}`;
       }
-      // console.log(url);
+      console.log(url);
       try {
         const response = await axios.get(url);
         // console.log(response);
@@ -28,11 +28,14 @@ const ChatBubble = ({ message }) => {
     };
 
     fetchChatPartner();
-  }, [message]);
+  }, []);
 
-  // useEffect(() => {
-  //   console.log(entry);
-  // }, [entry]);
+  useEffect(() => {
+    if(entry.length >0){
+      console.log(entry);
+    }
+    
+  }, [entry]);
 
   function bubble() {
     if (userData._id === message.author_id) {

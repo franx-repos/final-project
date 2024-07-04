@@ -47,6 +47,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("send-message", (message, room) => {
+    console.log(socket.rooms);
     console.log(message);
     console.log(`Message from Room: ${room}`);
     if (room === "" || room === undefined) {
@@ -54,7 +55,8 @@ io.on("connection", (socket) => {
       socket.to("Room1").emit("some event", message);
       console.log(message);
     } else {
-      socket.to(room).emit("recieve-message", message);
+      // socket.to(room).emit("recieve-message", message);
+      io.to(room).emit("recieve-message", message);
       console.log("Emitting recieve-message event");
     }
   });
