@@ -7,17 +7,10 @@ import Select from 'react-select';
 const UpdateTask = () => {
   const [editTaskId, setEditTaskId] = useState(null);
   const [images, setImages] = useState([]);
-  const [title, setTitle] = useState("");
   const [newTitle, setNewTitle] = useState("");
-  const [description, setDescription] = useState("");
   const [newDescription, setNewDescription] = useState("");
-  const [deadline, setDeadline] = useState("");
-  const [task_type, setTask_type] = useState([]);
   const [newTask_type, setNewTask_type] = useState([]);
-  const [industry, setIndustry] = useState("");
   const [newIndustry, setNewIndustry] = useState("");
-  const [create_date, setCreate_date] = useState("");
-
   const [documents, setDocuments] = useState([]);
   const [error, setError] = useState("");
   const [entries, setEntries] = useState([]);
@@ -160,9 +153,9 @@ const UpdateTask = () => {
       </div>
       <div className="editor mx-auto w-10/12 flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg max-w-2xl ">
         {entries.map((entry) => (
-          <div key={entry._id} className="border-2 border-gray-800 mb-3">
-            <div className="px-5 py-5 border-b bg-white text-sm text-center">
-              <div className="buttons flex justify-end mb-2">
+          <div key={entry._id} className="border-2 rounded-xl  border-gray-800 mb-3">
+            <div className="px-5 py-5 mt-2   border-b bg-white text-sm text-center">
+              <div className="buttons flex justify-end mb-2 ">
                 <button
                   // onClick={() => setEditTaskId(entry._id)}
                   onClick={() => {
@@ -174,7 +167,7 @@ const UpdateTask = () => {
                      setDocuments(entry.documents); // Setze die neuen Dokumente beim Klick auf "Edit"
                   }}
                   type="button"
-                  className="text-white bg-teal-500 hover:bg-teal-700  focus:outline-none font-medium rounded-lg text-sm mx-2 px-4 py-2 text-center dark:bg-teal-500 dark:hover:bg-teal-700"
+                  className="text-white bg-teal-500 hover:bg-teal-700 focus:outline-none font-medium rounded-lg text-sm mx-2 px-4 py-2 text-center dark:bg-teal-500 dark:hover:bg-teal-700"
                 >
                   Edit
                 </button>
@@ -227,7 +220,7 @@ const UpdateTask = () => {
 
 
 
-                  <div className="buttons flex justify-end mb-2">
+                  <div className="buttons flex justify-end my-3">
                     <button
                       onClick={() => handleUpdate(entry._id)}
                       type="button"
