@@ -1,8 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { format } from "date-fns";
-import TruncatedText from "./TruncatedText";
 import GanttChart from "../user-area/GanttChart";
+import NewPost from "./CreatTask";
 
 const styles = {
   th: "px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider",
@@ -13,6 +13,7 @@ const Taskoverview = () => {
   const [entries, setEntries] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -54,6 +55,10 @@ const Taskoverview = () => {
     // console.log("Error:", error.response);
   }, [error]);
 
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+
   return (
     <div className="w-full dark:text-white dark:bg-[#1f2937] ">
       <div className="bg-white p-4 w-full dark:text-white dark:bg-[#1f2937]">
@@ -82,9 +87,7 @@ const Taskoverview = () => {
                       </div>
                     </td>
 
-                    {/* <td className="px-5 py-5 border-b max-w-10 overflow-clip border-b-gray-200 text-wrap dark:border-x-0 dark:border-r-white dark:border bg-white text-sm">
-                      <TruncatedText text={entry.content.description} maxLength={100} />
-                    </td> */}
+                 
 
                     <td className={styles.td}>
                       <p className="text-gray-900 whitespace-no-wrap truncate ">
@@ -124,7 +127,7 @@ const Taskoverview = () => {
             </table>
             <div className="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between">
               <div className="inline-flex mt-2 xs:mt-0">
-                <button className="text-white bg-teal-500 hover:bg-teal-700  focus:outline-none font-medium rounded-lg text-sm mx-2 px-4 py-2 text-center dark:bg-teal-500 dark:hover:bg-teal-700">
+                <button  onClick={toggleModal} className="text-white bg-teal-500 hover:bg-teal-700  focus:outline-none font-medium rounded-lg text-sm mx-2 px-4 py-2 text-center dark:bg-teal-500 dark:hover:bg-teal-700">
                   Create New Task
                 </button>
               </div>
@@ -132,6 +135,7 @@ const Taskoverview = () => {
           </div>
         </div>
       </div>
+      <NewPost isModalOpen={isModalOpen} toggleModal={toggleModal} />
     </div>
   );
 };
