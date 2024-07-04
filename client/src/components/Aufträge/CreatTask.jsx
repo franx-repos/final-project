@@ -149,7 +149,7 @@ const NewPost = ({ isModalOpen, toggleModal }) => {
     documents,
   ]);
 
-if (!isModalOpen) return null;
+  if (!isModalOpen) return null;
 
   return (
     <>
@@ -160,95 +160,94 @@ if (!isModalOpen) return null;
         className=" fixed inset-0  z-50 flex justify-center items-center w-full h-full overflow-y-auto bg-gray-500 bg-opacity-90"
       >
         {" "}
-      
-      <div className=" relative p-4 w-full max-w-5xl  max-h-full">
-        <form
-          className="bg-white shadow p-4 py-8 rounded-lg dark:bg-[#1f2937]"
-          onSubmit={handlePost}
-        >
-          <div className="absolute top-0 right-0  p-4 mr-8 mt-4 ">
-                <button
-                  type="button"
-                  onClick={toggleModal}
-                  className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+        <div className=" relative p-4 w-full max-w-5xl  max-h-full">
+          <form
+            className="bg-white shadow p-4 py-8 rounded-lg dark:bg-[#1f2937]"
+            onSubmit={handlePost}
+          >
+            <div className="absolute top-0 right-0  p-4 mr-8 mt-4 ">
+              <button
+                type="button"
+                onClick={toggleModal}
+                className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+              >
+                <svg
+                  className="w-3 h-3"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 14 14"
                 >
-                  <svg
-                    className="w-3 h-3"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 14 14"
-                  >
-                    <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M1 1l6 6m0 0l6 6M7 7l6-6M7 7l-6 6"
-                    />
-                  </svg>
-                  <span className="sr-only">Close modal</span>
-                </button>
-              </div>
-          <div className="heading text-center  font-bold text-2xl m-5 text-gray-800 bg-white dark:text-white dark:bg-[#1f2937]">
-            New Task
-          </div>
-          <div className="editor mx-auto  rounded-lg w-10/12 flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg max-w-2xl ">
-            <input
-              className="title bg-gray-200 border border-gray-300 p-2 mb-4 outline-none"
-              spellCheck="false"
-              placeholder="Title"
-              type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            />
-            <textarea
-              className="description bg-gray-100 sec p-3 h-60 border border-gray-300 outline-none"
-              spellCheck="false"
-              placeholder="Describe everything about this post here"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            ></textarea>
-
-            <div className="sm:col-span-2 sm:col-start-1">
-              <label
-                htmlFor="industry"
-                className="block text-sm font-medium leading-6 text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
-              >
-                Industry
-              </label>
-              <div className="mt-2">
-                <Select
-                  options={options}
-                  value={options.find((option) => option.value === industry)}
-                  onChange={(selectedOption) =>
-                    setIndustry(selectedOption.value)
-                  }
-                  placeholder="Choose one of the following"
-                />
-              </div>
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M1 1l6 6m0 0l6 6M7 7l6-6M7 7l-6 6"
+                  />
+                </svg>
+                <span className="sr-only">Close modal</span>
+              </button>
             </div>
-
-            <div className="sm:col-span-2 sm:col-start-1">
-              <label
-                htmlFor="task_type"
-                className="block text-sm font-medium leading-6 text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
-              >
-                Type
-              </label>
-              <div className="mt-2">
-                <Select
-                  options={types}
-                  value={types.find((type) => type.value === task_type)}
-                  onChange={(selectedOption) =>
-                    setTask_type(selectedOption.value)
-                  }
-                  placeholder="Choose one of the following"
-                />
-              </div>
+            <div className="heading text-center font-bold text-2xl m-5 text-gray-800 bg-white dark:text-white dark:bg-[#1f2937]">
+              New Task
             </div>
+            <div className="editor mx-auto  rounded-lg w-10/12 flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg max-w-2xl ">
+              <input
+                className="title bg-gray-200 border border-gray-300 p-2 mb-4 outline-none"
+                spellCheck="false"
+                placeholder="Title"
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
+              <textarea
+                className="description bg-gray-100 sec p-3 h-60 border border-gray-300 outline-none"
+                spellCheck="false"
+                placeholder="Describe everything about this post here"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              ></textarea>
 
-            {/* <div className="icons flex text-gray-500 m-2">
+              <div className="sm:col-span-2 sm:col-start-1">
+                <label
+                  htmlFor="industry"
+                  className="block text-sm font-medium leading-6 text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
+                >
+                  Industry
+                </label>
+                <div className="mt-2">
+                  <Select
+                    options={options}
+                    value={options.find((option) => option.value === industry)}
+                    onChange={(selectedOption) =>
+                      setIndustry(selectedOption.value)
+                    }
+                    placeholder="Choose one of the following"
+                  />
+                </div>
+              </div>
+
+              <div className="sm:col-span-2 sm:col-start-1">
+                <label
+                  htmlFor="task_type"
+                  className="block text-sm font-medium leading-6 text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
+                >
+                  Type
+                </label>
+                <div className="mt-2">
+                  <Select
+                    options={types}
+                    value={types.find((type) => type.value === task_type)}
+                    onChange={(selectedOption) =>
+                      setTask_type(selectedOption.value)
+                    }
+                    placeholder="Choose one of the following"
+                  />
+                </div>
+              </div>
+
+              {/* <div className="icons flex text-gray-500 m-2">
           <label id="select-image">
             <svg
               className="mr-2 cursor-pointer hover:text-gray-700 border rounded-full p-1 h-7"
@@ -274,7 +273,7 @@ if (!isModalOpen) return null;
           </label>
         </div> */}
 
-            {/* <div id="preview" className="my-4 flex">
+              {/* <div id="preview" className="my-4 flex">
           {images.map((image, index) => (
             <div
               key={index}
