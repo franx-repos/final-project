@@ -35,7 +35,7 @@ const Modalsignin = ({ isModalOpen, toggleModal }) => {
         if (response.status === 200) {
           setIsLoggedIn(true);
           checkUser();
-          navigate("/");
+          navigate("/Dashboard");
           toggleModal();
         }
       } catch (error) {
