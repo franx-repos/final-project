@@ -35,7 +35,7 @@ const Signin = () => {
         if (response.status === 200) {
           setIsLoggedIn(true);
           checkUser();
-          navigate("/");
+          navigate("/Dashboard");
         }
       } catch (error) {
         setError(error.message || "Something went wrong with Login");
