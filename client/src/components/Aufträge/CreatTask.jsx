@@ -78,31 +78,34 @@ const NewPost = ({ isModalOpen, toggleModal }) => {
   const handlePost = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios
-        .post(
-          `http://localhost:8001/tasks`,
-          {
-            content: {
-              title,
-              description,
-              deadline,
-              task_type,
-              industry,
+      const response = await axios.post(
+        `http://localhost:8001/tasks`,
+        {
+          content: {
+            title,
+            description,
+            deadline,
+            task_type,
+            industry,
 
-              payment,
-            },
-            documents: [],
-
-            // documents:file.map ((file) => file.url),
+            payment,
           },
-          { withCredentials: true }
-        )
-        .populate("content.created_by");
+          documents: [],
 
-      if (response.status === 200) {
-        setIsLoggedIn(true);
-        toggleModal();
-      }
+          // documents: documents.map((document) => ({  
+          //   documentstitle: document.name,
+          //   icon: document.url,
+          // })),
+        },
+        { withCredentials: true }
+      );
+      // .populate("content.created_by");
+
+          toggleModal();
+          toggleModal();
+      
+      toggleModal();
+      
     } catch (error) {
       setError(error.message || "Something went wrong with Login");
       console.log("Error:", error.message);
@@ -136,7 +139,8 @@ const NewPost = ({ isModalOpen, toggleModal }) => {
       "documents:",
       documents
     );
-    console.log(error);
+   
+    
   }, [
     title,
     description,
@@ -146,7 +150,6 @@ const NewPost = ({ isModalOpen, toggleModal }) => {
     create_date,
     payment,
     documents,
-    error,
   ]);
 
   if (!isModalOpen) return null;
@@ -320,7 +323,6 @@ const NewPost = ({ isModalOpen, toggleModal }) => {
 
               <div className="buttons flex justify-end mt-3">
                 <button
-                  onClick={toggleModal}
                   type="submit"
                   className="text-white bg-teal-500 hover:bg-teal-700 focus:outline-none font-medium rounded-lg text-sm mx-2 px-4 py-2 text-center dark:bg-teal-500 dark:hover:bg-teal-700"
                 >
