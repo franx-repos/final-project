@@ -36,7 +36,7 @@ const Taskoverview = () => {
       }
     };
     fetchTasks();
-  }, []);
+  }, [entries]);
 
   const handelStutas = (status) => {
     if (status === "OPEN") {
