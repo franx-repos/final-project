@@ -3,12 +3,20 @@ import React, { useEffect, useState } from "react";
 import { format } from "date-fns";
 import GanttChart from "../user-area/GanttChart";
 import { useAuth } from "../../context/UserProvider";
+import NewPost from "./CreatTask";
+
+
+const styles = {
+  th: "px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider",
+  td: "px-5 py-5 border-b max-w-10 overflow-clip border-b-gray-200 text-wrap  dark:border-x-0 dark:border-r-white dark:border bg-white text-sm",
+};
 
 const Taskoverview = () => {
   const [entries, setEntries] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const { userData } = useAuth();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -21,7 +29,6 @@ const Taskoverview = () => {
         }
 
         const taskIds = response.data.tasks;
-        console.log(taskIds);
 
         const detailedTasksPromises = taskIds.map(id => 
           axios.get(`http://localhost:8001/tasks/${id}`, { withCredentials: true })
@@ -128,7 +135,7 @@ const Taskoverview = () => {
             </table>
             <div className="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between">
               <div className="inline-flex mt-2 xs:mt-0">
-                <button className="text-white bg-teal-500 hover:bg-teal-700 focus:outline-none font-medium rounded-lg text-sm mx-2 px-4 py-2 text-center dark:bg-teal-500 dark:hover:bg-teal-700">
+              <button  onClick={toggleModal} className="text-white bg-teal-500 hover:bg-teal-700  focus:outline-none font-medium rounded-lg text-sm mx-2 px-4 py-2 text-center dark:bg-teal-500 dark:hover:bg-teal-700">
                   Create New Task
                 </button>
               </div>
