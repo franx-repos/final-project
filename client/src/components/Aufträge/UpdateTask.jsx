@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState, useRef, useEffect } from "react";
 import { format } from "date-fns";
 import NavigationTop from "../NavigationTop";
-import Select from 'react-select';
+import Select from "react-select";
 
 const UpdateTask = () => {
   const [editTaskId, setEditTaskId] = useState(null);
@@ -22,7 +22,7 @@ const UpdateTask = () => {
   const [error, setError] = useState("");
   const [entries, setEntries] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [file, setFile] = useState('');
+  const [file, setFile] = useState("");
 
   const fileInputRef = useRef(null);
 
@@ -81,7 +81,6 @@ const UpdateTask = () => {
           description: newDescription,
           industry: newIndustry,
           task_type: newTask_type,
-         
         },
         { withCredentials: true }
       );
@@ -99,13 +98,11 @@ const UpdateTask = () => {
                     industry: newIndustry,
                     task_type: newTask_type,
                   },
-         
                 }
               : entry
           )
         );
         setEditTaskId(null);
-        
       }
     } catch (error) {
       setError(error.message || "Something went wrong with updating the task");
@@ -146,7 +143,6 @@ const UpdateTask = () => {
     }
   };
 
-
   useEffect(() => {
     console.log("Error:", error.message);
     console.log(newTitle, newDescription, newIndustry, newTask_type);
@@ -154,7 +150,6 @@ const UpdateTask = () => {
 
   return (
     <div>
-      <NavigationTop />
       <div className="heading text-center font-bold text-2xl m-5 text-gray-800 bg-white dark:text-white dark:bg-[#1f2937]">
         Task
       </div>
@@ -171,7 +166,7 @@ const UpdateTask = () => {
                     setNewDescription(entry.content.description); // Setze die neue Beschreibung beim Klick auf "Edit"
                     setNewIndustry(entry.content.industry); // Setze die neue Branche beim Klick auf "Edit"
                     setNewTask_type(entry.content.task_type); // Setze den neuen Task-Typ beim Klick auf "Edit"
-                     setDocuments(entry.documents); // Setze die neuen Dokumente beim Klick auf "Edit"
+                    setDocuments(entry.documents); // Setze die neuen Dokumente beim Klick auf "Edit"
                   }}
                   type="button"
                   className="text-white bg-teal-500 hover:bg-teal-700  focus:outline-none font-medium rounded-lg text-sm mx-2 px-4 py-2 text-center dark:bg-teal-500 dark:hover:bg-teal-700"
@@ -216,7 +211,9 @@ const UpdateTask = () => {
                     <div className="mt-2">
                       <Select
                         options={types}
-                        value={types.find((type) => type.value === newTask_type)}
+                        value={types.find(
+                          (type) => type.value === newTask_type
+                        )}
                         onChange={(selectedOption) =>
                           setNewTask_type(selectedOption.value)
                         }
@@ -224,8 +221,6 @@ const UpdateTask = () => {
                       />
                     </div>
                   </div>
-
-
 
                   <div className="buttons flex justify-end mb-2">
                     <button
@@ -274,8 +269,6 @@ const UpdateTask = () => {
                       {entry.content.task_type}
                     </p>
                   </div>
-
-                
                 </>
               )}
             </div>
@@ -301,7 +294,7 @@ const UpdateTask = () => {
               </span>
             </div>
 
-               {/* Add the documents here  */}
+            {/* Add the documents here  */}
             <div className="icons flex text-gray-500 m-2">
               <label id="select-image">
                 <svg

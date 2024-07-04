@@ -1,5 +1,4 @@
 import NavigationTop from "../NavigationTop";
-import AuftragÜbersichtSidebar from "./SidebarOr";
 import CreatTask from "./CreatTask";
 import Taskoverview from "./Taskoverview";
 import UPdateTask from "./UpdateTask";
@@ -8,15 +7,17 @@ function AuftragÜbersicht() {
     <>
       <NavigationTop />
       <div className="flex">
-        <AuftragÜbersichtSidebar />
         <div className="flex flex-col">
-        <div className=" w-full">
-          <CreatTask />
-        </div>
-        
-        <div className="w-full">
-          <Taskoverview />
-        </div><div><UPdateTask /></div>
+          <div className=" w-full">
+            <CreatTask />
+          </div>
+
+          <div className="w-full">
+            <Taskoverview />
+          </div>
+          <div>
+            <UPdateTask />
+          </div>
         </div>
       </div>
     </>
