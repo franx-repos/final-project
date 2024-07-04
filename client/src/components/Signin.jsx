@@ -91,7 +91,7 @@ const Signin = () => {
             <Link to="/">
               <img
                 className="mx-auto h-10 w-auto"
-                src="./public/TaxMax-Logo3.svg"
+                src="\src\assets\TaxMax-Logo3.svg"
                 alt="TAXMAX"
               />
             </Link>
