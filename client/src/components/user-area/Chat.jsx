@@ -1,7 +1,4 @@
 import { useEffect } from "react";
-import NavigationTop from "../NavigationTop";
-import ThemeToggle from "../ThemeToggle";
-import DashboardSidebar from "./Sidebar";
 import axios from "axios";
 import { useAuth } from "../../context/UserProvider";
 import ChatWindow from "./ChatWindow";
@@ -26,14 +23,8 @@ function Chat() {
 
   return (
     <>
-      {" "}
-      <div className="bg-white border-gray-200 dark:bg-gray-900">
-        {/* <ThemeToggle /> */}
-        <NavigationTop />
-        <div className="flex">
-          <DashboardSidebar />
-          <ChatWindow />
-        </div>
+      <div className="flex w-full flex-col bg-white rounded-md dark:text-white dark:bg-[#1f2937]">
+        <ChatWindow />
       </div>
     </>
   );

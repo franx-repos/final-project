@@ -1,9 +1,11 @@
 import Task from "../models/tasksSchema.js";
 import { v2 as cloudinary } from "cloudinary";
+import asyncHandler from "../utils/asyncHandler.js";
+import Client from "../models/clientsSchema.js";
 
 export const getAllTasks = async (req, res, next) => {
   try {
-    const task = await Task.find();
+    const task = await Task.find().populate("content.created_by");
     // const task = await Task.find({content:req.cid});
     if (!task.length) {
       throw { statusCode: 404, message: "Task not found" };
@@ -17,7 +19,7 @@ export const getAllTasks = async (req, res, next) => {
 export const getTaskById = async (req, res, next) => {
   const { id } = req.params;
   try {
-    const task = await Task.findById(id);
+    const task = await Task.findById(id).populate("content.created_by");
     if (!task) {
       throw { statusCode: 404, message: "Task not found" };
     }
@@ -30,18 +32,35 @@ export const getTaskById = async (req, res, next) => {
 export const CreateTask = async (req, res, next) => {
   // const {title,deadline,task_type,industry,description,created_by,...documents} = req.body;
   // const {content,...documents} = req.body;
+  const {cid} = req;
   const { content } = req.body;
   // console.log(content);
   // console.log(documents)
   try {
     // const newTask = new Task({title,deadline,task_type,industry,description,created_by,documents} );
-    const newTask = new Task({ content });
+    const newTask = new Task({ content,created_by: cid, });
     const savedTask = await newTask.save();
+
+    //Update the client's chat array
+    const clientUpdate = await Client.findByIdAndUpdate(cid, {
+    $push: { tasks: newTask._id },
+  }); 
     res.status(201).json(savedTask);
   } catch (error) {
     next(error);
   }
 };
+
+
+// export const CreateTask = asyncHandler(async (req, res, next) => {
+//   const {cid ,content} = req;
+
+//   const newTask = new Task({ content, created_by: cid });
+//   const savedTask = await newTask.save();
+//   res.status(201).json(savedTask);
+// }
+// );
+
 
 // export const updateTask = async (req, res, next) => {
 //   const { id } = req.params;
@@ -65,11 +84,13 @@ export const CreateTask = async (req, res, next) => {
 //mit multer und cloudinary
 export const updateTask = async (req, res, next) => {
   const { id } = req.params;
-  const { documentstitle, icon, title } = req.body;
+  const { documentstitle, icon, title, industry, task_type,description
+   } = req.body;
   const documents = { documentstitle, icon };
-  const content = { title };
-  // console.log(documents);
-  // console.log(content);
+  const content = { title ,industry, task_type,description};
+  res.status(200).json(updateTask);
+  console.log(documents);
+  console.log(content);
   try {
     if (req.file) {
       console.log(req.file);
@@ -78,8 +99,8 @@ export const updateTask = async (req, res, next) => {
       documents.url = url;
       documents.public_id = req.file.filename;
     }
-
-    const task = await Task.findById(id);
+    
+    const task = await Task.findById(id).populate("content.created_by");
 
     if (!task) {
       throw { statusCode: 404, message: "Task not found" };
@@ -152,10 +173,45 @@ export const deleteTaskDocument = async (req, res, next) => {
     //delete document in DB through updating array in db
     // console.log(filtered_documents);
     task.documents = filtered_documents;
-    const updatedTask = await task.save();
+    const updateTask = (await task.save()).populate("content.created_by");
 
     res.json(updateTask);
   } catch (error) {
     next(error);
   }
 };
+
+export const getTasksByOpen = async (req, res, next) => {
+  try {
+    const tasks = await Task.find({ "content.status": "OPEN" });
+    if (!tasks.length) {
+      return res.status(404).json({ message: "No tasks found" });
+    }
+    res.json(tasks);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getTaskByPro = async (req, res, next) => {
+  try {
+    const tasks = await Task.find({ "content.assigned_to": req.cid});
+    if (!tasks.length) {
+      return res.status(404).json({ message: "No tasks found" });
+    } 
+    res.json(tasks);
+  } catch (error) {
+    next(error);
+  }
+}
+export const getTaskByCid = async (req, res, next) => {
+  try {
+    const tasks = await Task.find({ "content.created_by": req.cid});
+    if (!tasks.length) {
+      return res.status(404).json({ message: "No tasks found" });
+    } 
+    res.json(tasks);
+  } catch (error) {
+    next(error);
+  }
+}

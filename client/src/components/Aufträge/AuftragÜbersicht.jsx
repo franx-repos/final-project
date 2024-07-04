@@ -2,6 +2,7 @@ import NavigationTop from "../NavigationTop";
 import AuftragÜbersichtSidebar from "./SidebarOr";
 import CreatTask from "./CreatTask";
 import Taskoverview from "./Taskoverview";
+import UPdateTask from "./UpdateTask";
 function AuftragÜbersicht() {
   return (
     <>
@@ -15,7 +16,7 @@ function AuftragÜbersicht() {
         
         <div className="w-full">
           <Taskoverview />
-        </div>
+        </div><div><UPdateTask /></div>
         </div>
       </div>
     </>
