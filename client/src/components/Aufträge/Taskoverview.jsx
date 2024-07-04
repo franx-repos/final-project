@@ -4,6 +4,11 @@ import { format } from "date-fns";
 import GanttChart from "../user-area/GanttChart";
 import NewPost from "./CreatTask";
 
+const styles = {
+  th: "px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider",
+  td: "px-5 py-5 border-b max-w-10 overflow-clip border-b-gray-200 text-wrap  dark:border-x-0 dark:border-r-white dark:border bg-white text-sm",
+};
+
 const Taskoverview = () => {
   const [entries, setEntries] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -31,7 +36,7 @@ const Taskoverview = () => {
       }
     };
     fetchTasks();
-  }, [entries]);
+  }, []);
 
   const handelStutas = (status) => {
     if (status === "OPEN") {
@@ -62,27 +67,16 @@ const Taskoverview = () => {
             <table className="min-w-full leading-normal">
               <thead>
                 <tr>
-                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                    Order Title
-                  </th>
-                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                    description
-                  </th>
-                  <th className="px-5 py-3 border-b-2 text-center border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                    Industry
-                  </th>
-                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                    Created at
-                  </th>
-
-                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                    Status
-                  </th>
+                  <th className={styles.th}>Order Title</th>
+                  <th className={styles.th}>description</th>
+                  <th className={styles.th}>Industry</th>
+                  <th className={styles.th}>Created at</th>
+                  <th className={styles.th}>Status</th>
                 </tr>
               </thead>
               <tbody>
                 {entries.map((entry) => (
-                  <tr key={entries._id} className=" hover:bg-gray-700">
+                  <tr key={entries._id} className="hover:bg-gray-700">
                     <td className="px-5 py-5 border-b bg-white text-sm">
                       <div className="flex items-center">
                         <div className="ml-3">
@@ -95,12 +89,12 @@ const Taskoverview = () => {
 
                  
 
-                    <td className="px-5 py-5 border-b max-w-10 overflow-clip border-b-gray-200 text-wrap  dark:border-x-0  dark:border-r-white dark:border  bg-white text-sm">
+                    <td className={styles.td}>
                       <p className="text-gray-900 whitespace-no-wrap truncate ">
                         {entry.content.description}
                       </p>
                     </td>
-                    <td className="px-5 py-5 border-b max-w-15  overflow-clip border-b-gray-200 text-wrap  dark:border-x-0  dark:border-r-white dark:border  bg-white text-sm">
+                    <td className={styles.td}>
                       <p className="text-gray-900 whitespace-no-wrap">
                         {entry.content.industry}
                       </p>

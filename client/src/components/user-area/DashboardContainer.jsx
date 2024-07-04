@@ -1,12 +1,14 @@
-
 import Chat from "./Chat";
 import Taskoverview from "../Aufträge/Taskoverview";
 import UserProfile from "./UserProfile";
+import MatchingPage from "../Aufträge/MatchingPage";
 
-function DashboardContainer(currentLocation) {
+const DashboardContainer = (currentLocation) => {
   console.log(currentLocation);
 
   switch (currentLocation.currentLocation) {
+    case "Dashboard":
+      return <MatchingPage />;
     case "Chat":
       return <Chat />;
     case "Task Overview":
@@ -16,6 +18,6 @@ function DashboardContainer(currentLocation) {
     default:
       return null;
   }
-}
+};
 
 export default DashboardContainer;
