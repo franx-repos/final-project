@@ -9,8 +9,8 @@ tasksRouter
   .route("/")
   .get(verifyToken,taskController.getAllTasks)
   .post(verifyToken,taskController.CreateTask);
-  tasksRouter.route("/yourtask").get(verifyToken,taskController.getTaskbyPro);
-  tasksRouter.route("/yourorder").get(verifyToken,taskController.getTaskbycid);
+  tasksRouter.route("/pro_task").get(verifyToken,taskController.getTaskByPro);
+  tasksRouter.route("/client_task").get(verifyToken,taskController.getTaskByCid);
   tasksRouter.route("/open").get(verifyToken,taskController.getTasksByOpen);
 tasksRouter
   .route("/:id")
