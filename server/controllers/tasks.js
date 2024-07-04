@@ -1,5 +1,6 @@
 import Task from "../models/tasksSchema.js";
 import { v2 as cloudinary } from "cloudinary";
+import asyncHandler from "../utils/asyncHandler.js";
 
 export const getAllTasks = async (req, res, next) => {
   try {
@@ -43,6 +44,34 @@ export const CreateTask = async (req, res, next) => {
   }
 };
 
+
+// export const CreateTask = asyncHandler(async (req, res, next) => {
+//   const {cid ,content} = req;
+
+//   const newTask = new Task({ content, created_by: cid });
+//   const savedTask = await newTask.save();
+//   res.status(201).json(savedTask);
+// }
+// );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // export const updateTask = async (req, res, next) => {
 //   const { id } = req.params;
 //   const { content, documents } = req.body;
@@ -65,9 +94,10 @@ export const CreateTask = async (req, res, next) => {
 //mit multer und cloudinary
 export const updateTask = async (req, res, next) => {
   const { id } = req.params;
-  const { documentstitle, icon, title } = req.body;
+  const { documentstitle, icon, title, industry, task_type,description
+   } = req.body;
   const documents = { documentstitle, icon };
-  const content = { title };
+  const content = { title ,industry, task_type,description};
   console.log(documents);
   console.log(content);
   try {
