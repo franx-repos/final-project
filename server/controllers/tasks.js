@@ -44,7 +44,7 @@ export const CreateTask = async (req, res, next) => {
     //Update the client's chat array
     const clientUpdate = await Client.findByIdAndUpdate(cid, {
     $push: { tasks: newTask._id },
-  });
+  }); 
     res.status(201).json(savedTask);
   } catch (error) {
     next(error);
