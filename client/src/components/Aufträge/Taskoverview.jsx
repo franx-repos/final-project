@@ -21,14 +21,14 @@ const Taskoverview = () => {
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        let response;
-        if (userData.data && userData.data.role === "client") {
-          response = await axios.get('http://localhost:8001/clients/me', { withCredentials: true });
-        } else {
-          response = await axios.get('http://localhost:8001/pros/me', { withCredentials: true });
-        }
+       // let response;
+       // if (userData.data && userData.data.role === "client") {
+       //   response = await axios.get('http://localhost:8001/clients/me', { withCredentials: true });
+       // } else {
+       //   response = await axios.get('http://localhost:8001/pros/me', { withCredentials: true });
+       // }
 
-        const taskIds = response.data.tasks;
+        const taskIds = userData.tasks;
 
         const detailedTasksPromises = taskIds.map(id => 
           axios.get(`http://localhost:8001/tasks/${id}`, { withCredentials: true })
