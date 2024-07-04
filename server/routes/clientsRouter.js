@@ -10,14 +10,15 @@ clientsRouter.get("/me", verifyToken, authClient.getClient); // Route overlap
 clientsRouter
   .route("/")
   .get(clientController.getAllClients)
-  .post(clientController.addNewClient);
+  .post(clientController.addNewClient)
+  .patch(verifyToken,clientController.updateClient);
 
 clientsRouter
   .route("/:id")
   .get(clientController.getClientById)
   // .put(clientController.updateClient)
   .delete(clientController.deleteClient)
-  .patch(clientController.updateClient);
+  // .patch(clientController.updateClient);
 // clientsRouter.patch("/:id", clientController.addTagToClient);
 
 clientsRouter.route("/email/:email").get(clientController.getClientByEmail);

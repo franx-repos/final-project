@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { format } from "date-fns";
 import GanttChart from "../user-area/GanttChart";
+import { useAuth } from "../../context/UserProvider";
 import NewPost from "./CreatTask";
 
 const styles = {
@@ -13,30 +14,46 @@ const Taskoverview = () => {
   const [entries, setEntries] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const { userData } = useAuth();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchTasks = async () => {
-      //   const deploy=import.meta.env.VITE_DEPLOY_URL;
-      //   console.log(deploy);
       try {
-        // const token = localStorage.getItem('token');
-        const response = await axios.get(
-          `http://localhost:8001/tasks`,
-          // {headers:{'Authorization':`bearer${token}`}},
-          { withCredentials: true }
+        // let response;
+        // if (userData.data && userData.data.role === "client") {
+        //   response = await axios.get('http://localhost:8001/clients/me', { withCredentials: true });
+        // } else {
+        //   response = await axios.get('http://localhost:8001/pros/me', { withCredentials: true });
+        // }
+
+        const taskIds = userData.tasks;
+
+        const detailedTasksPromises = taskIds.map((id) =>
+          axios.get(`http://localhost:8001/tasks/${id}`, {
+            withCredentials: true,
+          })
         );
-        setEntries(response.data);
-        //  console.log(response.data);
+
+        const detailedTasksResults = await Promise.allSettled(
+          detailedTasksPromises
+        );
+
+        const detailedTasksData = detailedTasksResults
+          .filter((result) => result.status === "fulfilled")
+          .map((result) => result.value.data);
+
+        setEntries(detailedTasksData);
         setLoading(false);
       } catch (error) {
         setLoading(false);
-        setError(error.message || "Something went wrong with Login");
+        setError(error.message || "Something went wrong with fetching tasks");
         console.log(error);
       }
     };
+
     fetchTasks();
-  }, [entries]);
+  }, [userData]);
 
   const handelStutas = (status) => {
     if (status === "OPEN") {
@@ -49,10 +66,7 @@ const Taskoverview = () => {
   };
 
   useEffect(() => {
-    // console.log(entries)
-    // console.log(error.message || "Something went wrong")
     console.log("Error:", error.message);
-    // console.log("Error:", error.response);
   }, [error]);
 
   const toggleModal = () => {
@@ -67,16 +81,26 @@ const Taskoverview = () => {
             <table className="w-full leading-normal">
               <thead>
                 <tr>
-                  <th className={styles.th}>Order Title</th>
-                  <th className={styles.th}>description</th>
-                  <th className={styles.th}>Industry</th>
-                  <th className={styles.th}>Created at</th>
-                  <th className={styles.th}>Status</th>
+                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                    Order Title
+                  </th>
+                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                    Description
+                  </th>
+                  <th className="px-5 py-3 border-b-2 text-center border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                    Industry
+                  </th>
+                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                    Created at
+                  </th>
+                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                    Status
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 {entries.map((entry) => (
-                  <tr key={entries._id} className="hover:bg-gray-700">
+                  <tr key={entry._id} className="hover:bg-gray-700">
                     <td className="px-5 py-5 border-b bg-white text-sm">
                       <div className="flex items-center">
                         <div className="ml-3">
@@ -92,15 +116,13 @@ const Taskoverview = () => {
                         {entry.content.description}
                       </p>
                     </td>
-                    <td className={styles.td}>
+                    <td className="px-5 py-5 border-b max-w-15 overflow-clip border-b-gray-200 text-wrap dark:border-x-0 dark:border-r-white dark:border bg-white text-sm">
                       <p className="text-gray-900 whitespace-no-wrap">
                         {entry.content.industry}
                       </p>
                     </td>
-
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                       <p className="text-gray-900 whitespace-no-wrap">
-                        {/* {entry.content.create_date} */}
                         {entry.content.create_date
                           ? format(
                               new Date(entry.content.create_date),
@@ -109,7 +131,6 @@ const Taskoverview = () => {
                           : ""}
                       </p>
                     </td>
-
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                       <span
                         className={`relative inline-block px-3 py-1 rounded-lg font-semibold leading-tight ${handelStutas(
