@@ -78,7 +78,7 @@ function UserProfile() {
 
     try {
       const response = await axios.patch(
-        `http://localhost:8001/clients/${userData._id}`,
+        `http://localhost:8001/clients`,
         {
           data: {
             first_name,

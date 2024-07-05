@@ -54,7 +54,7 @@ function Dashboard() {
             setCurrentLocation={setCurrentLocation}
           />
 
-          <div className="flex w-full flex-col bg-white p-3 rounded-md dark:text-white dark:bg-gray-900">
+          <div className="w-5/6 flex-col bg-teal-600 p-3 dark:text-white dark:bg-gray-900">
             <DashboardHeader currentLocation={currentLocation} />
             <DashboardContainer
               currentLocation={currentLocation}
