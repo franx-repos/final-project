@@ -102,8 +102,7 @@ const NewPost = ({ isModalOpen, toggleModal }) => {
       // .populate("content.created_by");
 
           toggleModal();
-          toggleModal();
-      
+       
       toggleModal();
       
     } catch (error) {
