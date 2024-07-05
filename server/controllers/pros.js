@@ -23,11 +23,26 @@ export const getProById = async (req, res, next) => {
   } catch (error) {}
 };
 
+export const getProByEmail = async (req, res, next) => {
+  const { email } = req.params;
+  console.log(email);
+  try {
+    const pro = await Pro.find({ "data.email": email });
+    if (!pro) {
+      throw { statusCode: 404, message: "Client not found" };
+    }
+    console.log(pro);
+    res.json(pro);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const addNewPro = async (req, res, next) => {
-  const { sowo_id, name, house, timeOfArrival } = req.body;
+  const { role, ...data } = req.body;
 
   try {
-    const newPro = new Pro({ sowo_id, name, house, timeOfArrival });
+    const newPro = new Pro({ data, role });
     const savedPro = await newPro.save();
     res.status(201).json(savedPro);
   } catch (error) {
@@ -36,13 +51,28 @@ export const addNewPro = async (req, res, next) => {
 };
 
 export const updatePro = async (req, res, next) => {
-  const { id } = req.params;
-  const { sowo_id, name, house } = req.body;
+  const {cid} = req;
+  const { data, email_verified, role, industry, languages, image_url } =
+    req.body;
 
   try {
     const updatedPro = await Pro.findByIdAndUpdate(
-      id,
-      { sowo_id, name, house, timeOfArrival },
+      cid,
+      {
+       
+        'data.first_name': data.first_name,
+        'data.email': data.email,
+        'data.street': data.street,
+        'data.zip': data.zip,
+        'data.city': data.city,
+        'data.country':data.country,
+        'data.phone_number': data.phone_number,
+        image_url,
+        email_verified,
+        role,
+        industry,
+        languages,
+      },
       { new: true }
     );
     if (!updatedPro) {
@@ -54,22 +84,22 @@ export const updatePro = async (req, res, next) => {
   }
 };
 
-export const addTagToPro = async (req, res, next) => {
-  const { id } = req.body;
-  const { tag } = req.body;
+// export const addTagToPro = async (req, res, next) => {
+//   const { id } = req.body;
+//   const { tag } = req.body;
 
-  try {
-    const pro = await Pro.findById(id);
-    if (!pro) {
-      throw { statusCode: 404, message: "Pro not found" };
-    }
-    pro.tags.push(tag);
-    const updatePro = await pro.save();
-    res.json(updatePro);
-  } catch (error) {
-    next(error);
-  }
-};
+//   try {
+//     const pro = await Pro.findById(id);
+//     if (!pro) {
+//       throw { statusCode: 404, message: "Pro not found" };
+//     }
+//     pro.tags.push(tag);
+//     const updatePro = await pro.save();
+//     res.json(updatePro);
+//   } catch (error) {
+//     next(error);
+//   }
+// };
 
 export const deletePro = async (req, res, next) => {
   const { id } = req.params;
