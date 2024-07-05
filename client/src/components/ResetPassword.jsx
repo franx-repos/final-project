@@ -10,7 +10,7 @@ const ResetPassword = () => {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
-
+  const deploy = import.meta.env.VITE_DEPLOY_URL;
   useEffect(() => {
     console.log(`email: ${email}, error: ${error}, message: ${message}`);
   }, [email, error, message]);
@@ -25,7 +25,7 @@ const ResetPassword = () => {
     }
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:8001/api/", {
+      const response = await fetch(`${deploy}/api/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

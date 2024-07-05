@@ -4,6 +4,8 @@ import { format } from "date-fns";
 import NavigationTop from "../NavigationTop";
 import Select from 'react-select';
 
+
+
 const UpdateTask = () => {
   const [editTaskId, setEditTaskId] = useState(null);
   const [images, setImages] = useState([]);
@@ -51,7 +53,8 @@ const UpdateTask = () => {
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        const response = await axios.get(`http://localhost:8001/tasks`, {
+        const deploy = import.meta.env.VITE_DEPLOY_URL;
+        const response = await axios.get(`${deploy}/tasks`, {
           withCredentials: true,
         });
         setEntries(response.data);
@@ -67,8 +70,9 @@ const UpdateTask = () => {
 
   const handleUpdate = async (_id) => {
     try {
+      const deploy = import.meta.env.VITE_DEPLOY_URL;
       const response = await axios.put(
-        `http://localhost:8001/tasks/${_id}`,
+        `${deploy}/tasks/${_id}`,
         {
           title: newTitle,
           description: newDescription,
@@ -107,8 +111,9 @@ const UpdateTask = () => {
 
   const handleDelete = async (_id) => {
     try {
+      const deploy = import.meta.env.VITE_DEPLOY_URL;
       const response = await axios.delete(
-        `http://localhost:8001/tasks/${_id}`,
+        `${deploy}/tasks/${_id}`,
         { withCredentials: true }
       );
       if (response.status === 200) {

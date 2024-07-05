@@ -3,6 +3,9 @@ import axios from "axios";
 import { useAuth } from "../../context/UserProvider";
 import ChatWindow from "./ChatWindow";
 
+
+
+
 function Chat() {
   const { isLoggedIn, setIsLoggedIn, userData, setUserData } = useAuth();
 
@@ -10,8 +13,9 @@ function Chat() {
     console.log(userData._id);
     const fetchChat = async () => {
       try {
+        const deploy = import.meta.env.VITE_DEPLOY_URL;
         const response = await axios.get(
-          `http://localhost:8001/chats/client_chat/${userData._id}`
+          `${deploy}/chats/client_chat/${userData._id}`
         );
         console.log(response);
       } catch (error) {

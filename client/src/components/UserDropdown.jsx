@@ -22,6 +22,8 @@ const UserDropdown = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const navigate = useNavigate();
 
+  const deploy = import.meta.env.VITE_DEPLOY_URL;
+
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
@@ -29,7 +31,7 @@ const UserDropdown = () => {
   const handleLogout = async () => {
     try {
       await axios.post(
-        `http://localhost:8001/clients/logout`,
+        `${deploy}/clients/logout`,
         {},
         { withCredentials: true }
       );

@@ -4,6 +4,8 @@ import ChatInput from "./ChatInput";
 import { useAuth } from "../../context/UserProvider";
 import axios from "axios";
 
+
+
 const ChatWindow = ({ socket }) => {
   const { isLoggedIn, setIsLoggedIn, userData, setUserData } = useAuth();
   const [chats, setChats] = useState([]);
@@ -11,12 +13,13 @@ const ChatWindow = ({ socket }) => {
   useEffect(() => {
     if (userData) {
       // Add this check
+      const deploy = import.meta.env.VITE_DEPLOY_URL;
       const fetchChat = async () => {
         let url = "";
         if (userData.data && userData.data.role === "client") {
-          url = `http://localhost:8001/chats/client_chat/`;
+          url = `${deploy}/chats/client_chat/`;
         } else {
-          url = `http://localhost:8001/chats/pro_chat/`;
+          url = `${deploy}/chats/pro_chat/`;
         }
         console.log(url);
         try {
