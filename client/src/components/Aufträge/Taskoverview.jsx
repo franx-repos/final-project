@@ -21,38 +21,40 @@ const Taskoverview = () => {
   const [isCreateTaskOpen, setIsCreateTaskOpen] = useState(false);
   const [isUpdateTaskOpen, setIsUpdateTaskOpen] = useState(false);
   const [entryToUpdate, setEntryToUpdate] = useState({});
+  const [hasBeenChanged, setHasBeenChanged] = useState(false);
 
+  const fetchTasks = async () => {
+    try {
+      const taskIds = userData.tasks;
+      //TaskIds kommt aus userData, also useAuth, dies wird nicht neu geladen, daher auch nicht die taskIds
+      const detailedTasksPromises = taskIds.map((id) =>
+        axios.get(`http://localhost:8001/tasks/${id}`, {
+          withCredentials: true,
+        })
+      );
+
+      const detailedTasksResults = await Promise.allSettled(
+        detailedTasksPromises
+      );
+
+      const detailedTasksData = detailedTasksResults
+        .filter((result) => result.status === "fulfilled")
+        .map((result) => result.value.data);
+
+      setEntries(detailedTasksData);
+
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      setError(error.message || "Something went wrong with fetching tasks");
+      console.log(error);
+    }
+  };
+  console.log("Taskoverview: " + hasBeenChanged);
   useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        const taskIds = userData.tasks;
-
-        const detailedTasksPromises = taskIds.map((id) =>
-          axios.get(`http://localhost:8001/tasks/${id}`, {
-            withCredentials: true,
-          })
-        );
-
-        const detailedTasksResults = await Promise.allSettled(
-          detailedTasksPromises
-        );
-
-        const detailedTasksData = detailedTasksResults
-          .filter((result) => result.status === "fulfilled")
-          .map((result) => result.value.data);
-
-        setEntries(detailedTasksData);
-
-        setLoading(false);
-      } catch (error) {
-        setLoading(false);
-        setError(error.message || "Something went wrong with fetching tasks");
-        console.log(error);
-      }
-    };
-
     fetchTasks();
-  }, [userData]);
+    console.log(entries);
+  }, [userData, hasBeenChanged]);
 
   const handleStatus = (status) => {
     if (status === "OPEN") {
@@ -154,11 +156,18 @@ const Taskoverview = () => {
         </div>
       </div>
 
-      <NewPost isCreateTaskOpen={isCreateTaskOpen} toggleModal={toggleModal} />
+      <NewPost
+        isCreateTaskOpen={isCreateTaskOpen}
+        toggleModal={toggleModal}
+        hasBeenChanged={hasBeenChanged}
+        setHasBeenChanged={setHasBeenChanged}
+      />
       <UpdateTask
         isUpdateTaskOpen={isUpdateTaskOpen}
         toggleUpdateModal={toggleUpdateModal}
         entryToUpdate={entryToUpdate}
+        hasBeenChanged={hasBeenChanged}
+        setHasBeenChanged={setHasBeenChanged}
       />
     </div>
   );

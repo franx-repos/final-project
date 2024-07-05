@@ -3,7 +3,13 @@ import { useState, useRef, useEffect } from "react";
 import { format } from "date-fns";
 import Select from "react-select";
 
-const UpdateTask = ({ isUpdateTaskOpen, toggleUpdateModal, entryToUpdate }) => {
+const UpdateTask = ({
+  isUpdateTaskOpen,
+  toggleUpdateModal,
+  entryToUpdate,
+  hasBeenChanged,
+  setHasBeenChanged,
+}) => {
   const [editTaskId, setEditTaskId] = useState(null);
   const [images, setImages] = useState([]);
   const [title, setTitle] = useState("");
@@ -74,6 +80,7 @@ const UpdateTask = ({ isUpdateTaskOpen, toggleUpdateModal, entryToUpdate }) => {
       );
 
       if (response.status === 200) {
+        setHasBeenChanged(!hasBeenChanged);
         toggleUpdateModal();
         console.log("Updated successfully.");
       }
@@ -88,6 +95,8 @@ const UpdateTask = ({ isUpdateTaskOpen, toggleUpdateModal, entryToUpdate }) => {
         `http://localhost:8001/tasks/${_id}`,
         { withCredentials: true }
       );
+      setHasBeenChanged(!hasBeenChanged);
+      toggleUpdateModal();
     } catch (error) {
       setError(error.message || "Something went wrong with deleting the task");
     }
@@ -149,7 +158,7 @@ const UpdateTask = ({ isUpdateTaskOpen, toggleUpdateModal, entryToUpdate }) => {
 
               <div className="flex flex-col">
                 <label
-                  class="flex pl-2 text-gray-700 text-sm font-bold mb-1"
+                  className="flex pl-2 text-gray-700 text-sm font-bold mb-1"
                   htmlFor="username"
                 >
                   title
@@ -163,7 +172,7 @@ const UpdateTask = ({ isUpdateTaskOpen, toggleUpdateModal, entryToUpdate }) => {
               </div>
               <div className="py-5 max-full border-b-gray-200 text-wrap dark:border-x-0 dark:border-r-white dark:border bg-white text-sm">
                 <label
-                  class="flex pl-2 text-gray-700 text-sm font-bold mb-1"
+                  className="flex pl-2 text-gray-700 text-sm font-bold mb-1"
                   htmlFor="username"
                 >
                   description
@@ -178,7 +187,7 @@ const UpdateTask = ({ isUpdateTaskOpen, toggleUpdateModal, entryToUpdate }) => {
               <div className="flex items-stretch">
                 <div className="w-full mr-2 overflow-clip border-b-gray-200 text-wrap dark:border-x-0 dark:border-r-white dark:border bg-white text-sm">
                   <label
-                    class="flex pl-2 text-gray-700 text-sm font-bold mb-1"
+                    className="flex pl-2 text-gray-700 text-sm font-bold mb-1"
                     htmlFor="username"
                   >
                     industry
@@ -192,7 +201,7 @@ const UpdateTask = ({ isUpdateTaskOpen, toggleUpdateModal, entryToUpdate }) => {
                 </div>
                 <div className="w-full ml-2">
                   <label
-                    class="flex pl-2 text-gray-700 text-sm font-bold mb-1"
+                    className="flex pl-2 text-gray-700 text-sm font-bold mb-1"
                     htmlFor="username"
                   >
                     job type
