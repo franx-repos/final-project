@@ -48,10 +48,12 @@ function Signup() {
 
   const navigate = useNavigate();
 
+  const deploy = import.meta.env.VITE_DEPLOY_URL;
+
   const handleRegister = async (e) => {
     e.preventDefault();
-    // const deploy = import.meta.env.VITE_DEPLOY_URL;
-    // ${deploy}
+ 
+
     if (client === false) {
       if (password !== confirmPassword) {
         // console.log("Passwords do not match");
@@ -78,8 +80,9 @@ function Signup() {
           { withCredentials: true }
         );
 
+        navigate("/Dashboard");
         if (response.status === 201) {
-          navigate("/signin");
+          
         }
       } catch (error) {
         // console.log(error);
@@ -92,7 +95,7 @@ function Signup() {
 
   const handleRegisterprofi = async (e) => {
     e.preventDefault();
-    const deploy = import.meta.env.VITE_DEPLOY_URL;
+    
     try {
       const response = await axios.post(
         `${deploy}/pros/register`,
@@ -113,17 +116,17 @@ function Signup() {
         { withCredentials: true }
       );
 
+      navigate("/Dashboard");
       if (response.status === 201) {
-        navigate("/signin");
       }
     } catch (error) {
       toast.error(error.response.data.error || "Registration failed");
     }
   };
 
-  // useEffect(() => {
-  //   console.log(role,first_name, last_name, street, city, zip, country, tax_id, phone_number, email, password,client);
-  // }, [ role,first_name, last_name, street, city, zip, country, tax_id, phone_number, email, password,client ]);
+  useEffect(() => {
+    console.log(role,first_name, last_name, street, city, zip, country, tax_id, phone_number, email, password,client);
+  }, [ role,first_name, last_name, street, city, zip, country, tax_id, phone_number, email, password,client ]);
 
   return (
     <form

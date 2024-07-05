@@ -4,7 +4,7 @@ import ChatInput from "./ChatInput";
 import { useAuth } from "../../context/UserProvider";
 import axios from "axios";
 
-
+const deploy = import.meta.env.VITE_DEPLOY_URL;
 
 const ChatWindow = ({ socket }) => {
   const { isLoggedIn, setIsLoggedIn, userData, setUserData } = useAuth();
@@ -13,7 +13,7 @@ const ChatWindow = ({ socket }) => {
   useEffect(() => {
     if (userData) {
       // Add this check
-      const deploy = import.meta.env.VITE_DEPLOY_URL;
+      
       const fetchChat = async () => {
         let url = "";
         if (userData.data && userData.data.role === "client") {

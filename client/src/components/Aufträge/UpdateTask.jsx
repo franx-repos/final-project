@@ -21,6 +21,8 @@ const UpdateTask = () => {
 
   const fileInputRef = useRef(null);
 
+  const deploy = import.meta.env.VITE_DEPLOY_URL;
+
   const types = [
     { value: "tax declaration", label: "tax declaration" },
     { value: "insolvency law", label: "insolvency law" },
@@ -53,7 +55,7 @@ const UpdateTask = () => {
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        const deploy = import.meta.env.VITE_DEPLOY_URL;
+        
         const response = await axios.get(`${deploy}/tasks`, {
           withCredentials: true,
         });
@@ -70,7 +72,7 @@ const UpdateTask = () => {
 
   const handleUpdate = async (_id) => {
     try {
-      const deploy = import.meta.env.VITE_DEPLOY_URL;
+      
       const response = await axios.put(
         `${deploy}/tasks/${_id}`,
         {
@@ -111,7 +113,7 @@ const UpdateTask = () => {
 
   const handleDelete = async (_id) => {
     try {
-      const deploy = import.meta.env.VITE_DEPLOY_URL;
+    
       const response = await axios.delete(
         `${deploy}/tasks/${_id}`,
         { withCredentials: true }

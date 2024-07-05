@@ -79,7 +79,7 @@ const NewPost = ({ isModalOpen, toggleModal }) => {
   const handlePost = async (e) => {
     e.preventDefault();
     try {
-      const deploy = import.meta.env.VITE_DEPLOY_URL;
+     
       const response = await axios.post(
         `${deploy}/tasks`,
         {

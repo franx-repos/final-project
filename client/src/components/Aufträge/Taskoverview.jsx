@@ -18,6 +18,8 @@ const Taskoverview = () => {
   const { userData } = useAuth();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+
+  const deploy = import.meta.env.VITE_DEPLOY_URL;
   useEffect(() => {
     const fetchTasks = async () => {
       try {
@@ -29,7 +31,7 @@ const Taskoverview = () => {
        // }
 
         const taskIds = userData.tasks;
-        const deploy = import.meta.env.VITE_DEPLOY_URL;
+        
         const detailedTasksPromises = taskIds.map(id => 
           axios.get(`${deploy}/tasks/${id}`, { withCredentials: true })
         );

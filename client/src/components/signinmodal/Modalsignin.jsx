@@ -12,14 +12,14 @@ const Modalsignin = ({ isModalOpen, toggleModal }) => {
   const [role, setRole] = useState("client");
 
   const navigate = useNavigate();
-
+  const deploy = import.meta.env.VITE_DEPLOY_URL;
   // ${deploy}
   
   const handleLogin = async (e) => {
     e.preventDefault();
     if (client === false) {
       try {
-        const deploy = import.meta.env.VITE_DEPLOY_URL;
+       
         const response = await axios.post(
           `${deploy}/clients/login`,
           {
@@ -49,7 +49,7 @@ const Modalsignin = ({ isModalOpen, toggleModal }) => {
   const handleLoginprofi = async (e) => {
     e.preventDefault();
     try {
-      const deploy = import.meta.env.VITE_DEPLOY_URL;
+      
       const response = await axios.post(
         `${deploy}/pros/login`,
         {
