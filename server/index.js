@@ -10,13 +10,17 @@ import cookieParser from "cookie-parser";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import { instrument } from "@socket.io/admin-ui";
+import { create } from "domain";
+import Chat from "./models/chatSchema.js";
 
 const app = express();
 const PORT = 8001;
+const IO_PORT = 3000;
 
 // attaching socket.io to express server
 const httpServer = createServer(app);
-const io = new Server(httpServer, {
+const socketServer = createServer();
+const io = new Server(socketServer, {
   cors: {
     origin: ["http://localhost:5173", "https://admin.socket.io/"],
     credentials: true,
@@ -58,6 +62,16 @@ io.on("connection", (socket) => {
       // socket.to(room).emit("recieve-message", message);
       io.to(room).emit("recieve-message", message);
       console.log("Emitting recieve-message event");
+      //Message speichern
+      // try {
+      //   const updateChat = Chat.findByIdAndUpdate(
+      //     message.author_id,
+      //     { $push: { messages: message } },
+      //     { new: true }
+      //   );
+      // } catch (error) {
+      //   console.log(error);
+      // }
     }
   });
 
@@ -91,8 +105,10 @@ app.use(errorHandler);
 
 // app.listen(PORT, () => console.log(`Server is running on Port: ${PORT}`));
 
+socketServer.listen(IO_PORT, () => {
+  console.log(`Socket Server is running on Port: http://localhost:${IO_PORT}`);
+});
+
 httpServer.listen(PORT, () => {
-  console.log(
-    `Server is running on Port: http://localhost:${PORT} socket.io is attached`
-  );
+  console.log(`Express Server is running on Port: http://localhost:${PORT}`);
 });

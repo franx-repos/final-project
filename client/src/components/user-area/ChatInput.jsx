@@ -5,8 +5,15 @@ import { useAuth } from "../../context/UserProvider";
 
 const ChatInput = () => {
   const [input, setInput] = useState("");
-  const { room, socket, message, setMessage } = useChat();
-  const {userData} = useAuth();
+  const {
+    room,
+    socket,
+    message,
+    setMessage,
+    saveNewMessage,
+    setSaveNewMessage,
+  } = useChat();
+  const { userData } = useAuth();
 
   // useEffect(() => {
   //   console.log(socket);
@@ -31,13 +38,14 @@ const ChatInput = () => {
       let inputMessage = {
         author_id: userData._id,
         text: input,
-        timestamp: formatDate
-
+        timestamp: formatDate,
       };
       // setMessage((prevMessage) => [...prevMessage, inputMessage]);
       try {
-        const send=await socket.emit("send-message", inputMessage, room);
-        const response=await axios.patch(`http://localhost:8001/chats/${room}`, {  inputMessage  }, { withCredentials: true })
+        const send = await socket.emit("send-message", inputMessage, room);
+        // const response=await axios.patch(`http://localhost:8001/chats/${room}`, {  inputMessage  }, { withCredentials: true })
+        console.log(send);
+        setSaveNewMessage(true);
       } catch (error) {
         console.log(error);
       }

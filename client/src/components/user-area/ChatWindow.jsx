@@ -10,28 +10,86 @@ import socketIO from "socket.io-client";
 const ChatWindow = () => {
   const { isLoggedIn, setIsLoggedIn, userData, setUserData } = useAuth();
   const [chats, setChats] = useState([]);
-  const { messages, setMessages, socket, setSocket, room } = useChat();
+  const {
+    messages,
+    setMessages,
+    socket,
+    setSocket,
+    room,
+    saveNewMessage,
+    setSaveNewMessage,
+  } = useChat();
   const [entry, setEntry] = useState([]);
   useEffect(() => {
     if (!socket) {
-      let s = socketIO.connect("http://localhost:8001");
+      let s = socketIO.connect("http://localhost:3000");
       setSocket(s);
     }
   }, []);
-
 
   useEffect(() => {
     if (socket && socket.connected) {
       console.log("Socket is connected");
       socket
-        .on("recieve-message", (message) => setMessages([...messages, message]))
+        .on("recieve-message", (message) => {
+          setMessages((prevMessages) => [...prevMessages, message]);
+        })
         .on("error", (error) => {
           console.error("Error handling recieve-message event:", error);
         });
     } else {
       console.log("Socket is not connected");
     }
-  }, [socket, chats, messages]);
+  }, [socket, chats]);
+
+  useEffect(() => {
+    console.log(`save the message: ${saveNewMessage}`);
+    console.log(messages);
+    const saveMessages = async () => {
+      try {
+        const response = await axios.patch(
+          `http://localhost:8001/chats/${room}`,
+          { messages },
+          { withCredentials: true }
+        );
+        console.log(response);
+        if (response) {
+          setSaveNewMessage(false); // Update saveNewMessage state to false
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    if (saveNewMessage) {
+      saveMessages();
+    }
+  }, [messages]); // Add messages to the dependency array
+
+  // useEffect(() => {
+  //   console.log(`save the message: ${saveNewMessage}`);
+  //   function getLatestMessage() {
+  //     return messages[messages.length - 1];
+  //   }
+
+  //   const saveMessages = async () => {
+  //     let newMessage = getLatestMessage();
+  //     console.log(newMessage);
+  //     try {
+  //       const response = await axios.patch(
+  //         `http://localhost:8001/chats/${room}`,
+  //         { newMessage },
+  //         { withCredentials: true }
+  //       );
+  //       console.log(response);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   if (saveNewMessage) {
+  //     saveMessages();
+  //     setSaveNewMessage(false);
+  //   }
+  // }, [saveNewMessage]);
 
   useEffect(() => {
     if (userData) {
@@ -57,17 +115,6 @@ const ChatWindow = () => {
     }
   }, [userData]);
 
-
-
-  // useEffect(() => {
-  //   console.log(chats);
-   
-  // }, [chats]);
-
-  // useEffect(() => {
-  //   console.log(messages);
-  // }, [messages]);
-
   return (
     <section className="flex w-full h-screen justify-start antialiased text-gray-600 p-4 pb-24 ">
       <div className=" flex ">
@@ -77,9 +124,7 @@ const ChatWindow = () => {
         <div className="flex-1 overflow-y-scroll border-gray-200 dark:bg-gray-800">
           {messages.map((message, index) => {
             // console.log(message);
-            return (
-              <ChatBubble key={index} message={message}></ChatBubble>
-            );
+            return <ChatBubble key={index} message={message}></ChatBubble>;
           })}
         </div>
         <ChatInput />
@@ -89,7 +134,6 @@ const ChatWindow = () => {
 };
 
 export default ChatWindow;
-
 
 // console.log(message);
 //           // setMessages([...messages, message]);

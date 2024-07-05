@@ -38,6 +38,8 @@ const ChatPartnerButton = ({ chat }) => {
   }, [room]);
 
   function joinChat() {
+    //save old chat
+
     setMessages(chat.messages);
     setRoom(chat._id);
   }

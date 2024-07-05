@@ -7,18 +7,24 @@ import asyncHandler from "../utils/asyncHandler.js";
 export const updateChat = async (req, res, next) => {
   const { id } = req.params;
   const { cid, body } = req;
-  const { inputMessage } = body;
+  const { messages } = body;
   console.log("update Chat");
   console.log(body);
   try {
-    const newMessage = {
-      author_id: cid,
-      text: inputMessage.text,
-    };
+    // const newMessage = {
+    //   author_id: cid,
+    //   text: inputMessage.text,
+    // };
+
+    // const updateChat = await Chat.findByIdAndUpdate(
+    //   id,
+    //   { $push: { messages: newMessage } },
+    //   { new: true }
+    // );
 
     const updateChat = await Chat.findByIdAndUpdate(
       id,
-      { $push: { messages: newMessage } },
+      { messages: messages },
       { new: true }
     );
 
@@ -129,7 +135,6 @@ export const deleteChat = asyncHandler(async (req, res, next) => {
 
   try {
     const found = await Chat.findById(id);
- 
 
     if (!found) throw new ErrorResponse(`Post ${id} does not exist`, 404);
 
