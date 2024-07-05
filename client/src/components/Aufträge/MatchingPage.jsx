@@ -22,6 +22,7 @@ const MatchingPage = () => {
         });
         const industry = userData.industry;
         const specialization = userData.specialization;
+        console.log(industry)
 
         const filteredTasks = response.data.filter(task => {
           const matchIndustry = industry.length > 0 ? industry.some(ind => task.content.industry.includes(ind)) : true;
@@ -29,7 +30,7 @@ const MatchingPage = () => {
         
           return matchIndustry && matchSpecialization;
         });
-console.log(filteredTasks)
+        console.log(filteredTasks)
         setTasks(filteredTasks);
         setLoading(false);
       } catch (err) {
