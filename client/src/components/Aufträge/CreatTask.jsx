@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState, useRef, useEffect } from "react";
 import Select from "react-select";
 
-const NewPost = ({ isModalOpen, toggleModal }) => {
+const NewPost = ({ isCreateTaskOpen, toggleModal }) => {
   const [images, setImages] = useState([]);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -92,7 +92,7 @@ const NewPost = ({ isModalOpen, toggleModal }) => {
           },
           documents: [],
 
-          // documents: documents.map((document) => ({  
+          // documents: documents.map((document) => ({
           //   documentstitle: document.name,
           //   icon: document.url,
           // })),
@@ -101,11 +101,7 @@ const NewPost = ({ isModalOpen, toggleModal }) => {
       );
       // .populate("content.created_by");
 
-          toggleModal();
-          toggleModal();
-      
       toggleModal();
-      
     } catch (error) {
       setError(error.message || "Something went wrong with Login");
       console.log("Error:", error.message);
@@ -139,8 +135,6 @@ const NewPost = ({ isModalOpen, toggleModal }) => {
       "documents:",
       documents
     );
-   
-    
   }, [
     title,
     description,
@@ -152,7 +146,7 @@ const NewPost = ({ isModalOpen, toggleModal }) => {
     documents,
   ]);
 
-  if (!isModalOpen) return null;
+  if (!isCreateTaskOpen) return null;
 
   return (
     <>
@@ -160,19 +154,19 @@ const NewPost = ({ isModalOpen, toggleModal }) => {
         id="authentication-modal"
         tabIndex="-1"
         aria-hidden="true"
-        className=" fixed inset-0  z-50 flex justify-center items-center w-full h-full overflow-y-auto bg-gray-500 bg-opacity-90"
+        className="fixed inset-0 z-50 flex justify-center items-center w-full h-full bg-gray-900 bg-opacity-90"
       >
         {" "}
-        <div className=" relative p-4 w-full max-w-5xl  max-h-full">
+        <div className="relative p-4 w-full max-w-3xl max-h-full">
           <form
-            className="bg-white shadow p-4 py-8 rounded-lg dark:bg-[#1f2937]"
+            className="bg-white shadow p-4 py-8 rounded-md dark:bg-[#1f2937]"
             onSubmit={handlePost}
           >
-            <div className="absolute top-0 right-0  p-4 mr-8 mt-4 ">
+            <div className="absolute top-0 right-0 p-6">
               <button
                 type="button"
                 onClick={toggleModal}
-                className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-md text-sm w-8 h-8 flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
               >
                 <svg
                   className="w-3 h-3"
@@ -192,12 +186,10 @@ const NewPost = ({ isModalOpen, toggleModal }) => {
                 <span className="sr-only">Close modal</span>
               </button>
             </div>
-            <div className="heading text-center font-bold text-2xl m-5 text-gray-800 bg-white dark:text-white dark:bg-[#1f2937]">
-              New Task
-            </div>
-            <div className="editor mx-auto  rounded-lg w-10/12 flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg max-w-2xl ">
+
+            <div className="editor mx-auto  rounded-md w-10/12 flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg max-w-2xl ">
               <input
-                className="title bg-gray-200 border border-gray-300 p-2 mb-4 outline-none"
+                className="title bg-gray-200 border border-gray-300 p-2 mb-4 outline-none rounded-md"
                 spellCheck="false"
                 placeholder="Title"
                 type="text"
@@ -205,7 +197,7 @@ const NewPost = ({ isModalOpen, toggleModal }) => {
                 onChange={(e) => setTitle(e.target.value)}
               />
               <textarea
-                className="description bg-gray-100 sec p-3 h-60 border border-gray-300 outline-none"
+                className="description bg-gray-100 sec p-3 h-60 border border-gray-300 outline-none rounded-md"
                 spellCheck="false"
                 placeholder="Describe everything about this post here"
                 value={description}
@@ -324,9 +316,9 @@ const NewPost = ({ isModalOpen, toggleModal }) => {
               <div className="buttons flex justify-end mt-3">
                 <button
                   type="submit"
-                  className="text-white bg-teal-500 hover:bg-teal-700 focus:outline-none font-medium rounded-lg text-sm mx-2 px-4 py-2 text-center dark:bg-teal-500 dark:hover:bg-teal-700"
+                  className="text-white bg-teal-500 hover:bg-teal-700 focus:outline-none font-medium rounded-md text-sm px-4 py-2 text-center dark:bg-teal-500 dark:hover:bg-teal-700"
                 >
-                  Post
+                  Create Task
                 </button>
               </div>
             </div>
