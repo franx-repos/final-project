@@ -3,12 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import { format } from "date-fns";
 import Select from "react-select";
 
-const UpdateTask = ({
-  isUpdateTaskOpen,
-  toggleUpdateModal,
-  entryToUpdate,
-  setEntryToUpdate,
-}) => {
+const UpdateTask = ({ isUpdateTaskOpen, toggleUpdateModal, entryToUpdate }) => {
   const [editTaskId, setEditTaskId] = useState(null);
   const [images, setImages] = useState([]);
   const [title, setTitle] = useState("");
@@ -155,7 +150,7 @@ const UpdateTask = ({
               <div className="flex flex-col">
                 <label
                   class="flex pl-2 text-gray-700 text-sm font-bold mb-1"
-                  for="username"
+                  htmlFor="username"
                 >
                   title
                 </label>
@@ -169,7 +164,7 @@ const UpdateTask = ({
               <div className="py-5 max-full border-b-gray-200 text-wrap dark:border-x-0 dark:border-r-white dark:border bg-white text-sm">
                 <label
                   class="flex pl-2 text-gray-700 text-sm font-bold mb-1"
-                  for="username"
+                  htmlFor="username"
                 >
                   description
                 </label>
@@ -184,7 +179,7 @@ const UpdateTask = ({
                 <div className="w-full mr-2 overflow-clip border-b-gray-200 text-wrap dark:border-x-0 dark:border-r-white dark:border bg-white text-sm">
                   <label
                     class="flex pl-2 text-gray-700 text-sm font-bold mb-1"
-                    for="username"
+                    htmlFor="username"
                   >
                     industry
                   </label>
@@ -198,7 +193,7 @@ const UpdateTask = ({
                 <div className="w-full ml-2">
                   <label
                     class="flex pl-2 text-gray-700 text-sm font-bold mb-1"
-                    for="username"
+                    htmlFor="username"
                   >
                     job type
                   </label>
@@ -235,7 +230,7 @@ const UpdateTask = ({
             <div className="flex justify-evenly">
               <div className="px-5 py-5 border-gray-200 bg-white text-sm">
                 <p className="flex text-gray-900 whitespace-no-wrap">
-                  <p>date created: </p>
+                  date created:
                   {entryToUpdate.content.create_date
                     ? format(
                         new Date(entryToUpdate.content.create_date),

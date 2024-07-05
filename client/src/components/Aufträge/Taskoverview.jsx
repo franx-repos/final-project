@@ -25,13 +25,6 @@ const Taskoverview = () => {
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        // let response;
-        // if (userData.data && userData.data.role === "client") {
-        //   response = await axios.get('http://localhost:8001/clients/me', { withCredentials: true });
-        // } else {
-        //   response = await axios.get('http://localhost:8001/pros/me', { withCredentials: true });
-        // }
-
         const taskIds = userData.tasks;
 
         const detailedTasksPromises = taskIds.map((id) =>
@@ -70,10 +63,6 @@ const Taskoverview = () => {
       return "bg-red-200 text-red-800";
     }
   };
-
-  useEffect(() => {
-    console.log("Error:", error.message);
-  }, [error]);
 
   const toggleModal = () => {
     setIsCreateTaskOpen(!isCreateTaskOpen);
@@ -170,7 +159,6 @@ const Taskoverview = () => {
         isUpdateTaskOpen={isUpdateTaskOpen}
         toggleUpdateModal={toggleUpdateModal}
         entryToUpdate={entryToUpdate}
-        setEntryToUpdate={setEntryToUpdate}
       />
     </div>
   );
