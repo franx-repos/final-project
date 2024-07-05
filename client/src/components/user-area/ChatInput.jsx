@@ -1,145 +1,127 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
-import { useChat } from "../../context/ChatProvider";
-import { useAuth } from "../../context/UserProvider";
+import { useState } from 'react';
+import { useChat } from '../../context/ChatProvider';
+import { useAuth } from '../../context/UserProvider';
 
 const ChatInput = () => {
-  const [input, setInput] = useState("");
-  const {
-    room,
-    socket,
-    message,
-    setMessage,
-    saveNewMessage,
-    setSaveNewMessage,
-  } = useChat();
+  const [input, setInput] = useState('');
+  const { room, socket, setSaveNewMessage } = useChat();
   const { userData } = useAuth();
-
-  // useEffect(() => {
-  //   console.log(socket);
-  // }, []);
-
-  // useEffect(() => {
-  //   console.log(input);
-  // }, [input]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("send message");
-    console.log("Room:", room); // Add this line
-    console.log(socket);
-    const d = new Date();
+    sendMessage();
+  };
 
-    // console.log(socket.rooms)
-    if (input.trim() && room !== "" && socket.connected) {
-      //send input
-      //Message array anpassen
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  };
+
+  const sendMessage = async () => {
+    if (input.trim() && room !== '' && socket.connected) {
+      const d = new Date();
       let formatDate = d.toUTCString();
       let inputMessage = {
         author_id: userData._id,
         text: input,
         timestamp: formatDate,
       };
-      // setMessage((prevMessage) => [...prevMessage, inputMessage]);
+
       try {
-        const send = await socket.emit("send-message", inputMessage, room);
-        // const response=await axios.patch(`http://localhost:8001/chats/${room}`, {  inputMessage  }, { withCredentials: true })
-        console.log(send);
+        console.log('Sending message:', inputMessage);
+        socket.emit('send-message', inputMessage, room);
         setSaveNewMessage(true);
       } catch (error) {
         console.log(error);
       }
-
-      // try {
-      //   await axios.patch(`http://localhost:8001/chats/${room}`, {  inputMessage  }, { withCredentials: true })
-      // } catch (error) {
-      //   console.log(error);
-      // }
+      setInput('');
     }
-    setInput("");
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <label for="chat" className="sr-only">
+      <label htmlFor='chat' className='sr-only'>
         Your input
       </label>
-      <div className="flex items-center px-3 py-2  bg-gray-50 dark:bg-gray-800">
+      <div className='flex items-center px-3 py-2 bg-gray-50 dark:bg-gray-800'>
         <button
-          type="button"
-          className="inline-flex justify-center p-2 text-gray-500 rounded-lg cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
+          type='button'
+          className='inline-flex justify-center p-2 text-gray-500 rounded-lg cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600'
         >
           <svg
-            className="w-5 h-5"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 20 18"
+            className='w-5 h-5'
+            aria-hidden='true'
+            xmlns='http://www.w3.org/2000/svg'
+            fill='none'
+            viewBox='0 0 20 18'
           >
             <path
-              fill="currentColor"
-              d="M13 5.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0ZM7.565 7.423 4.5 14h11.518l-2.516-3.71L11 13 7.565 7.423Z"
+              fill='currentColor'
+              d='M13 5.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0ZM7.565 7.423 4.5 14h11.518l-2.516-3.71L11 13 7.565 7.423Z'
             />
             <path
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M18 1H2a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z"
+              stroke='currentColor'
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              strokeWidth='2'
+              d='M18 1H2a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z'
             />
             <path
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M13 5.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0ZM7.565 7.423 4.5 14h11.518l-2.516-3.71L11 13 7.565 7.423Z"
+              stroke='currentColor'
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              strokeWidth='2'
+              d='M13 5.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0ZM7.565 7.423 4.5 14h11.518l-2.516-3.71L11 13 7.565 7.423Z'
             />
           </svg>
-          <span className="sr-only">Upload image</span>
+          <span className='sr-only'>Upload image</span>
         </button>
         <button
-          type="button"
-          className="p-2 text-gray-500 rounded-lg cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
+          type='button'
+          className='p-2 text-gray-500 rounded-lg cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600'
         >
           <svg
-            className="w-5 h-5"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 20 20"
+            className='w-5 h-5'
+            aria-hidden='true'
+            xmlns='http://www.w3.org/2000/svg'
+            fill='none'
+            viewBox='0 0 20 20'
           >
             <path
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M13.408 7.5h.01m-6.876 0h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM4.6 11a5.5 5.5 0 0 0 10.81 0H4.6Z"
+              stroke='currentColor'
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              strokeWidth='2'
+              d='M13.408 7.5h.01m-6.876 0h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM4.6 11a5.5 5.5 0 0 0 10.81 0H4.6Z'
             />
           </svg>
-          <span className="sr-only">Add emoji</span>
+          <span className='sr-only'>Add emoji</span>
         </button>
         <textarea
-          id="chat"
-          rows="1"
-          className="block mx-4 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder="Your input..."
+          id='chat'
+          rows='1'
+          className='block mx-4 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+          placeholder='Your input...'
           onChange={(e) => setInput(e.target.value)}
           value={input}
+          onKeyPress={handleKeyPress}
         ></textarea>
         <button
-          type="submit"
-          className="inline-flex justify-center p-2 text-teal-500 hover:text-teal-700 rounded-full cursor-pointer hover:bg-blue-100 dark:text-teal-500 dark:hover:text-teal-700 dark:hover:bg-gray-600"
+          type='submit'
+          className='inline-flex justify-center p-2 text-teal-500 hover:text-teal-700 rounded-full cursor-pointer hover:bg-blue-100 dark:text-teal-500 dark:hover:text-teal-700 dark:hover:bg-gray-600'
         >
           <svg
-            className="w-5 h-5 rotate-90 rtl:-rotate-90"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="currentColor"
-            viewBox="0 0 18 20"
+            className='w-5 h-5 rotate-90 rtl:-rotate-90'
+            aria-hidden='true'
+            xmlns='http://www.w3.org/2000/svg'
+            fill='currentColor'
+            viewBox='0 0 18 20'
           >
-            <path d="m17.914 18.594-8-18a1 1 0 0 0-1.828 0l-8 18a1 1 0 0 0 1.157 1.376L8 18.281V9a1 1 0 0 1 2 0v9.281l6.758 1.689a1 1 0 0 0 1.156-1.376Z" />
+            <path d='m17.914 18.594-8-18a1 1 0 0 0-1.828 0l-8 18a1 1 0 0 0 1.157 1.376L8 18.281V9a1 1 0 0 1 2 0v9.281l6.758 1.689a1 1 0 0 0 1.156-1.376Z' />
           </svg>
-          <span className="sr-only">Send input</span>
+          <span className='sr-only'>Send input</span>
         </button>
       </div>
     </form>
