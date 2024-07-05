@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useAuth } from "../../context/UserProvider"
 
 const styles = {
   button:
@@ -11,6 +12,7 @@ const MatchingPage = () => {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { userData } = useAuth();
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -18,7 +20,17 @@ const MatchingPage = () => {
         const response = await axios.get("http://localhost:8001/tasks/open", {
           withCredentials: true,
         });
-        setTasks(response.data);
+        const industry = userData.industry;
+        const specialization = userData.specialization;
+
+        const filteredTasks = response.data.filter(task => {
+          const matchIndustry = industry.length > 0 ? industry.some(ind => task.content.industry.includes(ind)) : true;
+          const matchSpecialization = specialization.length > 0 ? specialization.some(spec => task.content.task_type.includes(spec)) : true;
+        
+          return matchIndustry && matchSpecialization;
+        });
+console.log(filteredTasks)
+        setTasks(filteredTasks);
         setLoading(false);
       } catch (err) {
         setError(err.message);
