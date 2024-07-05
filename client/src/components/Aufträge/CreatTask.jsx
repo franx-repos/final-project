@@ -103,7 +103,6 @@ const NewPost = ({ isModalOpen, toggleModal }) => {
 
           toggleModal();
        
-      toggleModal();
       
     } catch (error) {
       setError(error.message || "Something went wrong with Login");
