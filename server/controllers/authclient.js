@@ -67,8 +67,9 @@ export const logIn = asyncHandler(async (req, res, next) => {
   });
   res.cookie("token", token, {
     maxAge: 1800000,
-    // httpOnly: true,
-    // sameSite: "Lax",
+    httpOnly: true,
+    secure:true,
+    sameSite: "none",
   }); // 30mn
   res.send({ status: "success" });
 });
@@ -82,7 +83,11 @@ export const getClient = asyncHandler(async (req, res, next) => {
 
 // logout
 export const logout = asyncHandler(async (req, res, next) => {
-  res.clearCookie("token");
+  res.clearCookie("token",{
+    maxAge: 1800000,
+    httpOnly: true,
+    secure:true,
+    sameSite: "none"} );
   res.send({ status: "success" });
 });
 
