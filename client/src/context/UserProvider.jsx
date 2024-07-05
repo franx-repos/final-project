@@ -5,13 +5,15 @@ import Cookies from "js-cookie";
 const AuthContext = createContext();
 export const useAuth = () => useContext(AuthContext);
 
+const deploy = import.meta.env.VITE_DEPLOY_URL;
+
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userData, setUserData] = useState({});
   const checkUser = async () => {
     try {
       const responseClient = await axios.get(
-        `http://localhost:8001/clients/me`,
+        `${deploy}/clients/me`,
         {
           withCredentials: true,
         }
@@ -28,7 +30,7 @@ export const AuthProvider = ({ children }) => {
         return;
       }
 
-      const responsePro = await axios.get(`http://localhost:8001/pros/me`, {
+      const responsePro = await axios.get(`${deploy}/pros/me`, {
         withCredentials: true,
       });
 

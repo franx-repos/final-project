@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState, useRef, useEffect } from "react";
 import Select from "react-select";
 
+const deploy = import.meta.env.VITE_DEPLOY_URL;
 const NewPost = ({ isModalOpen, toggleModal }) => {
   const [images, setImages] = useState([]);
   const [title, setTitle] = useState("");
@@ -78,8 +79,9 @@ const NewPost = ({ isModalOpen, toggleModal }) => {
   const handlePost = async (e) => {
     e.preventDefault();
     try {
+      const deploy = import.meta.env.VITE_DEPLOY_URL;
       const response = await axios.post(
-        `http://localhost:8001/tasks`,
+        `${deploy}/tasks`,
         {
           content: {
             title,

@@ -23,15 +23,15 @@ const Taskoverview = () => {
       try {
        // let response;
        // if (userData.data && userData.data.role === "client") {
-       //   response = await axios.get('http://localhost:8001/clients/me', { withCredentials: true });
+       //   response = await axios.get(`${deploy}/clients/me`, { withCredentials: true });
        // } else {
-       //   response = await axios.get('http://localhost:8001/pros/me', { withCredentials: true });
+       //   response = await axios.get(`${deploy}/pros/me`, { withCredentials: true });
        // }
 
         const taskIds = userData.tasks;
-
+        const deploy = import.meta.env.VITE_DEPLOY_URL;
         const detailedTasksPromises = taskIds.map(id => 
-          axios.get(`http://localhost:8001/tasks/${id}`, { withCredentials: true })
+          axios.get(`${deploy}/tasks/${id}`, { withCredentials: true })
         );
         
         const detailedTasksResults = await Promise.allSettled(detailedTasksPromises);

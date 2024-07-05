@@ -59,7 +59,7 @@ function Signup() {
       }
       try {
         const response = await axios.post(
-          `http://localhost:8001/clients/register`,
+          `${deploy}/clients/register`,
           {
             data: {
               role,
@@ -92,10 +92,10 @@ function Signup() {
 
   const handleRegisterprofi = async (e) => {
     e.preventDefault();
-    // const deploy = import.meta.env.VITE_DEPLOY_URL;
+    const deploy = import.meta.env.VITE_DEPLOY_URL;
     try {
       const response = await axios.post(
-        `http://localhost:8001/pros/register`,
+        `${deploy}/pros/register`,
         {
           data: {
             role,
