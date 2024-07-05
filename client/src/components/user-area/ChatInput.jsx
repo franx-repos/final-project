@@ -1,70 +1,51 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useState } from "react";
 import { useChat } from "../../context/ChatProvider";
 import { useAuth } from "../../context/UserProvider";
 
 const ChatInput = () => {
   const [input, setInput] = useState("");
-  const {
-    room,
-    socket,
-    message,
-    setMessage,
-    saveNewMessage,
-    setSaveNewMessage,
-  } = useChat();
+  const { room, socket, setSaveNewMessage } = useChat();
   const { userData } = useAuth();
-
-  // useEffect(() => {
-  //   console.log(socket);
-  // }, []);
-
-  // useEffect(() => {
-  //   console.log(input);
-  // }, [input]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("send message");
-    console.log("Room:", room); // Add this line
-    console.log(socket);
-    const d = new Date();
+    sendMessage();
+  };
 
-    // console.log(socket.rooms)
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  };
+
+  const sendMessage = async () => {
     if (input.trim() && room !== "" && socket.connected) {
-      //send input
-      //Message array anpassen
+      const d = new Date();
       let formatDate = d.toUTCString();
       let inputMessage = {
         author_id: userData._id,
         text: input,
         timestamp: formatDate,
       };
-      // setMessage((prevMessage) => [...prevMessage, inputMessage]);
+
       try {
-        const send = await socket.emit("send-message", inputMessage, room);
-        // const response=await axios.patch(`http://localhost:8001/chats/${room}`, {  inputMessage  }, { withCredentials: true })
-        console.log(send);
+        console.log("Sending message:", inputMessage);
+        socket.emit("send-message", inputMessage, room);
         setSaveNewMessage(true);
       } catch (error) {
         console.log(error);
       }
-
-      // try {
-      //   await axios.patch(`http://localhost:8001/chats/${room}`, {  inputMessage  }, { withCredentials: true })
-      // } catch (error) {
-      //   console.log(error);
-      // }
+      setInput("");
     }
-    setInput("");
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <label for="chat" className="sr-only">
+      <label htmlFor="chat" className="sr-only">
         Your input
       </label>
-      <div className="flex items-center px-3 py-2  bg-gray-50 dark:bg-gray-800">
+      <div className="flex items-center px-3 py-2 bg-gray-50 dark:bg-gray-800">
         <button
           type="button"
           className="inline-flex justify-center p-2 text-gray-500 rounded-lg cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
@@ -125,6 +106,7 @@ const ChatInput = () => {
           placeholder="Your input..."
           onChange={(e) => setInput(e.target.value)}
           value={input}
+          onKeyPress={handleKeyPress}
         ></textarea>
         <button
           type="submit"
