@@ -101,7 +101,9 @@ const NewPost = ({ isCreateTaskOpen, toggleModal }) => {
       );
       // .populate("content.created_by");
 
+
       toggleModal();
+
     } catch (error) {
       setError(error.message || "Something went wrong with Login");
       console.log("Error:", error.message);

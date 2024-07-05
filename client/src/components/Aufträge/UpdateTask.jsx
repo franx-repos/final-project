@@ -247,10 +247,7 @@ const UpdateTask = ({
               <div className="flex px-5 py-5 border-gray-200 bg-white text-sm">
                 <p>Status: </p>
                 <span
-                  className={`relative inline-block px-3 py-1 rounded-lg font-semibold leading-tight ${handleStatus(
-                    entryToUpdate.content.status
-                  )}`}
-                >
+                  className={`relative inline-block px-3 py-1 rounded-lg font-semibold leading-tight ${handleStatus(entryToUpdate.content.status)}`}>
                   {entryToUpdate.content.status}
                 </span>
               </div>
