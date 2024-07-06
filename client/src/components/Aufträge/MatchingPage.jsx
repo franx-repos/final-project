@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const styles = {
   button:
@@ -39,7 +40,10 @@ const MatchingPage = () => {
       </h5>
       <div className="flex">
         {tasks.map((task) => (
-          <div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+          <div
+            key={task._id}
+            className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+          >
             <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
               {task.content.title}
             </h5>
@@ -57,12 +61,12 @@ const MatchingPage = () => {
               {task.content.description}
             </p>
             <div className="flex justify-evenly">
-              <a href="#" className={styles.button}>
+              <Link to="#" className={styles.button}>
                 Accept
-              </a>
-              <a href="#" className={styles.button}>
+              </Link>
+              <Link to="#" className={styles.button}>
                 Contact
-              </a>
+              </Link>
             </div>
           </div>
         ))}

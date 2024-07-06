@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState, useRef, useEffect } from "react";
 import Select from "react-select";
 
-const NewPost = ({
+const CreateTask = ({
   isCreateTaskOpen,
   toggleModal,
   hasBeenChanged,
@@ -202,4 +202,4 @@ const NewPost = ({
   );
 };
 
-export default NewPost;
+export default CreateTask;
