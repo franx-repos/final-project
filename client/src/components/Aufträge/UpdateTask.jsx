@@ -93,7 +93,11 @@ const UpdateTask = ({
         `http://localhost:8001/tasks/${_id}`,
         { withCredentials: true }
       );
-    } catch (error) {
+      toggleUpdateModal();
+    } 
+    
+    
+    catch (error) {
       setError(error.message || "Something went wrong with deleting the task");
     }
   };
