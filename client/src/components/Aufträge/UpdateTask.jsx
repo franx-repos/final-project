@@ -1,23 +1,38 @@
 import axios from "axios";
 import { useState, useRef, useEffect } from "react";
 import { format } from "date-fns";
-import NavigationTop from "../NavigationTop";
-import Select from 'react-select';
+import Select from "react-select";
 
-
-
-const UpdateTask = () => {
+const UpdateTask = ({
+  isUpdateTaskOpen,
+  toggleUpdateModal,
+  entryToUpdate,
+  setEntryToUpdate,
+}) => {
   const [editTaskId, setEditTaskId] = useState(null);
   const [images, setImages] = useState([]);
-  const [newTitle, setNewTitle] = useState("");
-  const [newDescription, setNewDescription] = useState("");
-  const [newTask_type, setNewTask_type] = useState([]);
-  const [newIndustry, setNewIndustry] = useState("");
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [deadline, setDeadline] = useState("");
+  const [task_type, setTask_type] = useState([]);
+  const [industry, setIndustry] = useState([]);
+  const [create_date, setCreate_date] = useState("");
+
   const [documents, setDocuments] = useState([]);
   const [error, setError] = useState("");
-  const [entries, setEntries] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [file, setFile] = useState('');
+  // const [entries, setEntries] = useState([]);
+  // const [loading, setLoading] = useState(true);
+  const [file, setFile] = useState("");
+
+  useEffect(() => {
+    setEditTaskId(entryToUpdate?.content?._id || null);
+    setTitle(entryToUpdate?.content?.title || "");
+    setDescription(entryToUpdate?.content?.description || "");
+    setIndustry(entryToUpdate?.content?.industry || []);
+    setTask_type(entryToUpdate?.content?.task_type || []);
+    setDocuments(entryToUpdate?.content?.documents || []);
+    console.log(entryToUpdate?.content?.task_type);
+  }, [entryToUpdate]);
 
   const fileInputRef = useRef(null);
 
@@ -52,59 +67,23 @@ const UpdateTask = () => {
     setDocuments(documents.filter((_, i) => i !== index));
   };
 
-  useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        
-        const response = await axios.get(`${deploy}/tasks`, {
-          withCredentials: true,
-        });
-        setEntries(response.data);
-        setLoading(false);
-      } catch (error) {
-        setLoading(false);
-        setError(error.message || "Something went wrong with fetching tasks");
-        console.log(error);
-      }
-    };
-    fetchTasks();
-  }, []);
-
   const handleUpdate = async (_id) => {
     try {
       
       const response = await axios.put(
         `${deploy}/tasks/${_id}`,
         {
-          title: newTitle,
-          description: newDescription,
-          industry: newIndustry,
-          task_type: newTask_type,
-         
+          title: title,
+          description: description,
+          industry: industry,
+          task_type: task_type,
         },
         { withCredentials: true }
       );
 
       if (response.status === 200) {
-        setEntries((prevEntries) =>
-          prevEntries.map((entry) =>
-            entry._id === _id
-              ? {
-                  ...entry,
-                  content: {
-                    ...entry.content,
-                    title: newTitle,
-                    description: newDescription,
-                    industry: newIndustry,
-                    task_type: newTask_type,
-                  },
-         
-                }
-              : entry
-          )
-        );
-        setEditTaskId(null);
-        
+        toggleUpdateModal();
+        console.log("Updated successfully.");
       }
     } catch (error) {
       setError(error.message || "Something went wrong with updating the task");
@@ -118,19 +97,13 @@ const UpdateTask = () => {
         `${deploy}/tasks/${_id}`,
         { withCredentials: true }
       );
-      if (response.status === 200) {
-        setEntries((prevEntries) =>
-          prevEntries.filter((entry) => entry._id !== _id)
-        );
-      }
-    } catch (error) {
+      toggleUpdateModal();
+    } 
+    
+    
+    catch (error) {
       setError(error.message || "Something went wrong with deleting the task");
     }
-  };
-
-  const handleSaveChanges = async (_id) => {
-    // Implement save changes logic here
-    console.log("Save changes for task with ID:", _id);
   };
 
   const handleStatus = (status) => {
@@ -146,162 +119,151 @@ const UpdateTask = () => {
     }
   };
 
-
-  useEffect(() => {
-    console.log("Error:", error.message);
-    console.log(newTitle, newDescription, newIndustry, newTask_type);
-  }, [error, newTitle, newDescription, newIndustry, newTask_type]);
-
-  return (
-    <div>
-      <NavigationTop />
-      <div className="heading text-center font-bold text-2xl m-5 text-gray-800 bg-white dark:text-white dark:bg-[#1f2937]">
-        Task
-      </div>
-      <div className="editor mx-auto w-10/12 flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg max-w-2xl ">
-        {entries.map((entry) => (
-          <div key={entry._id} className="border-2 rounded-xl  border-gray-800 mb-3">
-            <div className="px-5 py-5 mt-2   border-b bg-white text-sm text-center">
-              <div className="buttons flex justify-end mb-2 ">
+  return isUpdateTaskOpen ? (
+    <div
+      id="authentication-modal"
+      tabIndex="-1"
+      aria-hidden="true"
+      className=" fixed inset-0 z-50 flex justify-center items-center w-full h-full bg-gray-900 bg-opacity-90"
+    >
+      {" "}
+      <div className="relative w-full max-w-3xl mt-8 max-h-full shadow py-8 rounded-md bg-white dark:bg-[#1f2937] overflow-auto">
+        <div className="editor mx-auto w-10/12 flex flex-col text-gray-800   p-4 max-w-2xl">
+          {/* {entries.map((entry) => ( */}
+          <div
+            // key={entry._id}
+            className="border border-gray-300 p-4 shadow-lg mb-3 rounded-md bg-white dark:bg-[#1f2937]"
+          >
+            <div className="px-5 py-5 bg-white text-sm text-center">
+              <div className="absolute top-0 right-0 p-4 ">
                 <button
-                  // onClick={() => setEditTaskId(entry._id)}
-                  onClick={() => {
-                    setEditTaskId(entry._id);
-                    setNewTitle(entry.content.title); // Setze den neuen Titel beim Klick auf "Edit"
-                    setNewDescription(entry.content.description); // Setze die neue Beschreibung beim Klick auf "Edit"
-                    setNewIndustry(entry.content.industry); // Setze die neue Branche beim Klick auf "Edit"
-                    setNewTask_type(entry.content.task_type); // Setze den neuen Task-Typ beim Klick auf "Edit"
-                     setDocuments(entry.documents); // Setze die neuen Dokumente beim Klick auf "Edit"
-                  }}
                   type="button"
-                  className="text-white bg-teal-500 hover:bg-teal-700 focus:outline-none font-medium rounded-lg text-sm mx-2 px-4 py-2 text-center dark:bg-teal-500 dark:hover:bg-teal-700"
+                  onClick={toggleUpdateModal}
+                  className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
                 >
-                  Edit
+                  <svg
+                    className="w-3 h-3"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 14 14"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M1 1l6 6m0 0l6 6M7 7l6-6M7 7l-6 6"
+                    />
+                  </svg>
+                  <span className="sr-only">Close modal</span>
+                </button>
+              </div>
+
+              <div className="flex flex-col">
+                <label
+                  class="flex pl-2 text-gray-700 text-sm font-bold mb-1"
+                  for="username"
+                >
+                  title
+                </label>
+                <input
+                  type="text"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  className="w-full px-2 py-2 border border-gray-300 rounded-md"
+                />
+              </div>
+              <div className="py-5 max-full border-b-gray-200 text-wrap dark:border-x-0 dark:border-r-white dark:border bg-white text-sm">
+                <label
+                  class="flex pl-2 text-gray-700 text-sm font-bold mb-1"
+                  for="username"
+                >
+                  description
+                </label>
+                <textarea
+                  type="text"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  className="w-full px-2 py-2 border border-gray-300 h-[7rem] rounded-md overflow-auto"
+                />
+              </div>
+              <div className="flex items-stretch">
+                <div className="w-full mr-2 overflow-clip border-b-gray-200 text-wrap dark:border-x-0 dark:border-r-white dark:border bg-white text-sm">
+                  <label
+                    class="flex pl-2 text-gray-700 text-sm font-bold mb-1"
+                    for="username"
+                  >
+                    industry
+                  </label>
+                  <input
+                    type="text"
+                    value={industry}
+                    onChange={(e) => setIndustry(e.target.value)}
+                    className="w-full px-2 py-2 border border-gray-300 rounded-md"
+                  />
+                </div>
+                <div className="w-full ml-2">
+                  <label
+                    class="flex pl-2 text-gray-700 text-sm font-bold mb-1"
+                    for="username"
+                  >
+                    job type
+                  </label>
+
+                  <Select
+                    options={types}
+                    // value={types.find((type) => type.value === task_type)}
+                    value={task_type}
+                    onChange={(selectedOption) =>
+                      setTask_type(selectedOption.value)
+                    }
+                    placeholder="Choose one of the following"
+                  />
+                </div>
+              </div>
+              <div className="buttons flex justify-end mt-4">
+                <button
+                  onClick={() => handleUpdate(entryToUpdate._id)}
+                  // onClick={() => console.log(entryToUpdate.content)}
+                  type="button"
+                  className="text-white bg-teal-500 hover:bg-teal-700  focus:outline-none font-medium rounded-lg text-sm  px-4 py-2 text-center dark:bg-teal-500 dark:hover:bg-teal-700"
+                >
+                  Save Changes
                 </button>
                 <button
-                  onClick={() => handleDelete(entry._id)}
+                  onClick={() => handleDelete(entryToUpdate._id)}
                   type="button"
-                  className="text-white bg-red-500 hover:bg-red-700  focus:outline-none font-medium rounded-lg text-sm mx-2 px-4 py-2 text-center dark:bg-red-500 dark:hover:bg-red-700"
+                  className="text-white bg-red-500 hover:bg-red-700  focus:outline-none font-medium rounded-lg text-sm ml-4 px-4 py-2 text-center dark:bg-red-500 dark:hover:bg-red-700"
                 >
                   Delete
                 </button>
               </div>
-              {editTaskId === entry._id ? (
-                <>
-                  <div className="flex items-center">
-                    <input
-                      type="text"
-                      value={newTitle}
-                      onChange={(e) => setNewTitle(e.target.value)}
-                      className="w-full px-2 py-2 border border-gray-300 rounded-md"
-                    />
-                  </div>
-                  <div className="px-5 py-5 border-b max-full border-b-gray-200 text-wrap dark:border-x-0 dark:border-r-white dark:border bg-white text-sm">
-                    <textarea
-                      type="text"
-                      value={newDescription}
-                      onChange={(e) => setNewDescription(e.target.value)}
-                      className="w-full px-2 py-2 border border-gray-300 h-[14rem] rounded-md"
-                    />
-                  </div>
-                  <div className="px-5 py-5 border-b max-w-15 overflow-clip border-b-gray-200 text-wrap dark:border-x-0 dark:border-r-white dark:border bg-white text-sm">
-                    <input
-                      type="text"
-                      value={newIndustry}
-                      onChange={(e) => setNewIndustry(e.target.value)}
-                      className="w-full px-2 py-2 border border-gray-300 rounded-md"
-                    />
-                  </div>
-                  <div className="sm:col-span-2 sm:col-start-1">
-                    <div className="mt-2">
-                      <Select
-                        options={types}
-                        value={types.find((type) => type.value === newTask_type)}
-                        onChange={(selectedOption) =>
-                          setNewTask_type(selectedOption.value)
-                        }
-                        placeholder="Choose one of the following"
-                      />
-                    </div>
-                  </div>
-
-
-
-                  <div className="buttons flex justify-end my-3">
-                    <button
-                      onClick={() => handleUpdate(entry._id)}
-                      type="button"
-                      className="text-white bg-teal-500 hover:bg-teal-700  focus:outline-none font-medium rounded-lg text-sm mx-2 px-4 py-2 text-center dark:bg-teal-500 dark:hover:bg-teal-700"
-                    >
-                      Save Changes
-                    </button>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div className="flex items-center">
-                    <div className="ml-3">
-                      <p className="text-gray-900 text-xl font-semibold text-center">
-                        {entry.content.title}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="px-5 py-5 border-b max-full border-b-gray-200 text-wrap dark:border-x-0 dark:border-r-white dark:border bg-white text-sm">
-                    <p className="text-gray-900 whitespace-no-wrap">
-                      {entry.content.description}
-                    </p>
-                  </div>
-                  <div className="px-5 py-5 border-b max-w-15 overflow-clip border-b-gray-200 text-wrap dark:border-x-0 dark:border-r-white dark:border bg-white text-sm">
-                    <label
-                      htmlFor="industry"
-                      className="block text-sm font-medium leading-6 text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
-                    >
-                      Industry
-                    </label>
-                    <p className="text-gray-900 whitespace-no-wrap text-xl">
-                      {entry.content.industry}
-                    </p>
-                  </div>
-
-                  <div className="px-5 py-5 border-b max-w-15 overflow-clip border-b-gray-200 text-wrap dark:border-x-0 dark:border-r-white dark:border bg-white text-sm">
-                    <label
-                      htmlFor="task_type"
-                      className="block text-sm font-medium leading-6 text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
-                    >
-                      Type
-                    </label>
-                    <p className="text-gray-900 whitespace-no-wrap text-xl">
-                      {entry.content.task_type}
-                    </p>
-                  </div>
-
-                
-                </>
-              )}
             </div>
-
-            <div className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-              <p className="text-gray-900 whitespace-no-wrap">
-                {entry.content.create_date
-                  ? format(
-                      new Date(entry.content.create_date),
-                      "dd MMM yyyy, HH:mm"
-                    )
-                  : ""}
-              </p>
+            <div className="flex justify-evenly">
+              <div className="px-5 py-5 border-gray-200 bg-white text-sm">
+                <p className="flex text-gray-900 whitespace-no-wrap">
+                  <p>date created: </p>
+                  {entryToUpdate.content.create_date
+                    ? format(
+                        new Date(entryToUpdate.content.create_date),
+                        "dd MMM yyyy, HH:mm"
+                      )
+                    : ""}
+                </p>
+              </div>
+              <div className="flex px-5 py-5 border-gray-200 bg-white text-sm">
+                <p>Status: </p>
+                <span
+                  className={`relative inline-block px-3 py-1 rounded-lg font-semibold leading-tight ${handleStatus(
+                    entryToUpdate.content.status
+                  )}`}
+                >
+                  {entryToUpdate.content.status}
+                </span>
+              </div>
             </div>
-
-            <div className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-              <span
-                className={`relative inline-block px-3 py-1 rounded-lg font-semibold leading-tight ${handleStatus(
-                  entry.content.status
-                )}`}
-              >
-                {entry.content.status}
-              </span>
-            </div>
-
-               {/* Add the documents here  */}
+            {/* Add the documents here  */}
             <div className="icons flex text-gray-500 m-2">
               <label id="select-image">
                 <svg
@@ -380,10 +342,11 @@ const UpdateTask = () => {
               ))}
             </div>
           </div>
-        ))}
+          {/* ))} */}
+        </div>
       </div>
     </div>
-  );
+  ) : null;
 };
 
 export default UpdateTask;

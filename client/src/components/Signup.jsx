@@ -1,34 +1,16 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import ThemeToggle from "./ThemeToggle";
 import NavigationTop from "./NavigationTop";
+import ParticlesBackground from "./ParticlesBackground";
 
 const styles = {
-  container: `max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-3 border-y-2 border-teal-500 shadow-2xl`,
-  logo: "flex items-center ml-2 space-x-3 rtl:space-x-reverse",
-  button: `text-white bg-teal-500 hover:bg-teal-700  focus:outline-none font-medium rounded-lg text-sm mx-2 px-4 py-2 text-center dark:bg-teal-500 dark:hover:bg-teal-700`,
-  userButton:
-    "flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600",
-  userImage: "w-8 h-8 rounded-full",
-  dropdown:
-    "z-50 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600",
-  dropdownOpen: "block", // Tailwind class for displaying the dropdown
-  dropdownItem:
-    "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white",
-  dropdownInfo: "px-4 py-3",
-  dropdownName: "block text-sm text-gray-900 dark:text-white",
-  dropdownEmail: "block text-sm text-gray-500 truncate dark:text-gray-400",
-  toggleButton:
-    "inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600",
-  menuIcon: "w-5 h-5",
-  nav: "items-center justify-between w-full md:flex md:w-auto md:order-1",
-  navList:
-    "flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700",
-  activeMenuItem:
-    "block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-teal-700 md:p-0 md:dark:text-teal-300",
-  menuItem:
-    "block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-teal-700 md:p-0 dark:text-white md:dark:hover:text-teal-300 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700",
+  button:
+    "text-white bg-teal-500 hover:bg-teal-700  focus:outline-none font-medium rounded-lg text-sm mx-2 px-4 py-2 text-center dark:bg-teal-500 dark:hover:bg-teal-700",
+  label:
+    "block text-sm font-medium leading-6 text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800",
+  input:
+    "block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm shadow-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6",
 };
 
 function Signup() {
@@ -129,264 +111,242 @@ function Signup() {
   }, [ role,first_name, last_name, street, city, zip, country, tax_id, phone_number, email, password,client ]);
 
   return (
-    <form
-      onSubmit={handleRegister}
-      className="w-fit m-auto rounded-lg p-6 bg-opacity-50 bg-white/75 dark:bg-gray-900/80"
-    >
-      {/* <ThemeToggle /> */}
-      <div className="space-y-12">
-        <div className="border-b border-gray-900/10 pb-12">
-          <Link to="/">
-            <img
-              className="mx-auto h-10 w-auto mb-6"
-              src="\src\assets\TaxMax-Logo3.svg"
-              alt="TAXMAX"
-            />
-          </Link>
-          <h2 className="text-base font-semibold leading-7 text-gray-900  dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800mb-2">
-            Personal Registrierung
-          </h2>
+    <>
+      <ParticlesBackground />
+      <div className="wrapper">
+        <NavigationTop />
 
-          <ul className="segmented-control shadow-sm shadow-gray-900 ">
-            <li className="segmented-control__item ">
-              <a href="#">
-                <input
-                  className="segmented-control__input "
-                  type="radio"
-                  value="1"
-                  name="option"
-                  id="option-1"
-                  onChange={() => {
-                    setClient(false), setRole("client");
-                  }}
-                  checked={!client}
+        <form
+          onSubmit={handleRegister}
+          className="w-fit m-auto rounded-lg p-6 bg-opacity-50 bg-white/75 dark:bg-gray-900/80"
+        >
+          {/* <ThemeToggle /> */}
+          <div className="space-y-12">
+            <div className="border-b border-gray-900/10 pb-12">
+              <Link to="/">
+                <img
+                  className="mx-auto h-10 w-auto mb-6"
+                  src="\src\assets\TaxMax-Logo3.svg"
+                  alt="TAXMAX"
                 />
-                <label
-                  className="segmented-control__label  dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 "
-                  htmlFor="option-1"
-                >
-                  Client
-                </label>
-              </a>
-            </li>
-            <li className="segmented-control__item">
-              <a href="#">
-                <input
-                  className="segmented-control__input"
-                  type="radio"
-                  value="2"
-                  name="option"
-                  id="option-2"
-                  onClick={() => {
-                    setClient(true), setRole("pro");
-                  }}
-                />
-                <label
-                  className="segmented-control__label dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
-                  htmlFor="option-2"
-                >
-                  Professional
-                </label>
-              </a>
-            </li>
-          </ul>
+              </Link>
+              <h2 className="text-base font-semibold leading-7 text-gray-900  dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800mb-2">
+                Personal Registrierung
+              </h2>
 
-          <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-            <div className="sm:col-span-3">
-              <label
-                htmlFor="first-name"
-                className="block text-sm font-medium leading-6 text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 "
-              >
-                First name
-              </label>
-              <div className="mt-2">
-                <input
-                  type="text"
-                  name="first-name"
-                  id="first-name"
-                  autoComplete="given-name"
-                  className="block w-full rounded-md px-2 border-0 py-1.5 text-gray-900 shadow-sm shadow-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  value={first_name}
-                  required
-                  onChange={(e) => setfirst_name(e.target.value)}
-                />
-              </div>
-            </div>
+              <ul className="segmented-control shadow-sm shadow-gray-900 ">
+                <li className="segmented-control__item ">
+                  <a href="#">
+                    <input
+                      className="segmented-control__input "
+                      type="radio"
+                      value="1"
+                      name="option"
+                      id="option-1"
+                      onChange={() => {
+                        setClient(false), setRole("client");
+                      }}
+                      checked={!client}
+                    />
+                    <label
+                      className="segmented-control__label  dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
+                      htmlFor="option-1"
+                    >
+                      Client
+                    </label>
+                  </a>
+                </li>
+                <li className="segmented-control__item">
+                  <a href="#">
+                    <input
+                      className="segmented-control__input"
+                      type="radio"
+                      value="2"
+                      name="option"
+                      id="option-2"
+                      onClick={() => {
+                        setClient(true), setRole("pro");
+                      }}
+                    />
+                    <label
+                      className="segmented-control__label dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
+                      htmlFor="option-2"
+                    >
+                      Professional
+                    </label>
+                  </a>
+                </li>
+              </ul>
 
-            <div className="sm:col-span-3">
-              <label
-                htmlFor="last-name"
-                className="block text-sm font-medium leading-6 text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
-              >
-                Last name
-              </label>
-              <div className="mt-2">
-                <input
-                  type="text"
-                  name="last-name"
-                  id="last-name"
-                  autoComplete="family-name"
-                  className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm shadow-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  value={last_name}
-                  required
-                  onChange={(e) => setlast_name(e.target.value)}
-                />
-              </div>
-            </div>
-
-            <div className="sm:col-span-6">
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium leading-6 text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
-              >
-                Email address
-              </label>
-              <div className="mt-2">
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm shadow-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  value={email}
-                  required
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-            </div>
-
-            <div className="sm:col-span-3">
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium leading-6 text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
-              >
-                Password
-              </label>
-              <div className="mt-2">
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  autoComplete="new-password"
-                  className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm shadow-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  value={password}
-                  required
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
-            </div>
-            <div className="sm:col-span-3">
-              <label
-                htmlFor="confirm-password"
-                className="block text-sm font-medium leading-6 text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
-              >
-                Confirm Password
-              </label>
-              <div className="mt-2">
-                <input
-                  id="confirm-password"
-                  name="confirm-password"
-                  type="password"
-                  autoComplete="new-password"
-                  className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm shadow-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  value={confirmPassword}
-                  required
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                />
-              </div>
-            </div>
-
-            {!client && (
-              <div className="sm:col-span-3">
-                <label
-                  htmlFor="tax-id"
-                  className="block text-sm font-medium leading-6 text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
-                >
-                  TAX ID
-                </label>
-                <div className="mt-2">
-                  <input
-                    type="text"
-                    name="tax-id"
-                    id="tax-id"
-                    autoComplete="tax-id"
-                    className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm shadow-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    value={tax_id}
-                    required
-                    onChange={(e) => settax_id(e.target.value)}
-                  />
+              <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                <div className="sm:col-span-3">
+                  <label htmlFor="first-name" className={styles.label}>
+                    First name
+                  </label>
+                  <div className="mt-2">
+                    <input
+                      type="text"
+                      name="first-name"
+                      id="first-name"
+                      autoComplete="given-name"
+                      className="block w-full rounded-md px-2 border-0 py-1.5 text-gray-900 shadow-sm shadow-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      value={first_name}
+                      required
+                      onChange={(e) => setfirst_name(e.target.value)}
+                    />
+                  </div>
                 </div>
-              </div>
-            )}
 
-            <div className="sm:col-span-3">
-              <label
-                htmlFor="phone-number"
-                className="block text-sm font-medium leading-6 text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
-              >
-                Phone Number
-              </label>
-              <div className="mt-2">
-                <input
-                  type="tel"
-                  name="phone-number"
-                  id="phone-number"
-                  autoComplete="phone-number"
-                  className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm shadow-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  value={phone_number}
-                  required
-                  onChange={(e) => setphone_number(e.target.value)}
-                />
-              </div>
-            </div>
-            <br />
+                <div className="sm:col-span-3">
+                  <label htmlFor="last-name" className={styles.label}>
+                    Last name
+                  </label>
+                  <div className="mt-2">
+                    <input
+                      type="text"
+                      name="last-name"
+                      id="last-name"
+                      autoComplete="family-name"
+                      className={styles.input}
+                      value={last_name}
+                      required
+                      onChange={(e) => setlast_name(e.target.value)}
+                    />
+                  </div>
+                </div>
 
-            <div className="col-span-full">
-              <label
-                htmlFor="street-address"
-                className="block text-sm font-medium leading-6 text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
-              >
-                Street
-              </label>
-              <div className="mt-2">
-                <input
-                  type="text"
-                  name="street-address"
-                  id="street-address"
-                  autoComplete="street-address"
-                  className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm shadow-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  value={street}
-                  required
-                  onChange={(e) => setStreet(e.target.value)}
-                />
-              </div>
-            </div>
+                <div className="sm:col-span-6">
+                  <label htmlFor="email" className={styles.label}>
+                    Email address
+                  </label>
+                  <div className="mt-2">
+                    <input
+                      id="email"
+                      name="email"
+                      type="email"
+                      autoComplete="email"
+                      className={styles.input}
+                      value={email}
+                      required
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                  </div>
+                </div>
 
-            <div className="sm:col-span-2 sm:col-start-1">
-              <label
-                htmlFor="city"
-                className="block text-sm font-medium leading-6 text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
-              >
-                City
-              </label>
-              <div className="mt-2">
-                <input
-                  type="text"
-                  name="city"
-                  id="city"
-                  autoComplete="address-level2"
-                  className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm shadow-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  value={city}
-                  required
-                  onChange={(e) => setCity(e.target.value)}
-                />
-              </div>
-            </div>
-            {/* 
+                <div className="sm:col-span-3">
+                  <label htmlFor="password" className={styles.label}>
+                    Password
+                  </label>
+                  <div className="mt-2">
+                    <input
+                      id="password"
+                      name="password"
+                      type="password"
+                      autoComplete="new-password"
+                      className={styles.input}
+                      value={password}
+                      required
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                  </div>
+                </div>
+                <div className="sm:col-span-3">
+                  <label htmlFor="confirm-password" className={styles.label}>
+                    Confirm Password
+                  </label>
+                  <div className="mt-2">
+                    <input
+                      id="confirm-password"
+                      name="confirm-password"
+                      type="password"
+                      autoComplete="new-password"
+                      className={styles.input}
+                      value={confirmPassword}
+                      required
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                    />
+                  </div>
+                </div>
+
+                {!client && (
+                  <div className="sm:col-span-3">
+                    <label htmlFor="tax-id" className={styles.label}>
+                      TAX ID
+                    </label>
+                    <div className="mt-2">
+                      <input
+                        type="text"
+                        name="tax-id"
+                        id="tax-id"
+                        autoComplete="tax-id"
+                        className={styles.input}
+                        value={tax_id}
+                        required
+                        onChange={(e) => settax_id(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                )}
+
+                <div className="sm:col-span-3">
+                  <label htmlFor="phone-number" className={styles.label}>
+                    Phone Number
+                  </label>
+                  <div className="mt-2">
+                    <input
+                      type="tel"
+                      name="phone-number"
+                      id="phone-number"
+                      autoComplete="phone-number"
+                      className={styles.input}
+                      value={phone_number}
+                      required
+                      onChange={(e) => setphone_number(e.target.value)}
+                    />
+                  </div>
+                </div>
+                <br />
+
+                <div className="col-span-full">
+                  <label htmlFor="street-address" className={styles.label}>
+                    Street
+                  </label>
+                  <div className="mt-2">
+                    <input
+                      type="text"
+                      name="street-address"
+                      id="street-address"
+                      autoComplete="street-address"
+                      className={styles.input}
+                      value={street}
+                      required
+                      onChange={(e) => setStreet(e.target.value)}
+                    />
+                  </div>
+                </div>
+
+                <div className="sm:col-span-2 sm:col-start-1">
+                  <label htmlFor="city" className={styles.label}>
+                    City
+                  </label>
+                  <div className="mt-2">
+                    <input
+                      type="text"
+                      name="city"
+                      id="city"
+                      autoComplete="address-level2"
+                      className={styles.input}
+                      value={city}
+                      required
+                      onChange={(e) => setCity(e.target.value)}
+                    />
+                  </div>
+                </div>
+                {/* 
             <div className="sm:col-span-2">
               <label
                 htmlFor="region"
-                className="block text-sm font-medium leading-6 text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
+                className={styles.label}
               >
                 State / Province
               </label>
@@ -396,124 +356,112 @@ function Signup() {
                   name="region"
                   id="region"
                   autoComplete="address-level1"
-                  className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm shadow-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className={styles.input}
                 />
               </div>
             </div> */}
 
-            <div className="sm:col-span-2">
-              <label
-                htmlFor="postal-code"
-                className="block text-sm font-medium leading-6 text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
-              >
-                ZIP / Postal code
-              </label>
-              <div className="mt-2">
-                <input
-                  type="text"
-                  name="postal-code"
-                  id="postal-code"
-                  autoComplete="postal-code"
-                  className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm shadow-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  value={zip}
-                  required
-                  onChange={(e) => setZip(e.target.value)}
-                />
-              </div>
-            </div>
-            <div className="sm:col-span-2">
-              <label
-                htmlFor="country"
-                className="block text-sm font-medium leading-6 text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
-              >
-                Country
-              </label>
-              <div className="mt-2">
-                <select
-                  id="country"
-                  name="country"
-                  autoComplete="country-name"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm shadow-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                  value={country}
-                  required
-                  onChange={(e) => setCountry(e.target.value)}
-                >
-                  <option>Albania</option>
-                  <option>Andorra</option>
-                  <option>Belgium</option>
-                  <option>Bosnia and Herzegovina</option>
-                  <option>Bulgaria</option>
-                  <option>Denmark</option>
-                  <option>Germany</option>
-                  <option>Estonia</option>
-                  <option>Finland</option>
-                  <option>France</option>
-                  <option>Greece</option>
-                  <option>Ireland</option>
-                  <option>Iceland</option>
-                  <option>Italy</option>
-                  <option>Kosovo</option>
-                  <option>Croatia</option>
-                  <option>Latvia</option>
-                  <option>Liechtenstein</option>
-                  <option>Lithuania</option>
-                  <option>Luxembourg</option>
-                  <option>Malta</option>
-                  <option>North Macedonia</option>
-                  <option>Moldova</option>
-                  <option>Monaco</option>
-                  <option>Montenegro</option>
-                  <option>Netherlands</option>
-                  <option>Norway</option>
-                  <option>Austria</option>
-                  <option>Poland</option>
-                  <option>Portugal</option>
-                  <option>Romania</option>
-                  <option>San Marino</option>
-                  <option>Sweden</option>
-                  <option>Switzerland</option>
-                  <option>Serbia</option>
-                  <option>Slovakia</option>
-                  <option>Slovenia</option>
-                  <option>Spain</option>
-                  <option>Czech Republic</option>
-                  <option>Ukraine</option>
-                  <option>Hungary</option>
-                  <option>Vatican City</option>
-                  <option>United Kingdom</option>
-                  <option>Belarus</option>
-                </select>
+                <div className="sm:col-span-2">
+                  <label htmlFor="postal-code" className={styles.label}>
+                    ZIP / Postal code
+                  </label>
+                  <div className="mt-2">
+                    <input
+                      type="text"
+                      name="postal-code"
+                      id="postal-code"
+                      autoComplete="postal-code"
+                      className={styles.input}
+                      value={zip}
+                      required
+                      onChange={(e) => setZip(e.target.value)}
+                    />
+                  </div>
+                </div>
+                <div className="sm:col-span-2">
+                  <label htmlFor="country" className={styles.label}>
+                    Country
+                  </label>
+                  <div className="mt-2">
+                    <select
+                      id="country"
+                      name="country"
+                      autoComplete="country-name"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm shadow-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                      value={country}
+                      required
+                      onChange={(e) => setCountry(e.target.value)}
+                    >
+                      <option>Albania</option>
+                      <option>Andorra</option>
+                      <option>Belgium</option>
+                      <option>Bosnia and Herzegovina</option>
+                      <option>Bulgaria</option>
+                      <option>Denmark</option>
+                      <option>Germany</option>
+                      <option>Estonia</option>
+                      <option>Finland</option>
+                      <option>France</option>
+                      <option>Greece</option>
+                      <option>Ireland</option>
+                      <option>Iceland</option>
+                      <option>Italy</option>
+                      <option>Kosovo</option>
+                      <option>Croatia</option>
+                      <option>Latvia</option>
+                      <option>Liechtenstein</option>
+                      <option>Lithuania</option>
+                      <option>Luxembourg</option>
+                      <option>Malta</option>
+                      <option>North Macedonia</option>
+                      <option>Moldova</option>
+                      <option>Monaco</option>
+                      <option>Montenegro</option>
+                      <option>Netherlands</option>
+                      <option>Norway</option>
+                      <option>Austria</option>
+                      <option>Poland</option>
+                      <option>Portugal</option>
+                      <option>Romania</option>
+                      <option>San Marino</option>
+                      <option>Sweden</option>
+                      <option>Switzerland</option>
+                      <option>Serbia</option>
+                      <option>Slovakia</option>
+                      <option>Slovenia</option>
+                      <option>Spain</option>
+                      <option>Czech Republic</option>
+                      <option>Ukraine</option>
+                      <option>Hungary</option>
+                      <option>Vatican City</option>
+                      <option>United Kingdom</option>
+                      <option>Belarus</option>
+                    </select>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-      <div className="mt-6 flex items-center justify-end gap-x-6 dark:text-white">
-        <p className="mt-2">
-          Already have an account?{" "}
-          <Link to="/signin" className="text-blue-500 underline">
-            Login here
-          </Link>
-        </p>
-        <Link to="/">
-          <button
-            type="button"
-            // className="inline-block rounded shadow-gray-900 bg-blue-500 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
-            className={styles.button}
-          >
-            Cancel
-          </button>
-        </Link>
+          <div className="mt-6 flex items-center justify-end gap-x-6 dark:text-white">
+            <p className="mt-2">
+              Already have an account?{" "}
+              <Link to="/signin" className="text-blue-500 underline">
+                Login here
+              </Link>
+            </p>
+            <Link to="/">
+              <button type="button" className={styles.button}>
+                Cancel
+              </button>
+            </Link>
 
-        <button
-          type="submit"
-          // className="inline-block rounded shadow-gray-900 bg-blue-500 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
-          className={styles.button}
-        >
-          REGISTER
-        </button>
+            <button type="submit" className={styles.button}>
+              REGISTER
+            </button>
+          </div>
+        </form>
       </div>
-    </form>
+    </>
   );
 }
 

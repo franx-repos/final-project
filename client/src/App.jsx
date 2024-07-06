@@ -8,7 +8,6 @@ import Signin from "./components/Signin";
 import ResetPassword from "./components/ResetPassword";
 import Modalsignin from "./components/signinmodal/Modalsignin";
 import Taskoverview from "./components/Aufträge/Taskoverview";
-import MatchingPage from "./components/Aufträge/MatchingPage";
 import NewPost from "./components/Aufträge/CreatTask";
 import UpdateTask from "./components/Aufträge/UpdateTask";
 import NotFound from "./components/NotFound";
@@ -26,7 +25,6 @@ function App() {
         <Route path ="/order" element={<UpdateTask />} />
         <Route path="/taskoverview" element={<Taskoverview />} />
         <Route path="/modalsignin" element={<Modalsignin />} />
-        <Route path="/Match" element={<MatchingPage /> }/>
         <Route path='*' element={<NotFound />} />
       </Routes>
     </>
