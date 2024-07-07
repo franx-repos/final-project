@@ -52,7 +52,7 @@ export const addNewPro = async (req, res, next) => {
 
 export const updatePro = async (req, res, next) => {
   const {cid} = req;
-  const { data, email_verified, role, industry, languages, image_url } =
+  const { data, email_verified, role, industry, languages, image_url, tasks } =
     req.body;
 
   try {
@@ -72,6 +72,7 @@ export const updatePro = async (req, res, next) => {
         role,
         industry,
         languages,
+        tasks,
       },
       { new: true }
     );
