@@ -4,8 +4,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { Label, Checkbox } from "flowbite-react";
 import { Dropdown } from "flowbite-react";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import Toastify, { notify } from "./Toastify";
 
 const styles = {
   input:
@@ -33,19 +32,6 @@ const fields = [
 function UserProfile() {
   const { isLoggedIn, setIsLoggedIn, userData, setUserData } = useAuth();
   const navigate = useNavigate();
-  const notify = () =>
-    toast.success("User data has been updated.", {
-      position: "top-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-      className:
-        "bg-gray-50 dark:bg-gray-700 text-teal-600 dark:text-teal-200 font-bold",
-    });
 
   const [formState, setFormState] = useState({
     first_name: "",
@@ -136,7 +122,7 @@ function UserProfile() {
       );
 
       if (response.status === 200) {
-        notify();
+        notify("User data has been updated.");
       }
 
       if (response.status === 401) {
@@ -149,7 +135,7 @@ function UserProfile() {
 
   return (
     <>
-      <ToastContainer />
+      <Toastify />
       <div className="flex">
         <div className="flex flex-col">
           {/* user picture and name */}
