@@ -216,3 +216,28 @@ export const getTaskByCid = async (req, res, next) => {
     next(error);
   }
 }
+
+export const patchtask = async (req, res, next) => {
+  const { id } = req.params;
+  const { content } = req.body;
+
+  console.log(`Updating task ${id} with content:`, content);
+
+  try {
+    const task = await Task.findById(id);
+
+    if (!task) {
+      throw { statusCode: 404, message: 'Task not found' };
+    }
+
+    // Update task content
+    Object.keys(content).forEach((key) => {
+      task.content[key] = content[key];
+    });
+
+    const updatedTask = await task.save();
+    res.json(updatedTask);
+  } catch (error) {
+    next(error);
+  }
+};

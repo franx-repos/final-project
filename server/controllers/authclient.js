@@ -66,7 +66,7 @@ export const logIn = asyncHandler(async (req, res, next) => {
     expiresIn: "30m",
   });
   res.cookie("token", token, {
-    maxAge: 1800000,
+    maxAge: 86400000,
     // httpOnly: true,
     // sameSite: "Lax",
   }); // 30mn
