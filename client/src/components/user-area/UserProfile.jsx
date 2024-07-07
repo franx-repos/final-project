@@ -4,10 +4,12 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { Label, Checkbox } from "flowbite-react";
 import { Dropdown } from "flowbite-react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const styles = {
   input:
-    "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500",
+    "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500",
   label:
     "block mb-2 text-left text-sm pl-2 font-medium text-gray-900 dark:text-white",
   deleteButton:
@@ -31,6 +33,19 @@ const fields = [
 function UserProfile() {
   const { isLoggedIn, setIsLoggedIn, userData, setUserData } = useAuth();
   const navigate = useNavigate();
+  const notify = () =>
+    toast.success("User data has been updated.", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      className:
+        "bg-gray-50 dark:bg-gray-700 text-teal-600 dark:text-teal-200 font-bold",
+    });
 
   const [formState, setFormState] = useState({
     first_name: "",
@@ -82,7 +97,7 @@ function UserProfile() {
         : [...prevState[optionType], optionValue],
     }));
   };
-  console.log("user role" + userData.data.role);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const {
@@ -120,6 +135,10 @@ function UserProfile() {
         { withCredentials: true }
       );
 
+      if (response.status === 200) {
+        notify();
+      }
+
       if (response.status === 401) {
         navigate("/signin");
       }
@@ -129,157 +148,160 @@ function UserProfile() {
   };
 
   return (
-    <div className="flex">
-      <div className="flex flex-col">
-        {/* user picture and name */}
-        <div className="flex w-fit h-fit p-3 bg-gray-50 rounded-md shadow dark:bg-gray-800 dark:border-gray-700">
-          <div className="flex">
-            <a className="w-1/3" href="#">
-              <img
-                className="rounded-t-lg"
-                src="https://flowbite.com/application-ui/demo/images/users/jese-leos-2x.png"
-                alt={`${formState.first_name} Avatar`}
-              />
-            </a>
-            <div className="w-2/3 p-5">
-              <h3 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
-                <a href="#">{formState.first_name}</a>
-              </h3>
-              <span className="text-gray-500 dark:text-gray-400">
-                {formState.last_name}
-              </span>
+    <>
+      <ToastContainer />
+      <div className="flex">
+        <div className="flex flex-col">
+          {/* user picture and name */}
+          <div className="flex w-fit h-fit p-3 bg-gray-50 rounded-md shadow dark:bg-gray-800 dark:border-gray-700">
+            <div className="flex">
+              <a className="w-1/3" href="#">
+                <img
+                  className="rounded-t-lg"
+                  src="https://flowbite.com/application-ui/demo/images/users/jese-leos-2x.png"
+                  alt={`${formState.first_name} Avatar`}
+                />
+              </a>
+              <div className="w-2/3 p-5">
+                <h3 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+                  <a href="#">{formState.first_name}</a>
+                </h3>
+                <span className="text-gray-500 dark:text-gray-400">
+                  {formState.last_name}
+                </span>
+              </div>
             </div>
           </div>
-        </div>
-        {/* languages & industries */}
-        <section className="h-full rounded-md mt-3 p-3 bg-white dark:bg-gray-800">
-          <h2 className="mb-4 text-xl text-left font-bold text-gray-900 dark:text-white">
-            Preferences
-          </h2>
-          <div className="flex">
-            <form onSubmit={handleSubmit} className="w-full">
-              <div className="mb-4 sm:mb-5">
-                <div className="w-full" key={userData._id}>
-                  <fieldset className="flex flex-col">
-                    <p className={`pl-0 ${styles.label}`}>Languages:</p>
+          {/* languages & industries */}
+          <section className="h-full rounded-md mt-3 p-3 bg-white dark:bg-gray-800">
+            <h2 className="mb-4 text-xl text-left font-bold text-gray-900 dark:text-white">
+              Preferences
+            </h2>
+            <div className="flex">
+              <form onSubmit={handleSubmit} className="w-full">
+                <div className="mb-4 sm:mb-5">
+                  <div className="w-full" key={userData._id}>
+                    <fieldset className="flex flex-col">
+                      <p className={`pl-0 ${styles.label}`}>Languages:</p>
 
-                    <Dropdown
-                      id="dropdown"
-                      label={
-                        <span className="text-gray-900 dark:text-white capitalize">
-                          {formState.languages.join(` | `) || "None"}
-                        </span>
-                      }
-                      dismissOnClick={false}
-                      className="z-50"
-                    >
-                      {languages.map((l) => (
-                        <Dropdown.Item key={l.title}>
-                          <div className="flex items-center gap-2 capitalize">
-                            <Checkbox
-                              id={l}
-                              checked={formState.languages.includes(l.title)}
-                              onChange={() =>
-                                handleOptionChange("languages", l.title)
-                              }
-                            />
-                            <Label
-                              className="flex text-gray-900 dark:text-white"
-                              htmlFor={l}
-                            >
-                              <img
-                                src={`https://flagsapi.com/${l.short}/flat/24.png`}
-                                alt={l.short}
-                                className="pr-2"
+                      <Dropdown
+                        id="dropdown"
+                        label={
+                          <span className="text-gray-900 dark:text-white capitalize">
+                            {formState.languages.join(` | `) || "None"}
+                          </span>
+                        }
+                        dismissOnClick={false}
+                        className="z-50"
+                      >
+                        {languages.map((l) => (
+                          <Dropdown.Item key={l.title}>
+                            <div className="flex items-center gap-2 capitalize">
+                              <Checkbox
+                                id={l}
+                                checked={formState.languages.includes(l.title)}
+                                onChange={() =>
+                                  handleOptionChange("languages", l.title)
+                                }
                               />
-                              {l.title}
-                            </Label>
-                          </div>
-                        </Dropdown.Item>
-                      ))}
-                    </Dropdown>
-                  </fieldset>
+                              <Label
+                                className="flex text-gray-900 dark:text-white"
+                                htmlFor={l}
+                              >
+                                <img
+                                  src={`https://flagsapi.com/${l.short}/flat/24.png`}
+                                  alt={l.short}
+                                  className="pr-2"
+                                />
+                                {l.title}
+                              </Label>
+                            </div>
+                          </Dropdown.Item>
+                        ))}
+                      </Dropdown>
+                    </fieldset>
+                  </div>
                 </div>
+
+                <fieldset className="flex flex-col">
+                  <p className={`pl-0 ${styles.label}`}>Industries:</p>
+                  <Dropdown
+                    label=<span className="text-gray-900 dark:text-white">
+                      {formState.industry.join(" | ") || "None"}
+                    </span>
+                    dismissOnClick={false}
+                  >
+                    {industries.map((i) => (
+                      <Dropdown.Item key={i}>
+                        <div className="flex items-center gap-2">
+                          <Checkbox
+                            id={i}
+                            checked={formState.industry.includes(i)}
+                            onChange={() => handleOptionChange("industry", i)}
+                          />
+                          <Label className="capitalize" htmlFor={i}>
+                            {i}
+                          </Label>
+                        </div>
+                      </Dropdown.Item>
+                    ))}
+                  </Dropdown>
+                </fieldset>
+              </form>
+            </div>
+          </section>
+        </div>
+        {/* address section */}
+        <section className="w-full rounded-md ml-3 bg-white dark:bg-gray-800">
+          <div className="px-4 py-8">
+            <h2 className="mb-4 text-xl text-left font-bold text-gray-900 dark:text-white">
+              General Info
+            </h2>
+            <form onSubmit={handleSubmit}>
+              <div className="grid gap-4 mb-4 sm:grid-cols-2 sm:gap-6 sm:mb-5">
+                {fields.map((field) => (
+                  <div className="w-full" key={field.id}>
+                    <label htmlFor={field.id} className={styles.label}>
+                      {field.label}
+                    </label>
+                    <input
+                      type="text"
+                      name={field.value}
+                      id={field.id}
+                      className={styles.input}
+                      value={formState[field.value]}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                ))}
               </div>
 
-              <fieldset className="flex flex-col">
-                <p className={`pl-0 ${styles.label}`}>Industries:</p>
-                <Dropdown
-                  label=<span className="text-gray-900 dark:text-white">
-                    {formState.industry.join(" | ") || "None"}
-                  </span>
-                  dismissOnClick={false}
-                >
-                  {industries.map((i) => (
-                    <Dropdown.Item key={i}>
-                      <div className="flex items-center gap-2">
-                        <Checkbox
-                          id={i}
-                          checked={formState.industry.includes(i)}
-                          onChange={() => handleOptionChange("industry", i)}
-                        />
-                        <Label className="capitalize" htmlFor={i}>
-                          {i}
-                        </Label>
-                      </div>
-                    </Dropdown.Item>
-                  ))}
-                </Dropdown>
-              </fieldset>
+              <div className="flex items-center space-x-4">
+                <button type="submit" className={styles.submitButton}>
+                  Update User Data
+                </button>
+                <button type="button" className={styles.deleteButton}>
+                  <svg
+                    className="w-5 h-5 mr-1 -ml-1"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d={styles.icon}
+                      class-rule="evenodd"
+                    ></path>
+                  </svg>
+                  Delete
+                </button>
+              </div>
             </form>
           </div>
         </section>
       </div>
-      {/* address section */}
-      <section className="w-full rounded-md ml-3 bg-white dark:bg-gray-800">
-        <div className="px-4 py-8">
-          <h2 className="mb-4 text-xl text-left font-bold text-gray-900 dark:text-white">
-            General Info
-          </h2>
-          <form onSubmit={handleSubmit}>
-            <div className="grid gap-4 mb-4 sm:grid-cols-2 sm:gap-6 sm:mb-5">
-              {fields.map((field) => (
-                <div className="w-full" key={field.id}>
-                  <label htmlFor={field.id} className={styles.label}>
-                    {field.label}
-                  </label>
-                  <input
-                    type="text"
-                    name={field.value}
-                    id={field.id}
-                    className={styles.input}
-                    value={formState[field.value]}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-              ))}
-            </div>
-
-            <div className="flex items-center space-x-4">
-              <button type="submit" className={styles.submitButton}>
-                Update User Data
-              </button>
-              <button type="button" className={styles.deleteButton}>
-                <svg
-                  className="w-5 h-5 mr-1 -ml-1"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d={styles.icon}
-                    class-rule="evenodd"
-                  ></path>
-                </svg>
-                Delete
-              </button>
-            </div>
-          </form>
-        </div>
-      </section>
-    </div>
+    </>
   );
 }
 
