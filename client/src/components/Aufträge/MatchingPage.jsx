@@ -13,7 +13,8 @@ const MatchingPage = () => {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { userData } = useAuth();
+  const { userData, checkUser } = useAuth();
+  
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -24,7 +25,6 @@ const MatchingPage = () => {
         });
         const industry = userData.industry;
         const specialization = userData.specialization;
-        console.log(industry);
 
         const filteredTasks = response.data.filter((task) => {
           const matchIndustry =
@@ -40,7 +40,6 @@ const MatchingPage = () => {
 
           return matchIndustry && matchSpecialization;
         });
-        console.log(filteredTasks);
         setTasks(filteredTasks);
         setLoading(false);
       } catch (err) {
@@ -52,13 +51,54 @@ const MatchingPage = () => {
     fetchTasks();
   }, []);
 
+  const acceptTask = async (_id) => {
+
+    try {
+      const proId = userData._id;
+      const name = userData.data.first_name
+      const newtasks = [...userData.tasks, _id];
+      const response = await axios.patch(
+        `http://localhost:8001/tasks/${_id}`,
+        {
+          content: {
+            status: 'IN PROGRESS',
+            assigned_to: proId,
+          },
+        },
+        { withCredentials: true }
+      );
+    
+      const responsepro = await axios.patch(
+        `http://localhost:8001/pros`,
+        { data:{
+          first_name: name
+        },
+
+          tasks: newtasks 
+        },
+        { withCredentials: true }
+      );
+    
+      console.log('Response from PATCH request to /pros:', responsepro);
+      console.log('Response from put request to /tasks:', response)
+    
+      if (responsepro.status === 200) {
+        console.log("Professional updated with task.");
+        checkUser();
+      }
+    } catch (error) {
+      console.error('Error in PATCH request to /pros:', error);
+      setError(error.message || "Something went wrong");
+    } }
+  
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
   return (
     <div className="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
       <h5 className="mb-2 text-3xl font-bold text-gray-900 dark:text-white">
-        Available Tasks
+        Tasks for you 
       </h5>
       <div className="flex">
         {tasks.map((task) => (
@@ -83,12 +123,12 @@ const MatchingPage = () => {
               {task.content.description}
             </p>
             <div className="flex justify-evenly">
-              <Link to="#" className={styles.button}>
+              <a to="#" className={styles.button} onClick={() => acceptTask(task._id)}>
                 Accept
-              </Link>
-              <Link to="#" className={styles.button}>
+              </a>
+              <a to="#" className={styles.button}>
                 Contact
-              </Link>
+              </a>
             </div>
           </div>
         ))}

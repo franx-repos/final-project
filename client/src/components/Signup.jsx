@@ -77,6 +77,11 @@ const [error2, setError2] = useState(null);
         setError2("An account with this Email already exists");
       }
     } else {
+      if (password !== confirmPassword) {
+        // console.log("Passwords do not match");
+        setError("Passwords do not match");
+        return;
+      }
       handleRegisterprofi(e);
     }
   };
@@ -108,7 +113,7 @@ const [error2, setError2] = useState(null);
       if (response.status === 201) {
       }
     } catch (error) {
-      toast.error(error.response.data.error || "Registration failed");
+      // toast.error(error.response.data.error || "Registration failed");
       setError2("An account with this Email already exists");
     }
   };
