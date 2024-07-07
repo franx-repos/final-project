@@ -16,7 +16,7 @@ tasksRouter
 tasksRouter
   .route("/:id")
   .get(verifyToken,taskController.getTaskById)
-  .put(upload.single("doc"),verifyToken,taskController.updateTask)
+  .patch(upload.single("doc"),verifyToken,taskController.updateTask)
   .delete(verifyToken,taskController.deleteTask);
 
 
