@@ -45,7 +45,15 @@ function UserProfile() {
     industry: [],
   });
 
-  const languages = ["german", "english", "spanish", "italian", "dutch"];
+  const languages = [
+    { title: "german", short: "DE" },
+    { title: "english", short: "GB" },
+    { title: "spanish", short: "ES" },
+    { title: "italian", short: "IT" },
+    { title: "dutch", short: "NL" },
+    { title: "polish", short: "PL" },
+    { title: "french", short: "FR" },
+  ];
   const industries = ["IT", "Gastronomy"];
 
   useEffect(() => {
@@ -158,27 +166,33 @@ function UserProfile() {
                     <Dropdown
                       id="dropdown"
                       label={
-                        <span className="text-gray-900 dark:text-white">
-                          {formState.languages.join(", ") || "None"}
+                        <span className="text-gray-900 dark:text-white capitalize">
+                          {formState.languages.join(` | `) || "None"}
                         </span>
                       }
                       dismissOnClick={false}
+                      className="z-50"
                     >
                       {languages.map((l) => (
-                        <Dropdown.Item key={l}>
-                          <div className="flex items-center gap-2">
+                        <Dropdown.Item key={l.title}>
+                          <div className="flex items-center gap-2 capitalize">
                             <Checkbox
                               id={l}
-                              checked={formState.languages.includes(l)}
+                              checked={formState.languages.includes(l.title)}
                               onChange={() =>
-                                handleOptionChange("languages", l)
+                                handleOptionChange("languages", l.title)
                               }
                             />
                             <Label
-                              className="text-gray-900 dark:text-white"
+                              className="flex text-gray-900 dark:text-white"
                               htmlFor={l}
                             >
-                              {l}
+                              <img
+                                src={`https://flagsapi.com/${l.short}/flat/24.png`}
+                                alt={l.short}
+                                className="pr-2"
+                              />
+                              {l.title}
                             </Label>
                           </div>
                         </Dropdown.Item>
@@ -192,7 +206,7 @@ function UserProfile() {
                 <p className={`pl-0 ${styles.label}`}>Industries:</p>
                 <Dropdown
                   label=<span className="text-gray-900 dark:text-white">
-                    {formState.industry.join(", ") || "None"}
+                    {formState.industry.join(" | ") || "None"}
                   </span>
                   dismissOnClick={false}
                 >
