@@ -119,8 +119,7 @@ function UserProfile() {
       console.log(error || "Updating user data failed");
     }
   };
-  console.log("Form data submitted: ", formState);
-  console.log(userData);
+
   return (
     <div className="flex">
       <div className="flex flex-col">
@@ -158,7 +157,11 @@ function UserProfile() {
 
                     <Dropdown
                       id="dropdown"
-                      label={formState.languages.join(", ") || "None"}
+                      label={
+                        <span className="text-gray-900 dark:text-white">
+                          {formState.languages.join(", ") || "None"}
+                        </span>
+                      }
                       dismissOnClick={false}
                     >
                       {languages.map((l) => (
@@ -188,7 +191,9 @@ function UserProfile() {
               <fieldset className="flex flex-col">
                 <p className={`pl-0 ${styles.label}`}>Industries:</p>
                 <Dropdown
-                  label={formState.industry.join(", ") || "None"}
+                  label=<span className="text-gray-900 dark:text-white">
+                    {formState.industry.join(", ") || "None"}
+                  </span>
                   dismissOnClick={false}
                 >
                   {industries.map((i) => (
