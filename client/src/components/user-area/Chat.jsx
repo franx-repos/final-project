@@ -7,7 +7,6 @@ function Chat() {
   const { isLoggedIn, setIsLoggedIn, userData, setUserData } = useAuth();
 
   useEffect(() => {
-    console.log(userData._id);
     const fetchChat = async () => {
       try {
         const response = await axios.get(
