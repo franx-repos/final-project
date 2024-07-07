@@ -57,9 +57,11 @@ const MatchingPage = () => {
       const newtasks = [...userData.tasks, _id];
       const response = await axios.patch(
         `http://localhost:8001/tasks/${_id}`,
-        {  content: {
-          status: "in progress",
-          assigned_to: proId, }
+        {
+          content: {
+            status: 'IN PROGRESS',
+            assigned_to: proId,
+          },
         },
         { withCredentials: true }
       );
