@@ -3,7 +3,8 @@ import { useState, useRef, useEffect } from "react";
 import Select from "react-select";
 
 const deploy = import.meta.env.VITE_DEPLOY_URL;
-const NewPost = ({ isCreateTaskOpen, toggleModal }) => {
+
+const CreateTask = ({ isCreateTaskOpen, toggleModal, checkUser }) => {
   const [images, setImages] = useState([]);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -16,6 +17,7 @@ const NewPost = ({ isCreateTaskOpen, toggleModal }) => {
   const [error, setError] = useState("");
   const [file, setFile] = useState([]);
 
+  
   const options = [
     { value: "craft", label: "craft" },
     { value: "it", label: "IT" },
@@ -55,33 +57,11 @@ const NewPost = ({ isCreateTaskOpen, toggleModal }) => {
     setDocuments(documents.filter((_, i) => i !== index));
   };
 
-  // const handleFileChange = (event) => {
-  //   const files = Array.from(event.target.files).map((file) => ({
-  //     url: URL.createObjectURL(file),
-  //     name: file.name,
-  //     preview: ['jpg', 'jpeg', 'png', 'gif', 'pdf',"webp"].includes(file.name.split('.').pop().toLowerCase()),
-  //     size:
-  //       file.size > 1024
-  //         ? file.size > 1048576
-  //           ? Math.round(file.size / 1048576) + 'mb'
-  //           : Math.round(file.size / 1024) + 'kb'
-  //         : file.size + 'b',
-  //   }));
-  //   setImages(files);
-  //   setDocuments(files);
-  // };
-
-  // const handleRemoveImage = (index) => {
-  //   setImages(images.filter((_, i) => i !== index));
-  //   setDocuments(documents.filter((_, i) => i !== index));
-  // };
-
   const handlePost = async (e) => {
     e.preventDefault();
     try {
-     
       const response = await axios.post(
-        `${deploy}/tasks`,
+        `${deploy}//tasks`,
         {
           content: {
             title,
@@ -89,66 +69,25 @@ const NewPost = ({ isCreateTaskOpen, toggleModal }) => {
             deadline,
             task_type,
             industry,
-
             payment,
           },
           documents: [],
-
-          // documents: documents.map((document) => ({
-          //   documentstitle: document.name,
-          //   icon: document.url,
-          // })),
         },
         { withCredentials: true }
       );
-      // .populate("content.created_by");
 
-          toggleModal();
-       
-      
+      if (response.status === 201) {
+        checkUser();
+        toggleModal();
+        console.log("Task has been created.");
+      }
     } catch (error) {
       setError(error.message || "Something went wrong with Login");
       console.log("Error:", error.message);
-      console.log("Error:", error.response.data);
       if (error.response) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
-        console.log("Response data:", error.response.data);
-        console.log("Response status:", error.response.status);
-        console.log("Response headers:", error.response.headers);
       }
     }
   };
-
-  useEffect(() => {
-    console.log(
-      "title:",
-      title,
-      "description:",
-      description,
-      "deadline:",
-      deadline,
-      "task_type:",
-      task_type,
-      "industry:",
-      industry,
-      "create_date:",
-      create_date,
-      "payment:",
-      payment,
-      "documents:",
-      documents
-    );
-  }, [
-    title,
-    description,
-    deadline,
-    task_type,
-    industry,
-    create_date,
-    payment,
-    documents,
-  ]);
 
   if (!isCreateTaskOpen) return null;
 
@@ -245,78 +184,6 @@ const NewPost = ({ isCreateTaskOpen, toggleModal }) => {
                   />
                 </div>
               </div>
-
-              {/* <div className="icons flex text-gray-500 m-2">
-          <label id="select-image">
-            <svg
-              className="mr-2 cursor-pointer hover:text-gray-700 border rounded-full p-1 h-7"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"
-              />
-            </svg>
-            <input
-              hidden
-              type="file"
-              multiple
-              onChange={handleFileChange}
-              ref={fileInputRef}
-            />
-          </label>
-        </div> */}
-
-              {/* <div id="preview" className="my-4 flex">
-          {images.map((image, index) => (
-            <div
-              key={index}
-              className="relative w-32 h-32 object-cover rounded"
-            >
-              {image.preview ? (
-                <div className="relative w-32 h-32 object-cover rounded">
-                  <img
-                    src={image.url}
-                    className="w-32 h-32 object-cover rounded"
-                    alt={image.name}
-                  />
-                  <button
-                    onClick={() => handleRemoveImage(index)}
-                    className="w-6 h-6 absolute text-center flex items-center top-0 right-0 m-2 text-white text-lg bg-red-500 hover:text-red-700 hover:bg-gray-100 rounded-full p-1"
-                  >
-                    <span className="mx-auto">×</span>
-                  </button>
-                  <div className="text-xs text-center p-2">{image.size}</div>
-                </div>
-              ) : (
-                <div className="relative w-32 h-32 object-cover rounded">
-                  <svg
-                    className="fill-current w-32 h-32 ml-auto pt-1"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M15 2v5h5v15h-16v-20h11zm1-2h-14v24h20v-18l-6-6z" />
-                  </svg>
-                  <button
-                    onClick={() => handleRemoveImage(index)}
-                    className="w-6 h-6 absolute text-center flex items-center top-0 right-0 m-2 text-white text-lg bg-red-500 hover:text-red-700 hover:bg-gray-100 rounded-full p-1"
-                  >
-                    <span className="mx-auto">×</span>
-                  </button>
-                  <div className="text-xs text-center p-2">{image.size}</div>
-                </div>
-              )}
-            </div>
-          ))}
-        </div> */}
-
               <div className="buttons flex justify-end mt-3">
                 <button
                   type="submit"
@@ -333,4 +200,4 @@ const NewPost = ({ isCreateTaskOpen, toggleModal }) => {
   );
 };
 
-export default NewPost;
+export default CreateTask;
