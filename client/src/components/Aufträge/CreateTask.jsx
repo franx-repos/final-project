@@ -61,7 +61,7 @@ const CreateTask = ({ isCreateTaskOpen, toggleModal, checkUser }) => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `${deploy}//tasks`,
+        `${deploy}/tasks`,
         {
           content: {
             title,

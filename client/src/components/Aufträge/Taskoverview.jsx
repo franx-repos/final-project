@@ -30,7 +30,7 @@ const Taskoverview = () => {
       const taskIds = userData.tasks;
       //TaskIds kommt aus userData, also useAuth, dies wird nicht neu geladen, daher auch nicht die taskIds
       const detailedTasksPromises = taskIds.map((id) =>
-        axios.get(`${deploy}//tasks/${id}`, {
+        axios.get(`${deploy}/tasks/${id}`, {
           withCredentials: true,
         })
       );
