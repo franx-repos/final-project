@@ -70,13 +70,6 @@ const Signin = () => {
     }
   };
 
-  // useEffect(() => {
-  //   console.log(`email:  ${email}`);
-  //   console.log(`password: ${password}`);
-  //   console.log(`client: ${client}`);
-  //   console.log(`role: ${role}`);
-  //   }, [email,password,client,role]);
-
   return (
     <>
       <form
@@ -178,13 +171,11 @@ const Signin = () => {
                 </label>
 
                 <div className="text-sm">
-                  <Link to="/reset-pass">
-                    <a
-                      href="#"
-                      className="font-semibold text-indigo-600 hover:text-indigo-500  dark:text-blue-500 dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
-                    >
-                      Forgot password?
-                    </a>
+                  <Link
+                    to="/reset-pass"
+                    className="font-semibold text-indigo-600 hover:text-indigo-500  dark:text-blue-500 dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
+                  >
+                    Forgot password?
                   </Link>
                 </div>
               </div>

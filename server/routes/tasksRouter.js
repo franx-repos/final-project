@@ -12,6 +12,7 @@ tasksRouter
   tasksRouter.route("/pro_task").get(verifyToken,taskController.getTaskByPro);
   tasksRouter.route("/client_task").get(verifyToken,taskController.getTaskByCid);
   tasksRouter.route("/open").get(verifyToken,taskController.getTasksByOpen);
+  tasksRouter.route("/open_free").get(taskController.getTasksByOpen);
 tasksRouter
   .route("/:id")
   .get(verifyToken,taskController.getTaskById)

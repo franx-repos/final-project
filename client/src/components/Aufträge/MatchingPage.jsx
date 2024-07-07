@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useAuth } from "../../context/UserProvider";
 
 const styles = {
   button:
@@ -11,6 +12,7 @@ const MatchingPage = () => {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { userData } = useAuth();
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -18,7 +20,26 @@ const MatchingPage = () => {
         const response = await axios.get("http://localhost:8001/tasks/open", {
           withCredentials: true,
         });
-        setTasks(response.data);
+        const industry = userData.industry;
+        const specialization = userData.specialization;
+        console.log(industry);
+
+        const filteredTasks = response.data.filter((task) => {
+          const matchIndustry =
+            industry.length > 0
+              ? industry.some((ind) => task.content.industry.includes(ind))
+              : true;
+          const matchSpecialization =
+            specialization.length > 0
+              ? specialization.some((spec) =>
+                  task.content.task_type.includes(spec)
+                )
+              : true;
+
+          return matchIndustry && matchSpecialization;
+        });
+        console.log(filteredTasks);
+        setTasks(filteredTasks);
         setLoading(false);
       } catch (err) {
         setError(err.message);
@@ -39,7 +60,10 @@ const MatchingPage = () => {
       </h5>
       <div className="flex">
         {tasks.map((task) => (
-          <div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+          <div
+            key={task._id}
+            className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+          >
             <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
               {task.content.title}
             </h5>
@@ -57,12 +81,12 @@ const MatchingPage = () => {
               {task.content.description}
             </p>
             <div className="flex justify-evenly">
-              <a href="#" className={styles.button}>
+              <Link to="#" className={styles.button}>
                 Accept
-              </a>
-              <a href="#" className={styles.button}>
+              </Link>
+              <Link to="#" className={styles.button}>
                 Contact
-              </a>
+              </Link>
             </div>
           </div>
         ))}
