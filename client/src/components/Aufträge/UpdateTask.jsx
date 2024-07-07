@@ -3,12 +3,16 @@ import { useState, useRef, useEffect } from "react";
 import { format } from "date-fns";
 import Select from "react-select";
 
+const styles = {
+  label:
+    "flex pl-2 text-gray-700 text-sm font-bold mb-1 dark:bg-[#1f2937] dark:text-gray-400",
+};
+
 const UpdateTask = ({
   isUpdateTaskOpen,
   toggleUpdateModal,
   entryToUpdate,
-  hasBeenChanged,
-  setHasBeenChanged,
+  checkUser,
 }) => {
   const [editTaskId, setEditTaskId] = useState(null);
   const [images, setImages] = useState([]);
@@ -21,8 +25,6 @@ const UpdateTask = ({
 
   const [documents, setDocuments] = useState([]);
   const [error, setError] = useState("");
-  // const [entries, setEntries] = useState([]);
-  // const [loading, setLoading] = useState(true);
   const [file, setFile] = useState("");
 
   useEffect(() => {
@@ -32,9 +34,8 @@ const UpdateTask = ({
     setIndustry(entryToUpdate?.content?.industry || []);
     setTask_type(entryToUpdate?.content?.task_type || []);
     setDocuments(entryToUpdate?.content?.documents || []);
-    console.log(entryToUpdate?.content?.task_type);
   }, [entryToUpdate]);
-
+  console.log(entryToUpdate?.content?.task_type);
   const fileInputRef = useRef(null);
 
   const types = [
@@ -80,7 +81,7 @@ const UpdateTask = ({
       );
 
       if (response.status === 200) {
-        setHasBeenChanged(!hasBeenChanged);
+        checkUser();
         toggleUpdateModal();
         console.log("Updated successfully.");
       }
@@ -95,7 +96,7 @@ const UpdateTask = ({
         `http://localhost:8001/tasks/${_id}`,
         { withCredentials: true }
       );
-      setHasBeenChanged(!hasBeenChanged);
+      checkUser();
       toggleUpdateModal();
     } catch (error) {
       setError(error.message || "Something went wrong with deleting the task");
@@ -124,13 +125,13 @@ const UpdateTask = ({
     >
       {" "}
       <div className="relative w-full max-w-3xl mt-8 max-h-full shadow py-8 rounded-md bg-white dark:bg-[#1f2937] overflow-auto">
-        <div className="editor mx-auto w-10/12 flex flex-col text-gray-800   p-4 max-w-2xl">
+        <div className="editor mx-auto w-10/12 flex flex-col text-gray-800   p-4 max-w-2xl ">
           {/* {entries.map((entry) => ( */}
           <div
             // key={entry._id}
             className="border border-gray-300 p-4 shadow-lg mb-3 rounded-md bg-white dark:bg-[#1f2937]"
           >
-            <div className="px-5 py-5 bg-white text-sm text-center">
+            <div className="px-5 py-5 bg-white dark:bg-[#1f2937]  text-sm text-center">
               <div className="absolute top-0 right-0 p-4 ">
                 <button
                   type="button"
@@ -157,24 +158,18 @@ const UpdateTask = ({
               </div>
 
               <div className="flex flex-col">
-                <label
-                  className="flex pl-2 text-gray-700 text-sm font-bold mb-1"
-                  htmlFor="username"
-                >
+                <label className={styles.label} htmlFor="username">
                   title
                 </label>
                 <input
                   type="text"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  className="w-full px-2 py-2 border border-gray-300 rounded-md"
+                  className="w-full px-2 py-2 border border-gray-300 rounded-md "
                 />
               </div>
-              <div className="py-5 max-full border-b-gray-200 text-wrap dark:border-x-0 dark:border-r-white dark:border bg-white text-sm">
-                <label
-                  className="flex pl-2 text-gray-700 text-sm font-bold mb-1"
-                  htmlFor="username"
-                >
+              <div className="py-5 max-full border-b-gray-200 text-wrap  bg-white text-sm dark:bg-[#1f2937] dark:text-gray-400">
+                <label className={styles.label} htmlFor="username">
                   description
                 </label>
                 <textarea
@@ -185,32 +180,26 @@ const UpdateTask = ({
                 />
               </div>
               <div className="flex items-stretch">
-                <div className="w-full mr-2 overflow-clip border-b-gray-200 text-wrap dark:border-x-0 dark:border-r-white dark:border bg-white text-sm">
-                  <label
-                    className="flex pl-2 text-gray-700 text-sm font-bold mb-1"
-                    htmlFor="username"
-                  >
+                <div className="w-full mr-2 overflow-clip border-b-gray-200 text-wrap bg-white text-sm dark:bg-[#1f2937]">
+                  <label className={styles.label} htmlFor="username">
                     industry
                   </label>
                   <input
                     type="text"
                     value={industry}
                     onChange={(e) => setIndustry(e.target.value)}
-                    className="w-full px-2 py-2 border border-gray-300 rounded-md"
+                    className="w-full px-2 py-2 border border-gray-300 rounded-md dark:text-gray-400"
                   />
                 </div>
                 <div className="w-full ml-2">
-                  <label
-                    className="flex pl-2 text-gray-700 text-sm font-bold mb-1"
-                    htmlFor="username"
-                  >
+                  <label className={styles.label} htmlFor="username">
                     job type
                   </label>
 
                   <Select
                     options={types}
-                    // value={types.find((type) => type.value === task_type)}
-                    value={task_type}
+                    value={types.find((type) => type.value === task_type)}
+                    // value={task_type}
                     onChange={(selectedOption) =>
                       setTask_type(selectedOption.value)
                     }
@@ -237,21 +226,23 @@ const UpdateTask = ({
               </div>
             </div>
             <div className="flex justify-evenly">
-              <div className="px-5 py-5 border-gray-200 bg-white text-sm">
-                <p className="flex text-gray-900 whitespace-no-wrap">
+              <div className="px-5 py-5 border-gray-200 bg-white text-sm dark:bg-[#1f2937]">
+                <p className="flex text-gray-900 whitespace-no-wrap dark:text-gray-400">
                   date created:
-                  {entryToUpdate.content.create_date
-                    ? format(
-                        new Date(entryToUpdate.content.create_date),
-                        "dd MMM yyyy, HH:mm"
-                      )
-                    : ""}
+                  <span className="ml-2">
+                    {entryToUpdate.content.create_date
+                      ? format(
+                          new Date(entryToUpdate.content.create_date),
+                          "dd MMM yyyy, HH:mm"
+                        )
+                      : ""}
+                  </span>
                 </p>
               </div>
-              <div className="flex px-5 py-5 border-gray-200 bg-white text-sm">
-                <p>Status: </p>
+              <div className="flex px-5 py-5 border-gray-200 bg-white text-sm dark:bg-[#1f2937]">
+                <p className="dark:text-gray-400">Status:</p>
                 <span
-                  className={`relative inline-block px-3 py-1 rounded-lg font-semibold leading-tight ${handleStatus(
+                  className={`relative inline-block px-3 py-1 ml-2 rounded-md font-semibold leading-tight ${handleStatus(
                     entryToUpdate.content.status
                   )}`}
                 >

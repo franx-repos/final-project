@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/UserProvider.jsx";
 import axios from "axios";
 
-const Modalsignin = ({ isModalOpen, toggleModal }) => {
+const Modalsignin = ({ isLoginModalOpen, toggleLoginModal }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -36,7 +36,7 @@ const Modalsignin = ({ isModalOpen, toggleModal }) => {
           setIsLoggedIn(true);
           checkUser();
           navigate("/Dashboard");
-          toggleModal();
+          toggleLoginModal();
         }
       } catch (error) {
         setError(error.message || "Something went wrong with Login");
@@ -65,14 +65,14 @@ const Modalsignin = ({ isModalOpen, toggleModal }) => {
         setIsLoggedIn(true);
         checkUser();
         navigate("/");
-        toggleModal();
+        toggleLoginModal();
       }
     } catch (error) {
       setError(error.message || "Something went wrong with Login");
     }
   };
 
-  if (!isModalOpen) return null;
+  if (!isLoginModalOpen) return null;
 
   return (
     <>
@@ -81,7 +81,7 @@ const Modalsignin = ({ isModalOpen, toggleModal }) => {
         id="authentication-modal"
         tabIndex="-1"
         aria-hidden="true"
-        className="fixed inset-0 z-50 flex justify-center items-center w-full h-full overflow-y-auto bg-gray-500 bg-opacity-90"
+        className="fixed inset-0 z-50 flex justify-center items-center w-full h-full overflow-y-auto bg-gray-900/70"
       >
         <div className="relative p-4 w-full max-w-md max-h-full">
           {/* Modal content */}
@@ -91,11 +91,11 @@ const Modalsignin = ({ isModalOpen, toggleModal }) => {
             method="POST"
             onSubmit={handleLogin}
           >
-            <div className="flex flex-1 flex-col w-fit m-auto justify-center px-6 py-12 lg:px-8 shadow shadow-gray-900 rounded-lg p-6 border-gray-200 bg-white/75 dark:bg-gray-900/80">
+            <div className="flex flex-1 flex-col w-fit m-auto justify-center px-6 py-12 lg:px-8 shadow shadow-gray-900 rounded-lg p-6 border-gray-200 bg-white dark:bg-gray-900 dark:border-teal-300">
               <div className="absolute top-0 right-0 p-4 mr-8 mt-4 ">
                 <button
                   type="button"
-                  onClick={toggleModal}
+                  onClick={toggleLoginModal}
                   className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
                 >
                   <svg
@@ -254,7 +254,7 @@ const Modalsignin = ({ isModalOpen, toggleModal }) => {
                     Not registered ?{" "}
                     <Link
                       to="/signup"
-                      onClick={toggleModal}
+                      onClick={toggleLoginModal}
                       className="text-blue-500 underline"
                     >
                       Register here
