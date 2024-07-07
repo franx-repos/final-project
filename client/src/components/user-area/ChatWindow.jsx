@@ -20,7 +20,7 @@ const ChatWindow = ({ socket }) => {
         }
         console.log(url);
         try {
-          const response = await axios.get(url,{withCredentials: true});
+          const response = await axios.get(url, { withCredentials: true });
           // console.log(response);
           setChats(response.data);
         } catch (error) {
@@ -36,12 +36,12 @@ const ChatWindow = ({ socket }) => {
   }, [chats]);
 
   return (
-    <section className="flex w-full h-screen justify-start antialiased text-gray-600 p-4 pb-24 ">
+    <section className="flex w-full h-screen justify-start antialiased text-gray-600 bg-white dark:bg-gray-900">
       <div className=" flex ">
         <ChatSideBar chats={chats} />
       </div>
-      <div className="flex flex-col  w-full mx-9 shadow-lg rounded-lg">
-        <div className="flex-1 overflow-y-scroll border-gray-200 dark:bg-gray-800"></div>
+      <div className="flex flex-col w-full ml-3 shadow-lg">
+        <div className="flex-1 overflow-y-auto border-gray-200 dark:bg-gray-800 rounded-t-md"></div>
         <ChatInput />
       </div>
     </section>
