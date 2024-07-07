@@ -9,7 +9,7 @@ const ChatSideBar = ({ chats }) => {
   // }, [chats]);
 
   return (
-    <div className="relative max-w-[340px] mx-auto bg-gray-50 dark:bg-gray-800 shadow-lg rounded-lg">
+    <div className="relative max-w-[340px] mx-auto bg-gray-50 dark:bg-gray-800 shadow-lg rounded-md">
       <header className="pt-6 pb-4 px-5 border-b border-gray-200">
         <div className="flex justify-between items-center mb-3">
           <div className="flex items-center">

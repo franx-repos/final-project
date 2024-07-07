@@ -36,7 +36,6 @@ function Signup() {
     // ${deploy}
     if (client === false) {
       if (password !== confirmPassword) {
-        // console.log("Passwords do not match");
         return;
       }
       try {
@@ -64,8 +63,7 @@ function Signup() {
           navigate("/signin");
         }
       } catch (error) {
-        // console.log(error);
-        // console.log(error.response.data.error || "Registration failed");
+        console.log(error);
       }
     } else {
       handleRegisterprofi(e);
