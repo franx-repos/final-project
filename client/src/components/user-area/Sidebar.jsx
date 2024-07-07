@@ -52,7 +52,7 @@ function DashboardSidebar({ currentLocation, setCurrentLocation }) {
   ];
 
   return (
-    <Sidebar className="h-screen sticky top-0 bg-gray-50 dark:bg-gray-800">
+    <Sidebar className="h-screen pt-5 sticky top-0 bg-gray-50 dark:bg-gray-800">
       <Link
         to="/"
         className="flex items-center ml-2 space-x-3 rtl:space-x-reverse"
