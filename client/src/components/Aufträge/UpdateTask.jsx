@@ -12,8 +12,7 @@ const UpdateTask = ({
   isUpdateTaskOpen,
   toggleUpdateModal,
   entryToUpdate,
-  hasBeenChanged,
-  setHasBeenChanged,
+  checkUser,
 }) => {
   const [editTaskId, setEditTaskId] = useState(null);
   const [images, setImages] = useState([]);
@@ -26,8 +25,6 @@ const UpdateTask = ({
 
   const [documents, setDocuments] = useState([]);
   const [error, setError] = useState("");
-  // const [entries, setEntries] = useState([]);
-  // const [loading, setLoading] = useState(true);
   const [file, setFile] = useState("");
 
   useEffect(() => {
@@ -37,9 +34,8 @@ const UpdateTask = ({
     setIndustry(entryToUpdate?.content?.industry || []);
     setTask_type(entryToUpdate?.content?.task_type || []);
     setDocuments(entryToUpdate?.content?.documents || []);
-    console.log(entryToUpdate?.content?.task_type);
   }, [entryToUpdate]);
-
+  console.log(entryToUpdate?.content?.task_type);
   const fileInputRef = useRef(null);
 
   const types = [
@@ -85,7 +81,7 @@ const UpdateTask = ({
       );
 
       if (response.status === 200) {
-        setHasBeenChanged(!hasBeenChanged);
+        checkUser();
         toggleUpdateModal();
         console.log("Updated successfully.");
       }
@@ -100,7 +96,7 @@ const UpdateTask = ({
         `http://localhost:8001/tasks/${_id}`,
         { withCredentials: true }
       );
-      setHasBeenChanged(!hasBeenChanged);
+      checkUser();
       toggleUpdateModal();
     } catch (error) {
       setError(error.message || "Something went wrong with deleting the task");
@@ -192,7 +188,7 @@ const UpdateTask = ({
                     type="text"
                     value={industry}
                     onChange={(e) => setIndustry(e.target.value)}
-                    className="w-full px-2 py-2 border border-gray-300 rounded-md"
+                    className="w-full px-2 py-2 border border-gray-300 rounded-md dark:text-gray-400"
                   />
                 </div>
                 <div className="w-full ml-2">
@@ -202,8 +198,8 @@ const UpdateTask = ({
 
                   <Select
                     options={types}
-                    // value={types.find((type) => type.value === task_type)}
-                    value={task_type}
+                    value={types.find((type) => type.value === task_type)}
+                    // value={task_type}
                     onChange={(selectedOption) =>
                       setTask_type(selectedOption.value)
                     }
@@ -244,7 +240,7 @@ const UpdateTask = ({
                 </p>
               </div>
               <div className="flex px-5 py-5 border-gray-200 bg-white text-sm dark:bg-[#1f2937]">
-                <p className="dark:text-gray-400">Status: </p>
+                <p className="dark:text-gray-400">Status:</p>
                 <span
                   className={`relative inline-block px-3 py-1 ml-2 rounded-md font-semibold leading-tight ${handleStatus(
                     entryToUpdate.content.status

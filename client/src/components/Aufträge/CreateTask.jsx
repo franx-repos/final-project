@@ -2,12 +2,7 @@ import axios from "axios";
 import { useState, useRef, useEffect } from "react";
 import Select from "react-select";
 
-const CreateTask = ({
-  isCreateTaskOpen,
-  toggleModal,
-  hasBeenChanged,
-  setHasBeenChanged,
-}) => {
+const CreateTask = ({ isCreateTaskOpen, toggleModal, checkUser }) => {
   const [images, setImages] = useState([]);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -79,9 +74,9 @@ const CreateTask = ({
       );
 
       if (response.status === 201) {
-        setHasBeenChanged(!hasBeenChanged);
+        checkUser();
         toggleModal();
-        console.log("CreateTask: " + hasBeenChanged);
+        console.log("Task has been created.");
       }
     } catch (error) {
       setError(error.message || "Something went wrong with Login");

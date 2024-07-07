@@ -70,13 +70,6 @@ const Signin = () => {
     }
   };
 
-  // useEffect(() => {
-  //   console.log(`email:  ${email}`);
-  //   console.log(`password: ${password}`);
-  //   console.log(`client: ${client}`);
-  //   console.log(`role: ${role}`);
-  //   }, [email,password,client,role]);
-
   return (
     <>
       <form

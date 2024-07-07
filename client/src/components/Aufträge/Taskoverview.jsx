@@ -18,11 +18,10 @@ const Taskoverview = () => {
   const [entries, setEntries] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const { userData } = useAuth();
+  const { userData, checkUser } = useAuth();
   const [isCreateTaskOpen, setIsCreateTaskOpen] = useState(false);
   const [isUpdateTaskOpen, setIsUpdateTaskOpen] = useState(false);
   const [entryToUpdate, setEntryToUpdate] = useState({});
-  const [hasBeenChanged, setHasBeenChanged] = useState(false);
 
   const fetchTasks = async () => {
     try {
@@ -51,11 +50,10 @@ const Taskoverview = () => {
       console.log(error);
     }
   };
-  console.log("Taskoverview: " + hasBeenChanged);
+
   useEffect(() => {
     fetchTasks();
-    console.log(entries);
-  }, [userData, hasBeenChanged]);
+  }, [userData]);
 
   const handleStatus = (status) => {
     if (status === "OPEN") {
@@ -76,7 +74,7 @@ const Taskoverview = () => {
   };
 
   return (
-    <div className="w-full dark:text-white dark:bg-[#1f2937]">
+    <div className="w-full dark:text-white dark:bg-[#1f2937] rounded-md">
       <div className="bg-white p-4 w-full dark:text-white dark:bg-[#1f2937] rounded-md">
         <div className="inline-block min-w-full shadow rounded-md overflow-hidden">
           <table className="w-full leading-normal">
@@ -154,15 +152,13 @@ const Taskoverview = () => {
       <CreateTask
         isCreateTaskOpen={isCreateTaskOpen}
         toggleModal={toggleModal}
-        hasBeenChanged={hasBeenChanged}
-        setHasBeenChanged={setHasBeenChanged}
+        checkUser={checkUser}
       />
       <UpdateTask
         isUpdateTaskOpen={isUpdateTaskOpen}
         toggleUpdateModal={toggleUpdateModal}
         entryToUpdate={entryToUpdate}
-        hasBeenChanged={hasBeenChanged}
-        setHasBeenChanged={setHasBeenChanged}
+        checkUser={checkUser}
       />
     </div>
   );
