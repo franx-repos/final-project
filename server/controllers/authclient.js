@@ -91,8 +91,9 @@ export const logIn = asyncHandler(async (req, res, next) => {
   });
   res.cookie("token", token, {
     maxAge: 86400000,
-    // httpOnly: true,
-    // sameSite: "Lax",
+     httpOnly: true,
+    secure:true,
+    sameSite: "none"
   }); // 30mn
   res.send({ status: "success" });
 });

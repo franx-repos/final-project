@@ -14,12 +14,11 @@ const Modalsignin = ({ isLoginModalOpen, toggleLoginModal }) => {
   const navigate = useNavigate();
   const deploy = import.meta.env.VITE_DEPLOY_URL;
   // ${deploy}
-  
+
   const handleLogin = async (e) => {
     e.preventDefault();
     if (client === false) {
       try {
-       
         const response = await axios.post(
           `${deploy}/clients/login`,
           {
@@ -49,7 +48,6 @@ const Modalsignin = ({ isLoginModalOpen, toggleLoginModal }) => {
   const handleLoginprofi = async (e) => {
     e.preventDefault();
     try {
-      
       const response = await axios.post(
         `${deploy}/pros/login`,
         {
@@ -65,7 +63,7 @@ const Modalsignin = ({ isLoginModalOpen, toggleLoginModal }) => {
       if (response.status === 200) {
         setIsLoggedIn(true);
         checkUser();
-        navigate("/");
+        navigate("/Dashboard");
         toggleLoginModal();
       }
     } catch (error) {
@@ -219,14 +217,7 @@ const Modalsignin = ({ isLoginModalOpen, toggleLoginModal }) => {
                     </label>
 
                     <div className="text-sm">
-                      <Link to="/reset-pass">
-                        <a
-                          href="#"
-                          className="font-semibold text-indigo-600 hover:text-indigo-500 dark:text-blue-500 dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
-                        >
-                          Forgot password?
-                        </a>
-                      </Link>
+                      <Link to="/reset-pass">Forgot password?</Link>
                     </div>
                   </div>
 
