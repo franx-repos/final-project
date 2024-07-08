@@ -79,7 +79,6 @@ const CreateTask = ({ isCreateTaskOpen, toggleModal, checkUser }) => {
       if (response.status === 201) {
         checkUser();
         toggleModal();
-        console.log("Task has been created.");
       }
     } catch (error) {
       setError(error.message || "Something went wrong with Login");

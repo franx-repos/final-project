@@ -5,8 +5,6 @@ import OpenTasksSlider from "./OpenTasksSlider";
 import MatchingPage from "../Aufträge/MatchingPage";
 
 const DashboardContainer = (currentLocation) => {
-  console.log(currentLocation);
-
   switch (currentLocation.currentLocation) {
     case "Dashboard":
       return (

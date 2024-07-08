@@ -35,7 +35,7 @@ const UpdateTask = ({
     setTask_type(entryToUpdate?.content?.task_type || []);
     setDocuments(entryToUpdate?.content?.documents || []);
   }, [entryToUpdate]);
-  console.log(entryToUpdate?.content?.task_type);
+
   const fileInputRef = useRef(null);
 
   const deploy = import.meta.env.VITE_DEPLOY_URL;
@@ -86,7 +86,6 @@ const UpdateTask = ({
       if (response.status === 200) {
         checkUser();
         toggleUpdateModal();
-        console.log("Updated successfully.");
       }
     } catch (error) {
       setError(error.message || "Something went wrong with updating the task");
@@ -214,7 +213,6 @@ const UpdateTask = ({
               <div className="buttons flex justify-end mt-4">
                 <button
                   onClick={() => handleUpdate(entryToUpdate._id)}
-                  // onClick={() => console.log(entryToUpdate.content)}
                   type="button"
                   className="text-white bg-teal-500 hover:bg-teal-700  focus:outline-none font-medium rounded-lg text-sm  px-4 py-2 text-center dark:bg-teal-500 dark:hover:bg-teal-700"
                 >
