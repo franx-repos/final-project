@@ -3,27 +3,25 @@ import axios from "axios";
 import { useAuth } from "../../context/UserProvider";
 import ChatWindow from "./ChatWindow";
 
-
 const deploy = import.meta.env.VITE_DEPLOY_URL;
-
 
 function Chat() {
   const { isLoggedIn, setIsLoggedIn, userData, setUserData } = useAuth();
 
-  useEffect(() => {
-    const fetchChat = async () => {
-      try {
-        
-        const response = await axios.get(
-          `${deploy}/chats/client_chat/${userData._id}`
-        );
-        console.log(response);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchChat();
-  }, [userData]);
+  // useEffect(() => {
+  //   console.log(userData._id);
+  //   const fetchChat = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         `http://localhost:8001/chats/client_chat/${userData._id}`
+  //       );
+  //       console.log(response);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   fetchChat();
+  // }, [userData]);
 
   return (
     <>

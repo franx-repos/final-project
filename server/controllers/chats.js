@@ -7,17 +7,24 @@ import asyncHandler from "../utils/asyncHandler.js";
 export const updateChat = async (req, res, next) => {
   const { id } = req.params;
   const { cid, body } = req;
-  const { message } = body;
-
+  const { messages } = body;
+  console.log("update Chat");
+  console.log(body);
   try {
-    const newMessage = {
-      author_id: cid,
-      text: message,
-    };
+    // const newMessage = {
+    //   author_id: cid,
+    //   text: inputMessage.text,
+    // };
+
+    // const updateChat = await Chat.findByIdAndUpdate(
+    //   id,
+    //   { $push: { messages: newMessage } },
+    //   { new: true }
+    // );
 
     const updateChat = await Chat.findByIdAndUpdate(
       id,
-      { $push: { messages: newMessage } },
+      { messages: messages },
       { new: true }
     );
 
@@ -51,6 +58,7 @@ export const getChatByClientID = async (req, res, next) => {
 
   try {
     const chat = await Chat.find({ client: cid });
+
     res.status(200).json(chat);
   } catch (error) {
     console.log(error);
@@ -60,8 +68,10 @@ export const getChatByClientID = async (req, res, next) => {
 
 export const getChatByProID = async (req, res, next) => {
   const { cid } = req;
+
   try {
     const chat = await Chat.find({ pro: cid });
+
     res.status(200).json(chat);
   } catch (error) {
     console.log(error);
@@ -125,8 +135,6 @@ export const deleteChat = asyncHandler(async (req, res, next) => {
 
   try {
     const found = await Chat.findById(id);
-    console.log(found);
-    console.log(cid);
 
     if (!found) throw new ErrorResponse(`Post ${id} does not exist`, 404);
 
