@@ -4,7 +4,6 @@ import ThemeToggle from "./ThemeToggle";
 import NavigationTop from "./NavigationTop";
 
 const ResetPassword = () => {
-
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
@@ -15,10 +14,9 @@ const ResetPassword = () => {
     console.log(`email: ${email}, error: ${error}, message: ${message}`);
   }, [email, error, message]);
 
-
-  const handelREsetPassword = async (e) => {
+  const handleResetPassword = async (e) => {
     e.preventDefult();
-    setError("") ;
+    setError("");
     setMessage("");
     if (!email) {
       return setError("Email is required");
@@ -39,13 +37,15 @@ const ResetPassword = () => {
       setError("Something went wrong");
       setLoading(false);
     }
-  }
-  
+  };
+
   return (
     <div className="antialiased ">
-    <NavigationTop/>
+      <NavigationTop />
       <div className="max-w-lg mx-auto my-10  p-8  shadow shadow-gray-900 bg-slate-300 bg-opacity-[60%] rounded-3xl dark:bg-[#111827] dark:bg-opacity-[60%]">
-        <h1 className="text-4xl font-medium text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 ">Reset password</h1>
+        <h1 className="text-4xl font-medium text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 ">
+          Reset password
+        </h1>
         <p className=" font-semibold text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
           Fill up the form to reset the password
         </p>
@@ -55,7 +55,7 @@ const ResetPassword = () => {
           <div className="flex flex-col space-y-5">
             <label for="email">
               <p className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight  text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
-              Email address
+                Email address
               </p>
               <input
                 id="email"
@@ -64,14 +64,13 @@ const ResetPassword = () => {
                 className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
                 placeholder="Enter email address"
                 value={email}
-                onChange={(e)=>setEmail(e.target.value)}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </label>
 
-            <button
-             className="w-full py-3 font-medium text-gray-900 dark:text-white  bg-teal-500 hover:bg-teal-700   rounded-lg border-indigo-500 hover:shadow inline-flex space-x-2 items-center justify-center">
-            {/* className="text-white bg-teal-500 hover:bg-teal-700  focus:outline-none font-medium rounded-lg text-sm mx-2 px-4 py-2 text-center dark:bg-teal-500 dark:hover:bg-teal-700" */}
-            
+            <button className="w-full py-3 font-medium text-gray-900 dark:text-white  bg-teal-500 hover:bg-teal-700   rounded-lg border-indigo-500 hover:shadow inline-flex space-x-2 items-center justify-center">
+              {/* className="text-white bg-teal-500 hover:bg-teal-700  focus:outline-none font-medium rounded-lg text-sm mx-2 px-4 py-2 text-center dark:bg-teal-500 dark:hover:bg-teal-700" */}
+
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"

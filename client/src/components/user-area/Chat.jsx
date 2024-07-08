@@ -4,16 +4,16 @@ import { useAuth } from "../../context/UserProvider";
 import ChatWindow from "./ChatWindow";
 
 
+const deploy = import.meta.env.VITE_DEPLOY_URL;
 
 
 function Chat() {
   const { isLoggedIn, setIsLoggedIn, userData, setUserData } = useAuth();
 
   useEffect(() => {
-    console.log(userData._id);
     const fetchChat = async () => {
       try {
-        const deploy = import.meta.env.VITE_DEPLOY_URL;
+        
         const response = await axios.get(
           `${deploy}/chats/client_chat/${userData._id}`
         );

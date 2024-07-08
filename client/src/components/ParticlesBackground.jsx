@@ -14,10 +14,12 @@ const ParticlesBackground = () => {
       // options for breakpoints
       responsive: [
         {
-          breakpoint: 768,
+          breakpoint: 1400,
           options: {
-            maxParticles: 200,
-            color: "#5CBFBF",
+            maxParticles: 80,
+            speed: 0.075,
+            sizeVariations: 5,
+            minDistance: 150,
             connectParticles: true,
           },
         },

@@ -5,7 +5,7 @@ import axios from "axios";
 
 const styles = {
   userButton:
-    "flex text-sm bg-gray-800 rounded-full md:me-3 p-1 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600",
+    "flex text-sm bg-teal-600 rounded-full md:me-3 p-1 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600",
   userImage: "w-8 h-8 rounded-full",
   dropdown:
     "z-50 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600",
