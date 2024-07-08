@@ -1,5 +1,5 @@
 import axios from "axios";
-
+const deploy = import.meta.env.VITE_DEPLOY_URL;
 const styles = {
   wrapper:
     "p-4 text-center bg-white border border-gray-200 rounded-md shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700",
@@ -25,7 +25,7 @@ const TaskCard = ({
     // console.log(`Task ${task_id} was created by ${created_by}`);
     try {
       const response = await axios.post(
-        `http://localhost:8001/chats`,
+        `${deploy}/chats`,
         {
           client: created_by,
           task: task_id,
