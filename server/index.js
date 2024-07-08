@@ -15,12 +15,10 @@ import Chat from "./models/chatSchema.js";
 
 const app = express();
 const PORT = 8001;
-const IO_PORT = 3000;
 
 // attaching socket.io to express server
 const httpServer = createServer(app);
-const socketServer = createServer();
-const io = new Server(socketServer, {
+const io = new Server(httpServer, {
   cors: {
     origin: ["http://localhost:5173", "https://admin.socket.io/"],
     credentials: true,
@@ -103,12 +101,6 @@ app.use("/chats", chatRouter);
 
 app.use(errorHandler);
 
-// app.listen(PORT, () => console.log(`Server is running on Port: ${PORT}`));
-
-socketServer.listen(IO_PORT, () => {
-  console.log(`Socket Server is running on Port: http://localhost:${IO_PORT}`);
-});
-
 httpServer.listen(PORT, () => {
-  console.log(`Express Server is running on Port: http://localhost:${PORT}`);
+  console.log(`Server is running on Port: http://localhost:${PORT}`);
 });
