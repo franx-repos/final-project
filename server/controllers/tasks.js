@@ -34,7 +34,7 @@ export const CreateTask = async (req, res, next) => {
   // const {content,...documents} = req.body;
   const { cid } = req;
   const { content } = req.body;
-  console.log(content);
+  // console.log(content);
   // console.log(documents)
   try {
     // const newTask = new Task({title,deadline,task_type,industry,description,created_by,documents} );
@@ -180,8 +180,7 @@ export const deleteTaskDocument = async (req, res, next) => {
   });
 
   const { id, docID } = req.params;
-  console.log(id);
-  console.log(docID);
+;
   let public_id = "";
   try {
     const task = await Task.findById(id);
@@ -209,7 +208,7 @@ export const deleteTaskDocument = async (req, res, next) => {
     );
 
     //delete document in DB through updating array in db
-    console.log(filtered_documents);
+    // console.log(filtered_documents);
     task.documents = filtered_documents;
     const updateTask = (await task.save()).populate("content.created_by");
 

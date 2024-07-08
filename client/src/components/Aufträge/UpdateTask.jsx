@@ -88,16 +88,12 @@ const UpdateTask = ({
         formData.append("doc", file);
       }
 
-      const response = await axios.put(
-        `http://localhost:8001/tasks/${_id}`,
-        formData,
-        {
-          withCredentials: true,
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const response = await axios.put(`${deploy}/tasks/${_id}`, formData, {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
       if (response.status === 200) {
         checkUser();
