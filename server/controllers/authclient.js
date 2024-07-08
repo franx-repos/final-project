@@ -5,50 +5,67 @@ import ErrorResponse from "../utils/ErrorResponse.js";
 import asyncHandler from "../utils/asyncHandler.js";
 
 // Funktion für Sign up
-export const signUp = asyncHandler(async(req,res,next) => {
-    const { data: {
-        role,
-        first_name, 
-        last_name, 
-        email, 
-        password,
-        vat_id,
-        tax_id,
-        street,
-        zip,
-        city,
-        country,
-        phone_number
-      },
-        industry,
-        languages
-      } = req.body; 
-      const existingClientMail = await Client.findOne({ email });
-      if(existingClientMail) throw new ErrorResponse("An account with this Email already exists", 409); // Fehlermeldung für existierende Clients
+export const signUp = asyncHandler(async (req, res, next) => {
+  const {
+    data: {
+      role,
+      first_name,
+      last_name,
+      email,
+      password,
+      vat_id,
+      tax_id,
+      street,
+      zip,
+      city,
+      country,
+      phone_number,
+    },
+    industry,
+    languages,
+  } = req.body;
+  const existingClientMail = await Client.findOne({ email });
+  if (existingClientMail)
+    throw new ErrorResponse("An account with this Email already exists", 409); // Fehlermeldung für existierende Clients
 
-
-      const hash = await bcrypt.hash(password, 10); // verschlüssel das passwort im token
-      const newClient = await Client.create({ data: {
-        role,
-        first_name, 
-        last_name, 
-        email, 
-        password: hash,
-        vat_id,
-        tax_id,
-        street,
-        zip,
-        city, 
-        country,
-        phone_number
-      }, 
-        industry,
-        languages
-      });
-      console.log(role, first_name, last_name, email, password, vat_id, tax_id, street, zip, city, country, phone_number, industry, languages)
-      const token = jwt.sign({ cid: newClient._id}, process.env.JWT_SECRET);
-      res.status(201).send ({token}) //sendung vom token an die datenbank
-})
+  const hash = await bcrypt.hash(password, 10); // verschlüssel das passwort im token
+  const newClient = await Client.create({
+    data: {
+      role,
+      first_name,
+      last_name,
+      email,
+      password: hash,
+      vat_id,
+      tax_id,
+      street,
+      zip,
+      city,
+      country,
+      phone_number,
+    },
+    industry,
+    languages,
+  });
+  console.log(
+    role,
+    first_name,
+    last_name,
+    email,
+    password,
+    vat_id,
+    tax_id,
+    street,
+    zip,
+    city,
+    country,
+    phone_number,
+    industry,
+    languages
+  );
+  const token = jwt.sign({ cid: newClient._id }, process.env.JWT_SECRET);
+  res.status(201).send({ token }); //sendung vom token an die datenbank
+});
 
 //funktion für Log in
 export const logIn = asyncHandler(async (req, res, next) => {
@@ -74,9 +91,9 @@ export const logIn = asyncHandler(async (req, res, next) => {
 });
 //verification
 export const getClient = asyncHandler(async (req, res, next) => {
-  console.log(req);
+  // console.log(req);
   const client = await Client.findById(req.cid);
-  console.log(client);
+  // console.log(client);
   res.json(client);
 });
 
@@ -98,6 +115,6 @@ export const logout = asyncHandler(async (req, res, next) => {
 //     maxAge: 1800000,
 //     // httpOnly: true,
 //     // sameSite: "Lax",
-//   }); // 30mn 
-//   res.send({ token });  
+//   }); // 30mn
+//   res.send({ token });
 // });
