@@ -2,19 +2,24 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../../context/UserProvider";
 import axios from "axios";
 
+
+const deploy = import.meta.env.VITE_DEPLOY_URL;
+
 const ChatPartnerButton = ({ chat }) => {
   const { userData } = useAuth();
   const [entry, setEntry] = useState([]);
 
+ 
   useEffect(() => {
     const fetchChatPartner = async () => {
+    
       let url = "";
       if (userData.data && userData.data.role === "client") {
         //pros als chatpartner fetchen
-        url = `http://localhost:8001/pros/${chat.pro_id}`;
+        url = `${deploy}/pros/${chat.pro_id}`;
       } else {
         //clients als chatpartner fetchen
-        url = `http://localhost:8001/clients/${chat.client_id}`;
+        url = `${deploy}/clients/${chat.client_id}`;
       }
 
       try {

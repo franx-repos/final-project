@@ -23,12 +23,14 @@ const Taskoverview = () => {
   const [isUpdateTaskOpen, setIsUpdateTaskOpen] = useState(false);
   const [entryToUpdate, setEntryToUpdate] = useState({});
 
+  const deploy = import.meta.env.VITE_DEPLOY_URL;
+
   const fetchTasks = async () => {
     try {
       const taskIds = userData.tasks;
       //TaskIds kommt aus userData, also useAuth, dies wird nicht neu geladen, daher auch nicht die taskIds
       const detailedTasksPromises = taskIds.map((id) =>
-        axios.get(`http://localhost:8001/tasks/${id}`, {
+        axios.get(`${deploy}/tasks/${id}`, {
           withCredentials: true,
         })
       );

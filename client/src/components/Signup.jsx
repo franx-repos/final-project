@@ -27,20 +27,30 @@ function Signup() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [client, setClient] = useState(false);
-
+const [error, setError] = useState(null);
+const [error2, setError2] = useState(null);
   const navigate = useNavigate();
+
+  const deploy = import.meta.env.VITE_DEPLOY_URL;
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    // const deploy = import.meta.env.VITE_DEPLOY_URL;
-    // ${deploy}
+ 
+
     if (client === false) {
       if (password !== confirmPassword) {
+
+        // console.log("Passwords do not match");
+        setError("Passwords do not match");
+
         return;
       }
+      else
+
+
       try {
         const response = await axios.post(
-          `http://localhost:8001/clients/register`,
+          `${deploy}/clients/register`,
           {
             data: {
               role,
@@ -59,23 +69,33 @@ function Signup() {
           { withCredentials: true }
         );
 
+        navigate("/Dashboard");
         if (response.status === 201) {
-          navigate("/signin");
+          
         }
       } catch (error) {
-        console.log(error);
+
+        // console.log(error);
+        // console.log(error.response.data.error || "Registration failed");
+        setError2("An account with this Email already exists");
+
       }
     } else {
+      if (password !== confirmPassword) {
+        // console.log("Passwords do not match");
+        setError("Passwords do not match");
+        return;
+      }
       handleRegisterprofi(e);
     }
   };
 
   const handleRegisterprofi = async (e) => {
     e.preventDefault();
-    // const deploy = import.meta.env.VITE_DEPLOY_URL;
+    
     try {
       const response = await axios.post(
-        `http://localhost:8001/pros/register`,
+        `${deploy}/pros/register`,
         {
           data: {
             role,
@@ -93,17 +113,18 @@ function Signup() {
         { withCredentials: true }
       );
 
+      navigate("/Dashboard");
       if (response.status === 201) {
-        navigate("/signin");
       }
     } catch (error) {
-      toast.error(error.response.data.error || "Registration failed");
+      // toast.error(error.response.data.error || "Registration failed");
+      setError2("An account with this Email already exists");
     }
   };
 
-  // useEffect(() => {
-  //   console.log(role,first_name, last_name, street, city, zip, country, tax_id, phone_number, email, password,client);
-  // }, [ role,first_name, last_name, street, city, zip, country, tax_id, phone_number, email, password,client ]);
+  useEffect(() => {
+    console.log(role,first_name, last_name, street, city, zip, country, tax_id, phone_number, email, password,client);
+  }, [ role,first_name, last_name, street, city, zip, country, tax_id, phone_number, email, password,client ]);
 
   return (
     <>
@@ -210,6 +231,13 @@ function Signup() {
                   </div>
                 </div>
 
+                {error2 && (
+                  <div className="text-sm text-red-500 mt-3 w-full sm:col-span-6 ">
+                    <p>{error2}</p>
+                  </div>
+                )}
+
+
                 <div className="sm:col-span-6">
                   <label htmlFor="email" className={styles.label}>
                     Email address
@@ -227,6 +255,13 @@ function Signup() {
                     />
                   </div>
                 </div>
+
+                {error && (
+                  <div className="text-sm text-red-500 mt-3 w-full sm:col-span-6 ">
+                    {/* <p>{"your email or password is incorrect"}</p> */}
+                    <p>{error}</p>
+                  </div>
+                )}
 
                 <div className="sm:col-span-3">
                   <label htmlFor="password" className={styles.label}>

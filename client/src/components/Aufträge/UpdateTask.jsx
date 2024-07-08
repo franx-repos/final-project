@@ -39,6 +39,8 @@ const UpdateTask = ({
 
   const fileInputRef = useRef(null);
 
+  const deploy = import.meta.env.VITE_DEPLOY_URL;
+
   const types = [
     { value: "tax declaration", label: "tax declaration" },
     { value: "insolvency law", label: "insolvency law" },
@@ -110,10 +112,9 @@ const UpdateTask = ({
 
   const handleDelete = async (_id) => {
     try {
-      const response = await axios.delete(
-        `http://localhost:8001/tasks/${_id}`,
-        { withCredentials: true }
-      );
+      const response = await axios.delete(`${deploy}/tasks/${_id}`, {
+        withCredentials: true,
+      });
       checkUser();
       toggleUpdateModal();
     } catch (error) {
