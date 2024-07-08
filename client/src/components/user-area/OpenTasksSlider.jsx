@@ -57,7 +57,7 @@ function OpenTasksSlider() {
       <div className="w-full p-3">
         <Slider {...settings}>
           {tasks.map((task) => (
-            <div key={task.id} className={styles.card}>
+            <div key={task._id} className={styles.card}>
               <h5 className={styles.cardHeading}>{task.content.title}</h5>
               <div className={styles.types}>
                 <strong>Industry:</strong> {task.content.industry.join(", ")}

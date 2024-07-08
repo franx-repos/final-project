@@ -76,6 +76,7 @@ const UpdateTask = ({
           description: description,
           industry: industry,
           task_type: task_type,
+          doc: images[0],
         },
         { withCredentials: true }
       );
@@ -269,6 +270,7 @@ const UpdateTask = ({
                   hidden
                   type="file"
                   multiple
+                  name="doc"
                   onChange={handleFileChange}
                   ref={fileInputRef}
                   value={file}
