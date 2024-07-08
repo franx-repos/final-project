@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useState, useRef, useEffect } from "react";
 import Select from "react-select";
+import { useAuth } from "../../context/UserProvider";
+import { useActionData } from "react-router-dom";
 
 const deploy = import.meta.env.VITE_DEPLOY_URL;
 
@@ -16,8 +18,8 @@ const CreateTask = ({ isCreateTaskOpen, toggleModal, checkUser }) => {
   const [documents, setDocuments] = useState([]);
   const [error, setError] = useState("");
   const [file, setFile] = useState([]);
+  const { userData } = useAuth();
 
-  
   const options = [
     { value: "craft", label: "craft" },
     { value: "it", label: "IT" },
@@ -70,6 +72,7 @@ const CreateTask = ({ isCreateTaskOpen, toggleModal, checkUser }) => {
             task_type,
             industry,
             payment,
+            created_by: userData._id,
           },
           documents: [],
         },
