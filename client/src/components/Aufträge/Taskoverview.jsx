@@ -125,29 +125,35 @@ const Taskoverview = () => {
                       {entry.content.status}
                     </span>
                   </td>
-                  <td className={styles.td}>
-                    <button
-                      type="button"
-                      // onClick={toggleUpdateModal}
-                      onClick={() => {
-                        toggleUpdateModal(entries[index]);
-                      }}
-                      className={styles.button}
-                    >
-                      Edit
-                    </button>
-                  </td>
+                  {userData.data.role === "client" ? (
+                    <td className={styles.td}>
+                      <button
+                        type="button"
+                        // onClick={toggleUpdateModal}
+                        onClick={() => {
+                          toggleUpdateModal(entries[index]);
+                        }}
+                        className={styles.button}
+                      >
+                        Edit
+                      </button>
+                    </td>
+                  ) : null}
                 </tr>
               ))}
             </tbody>
           </table>
-          <div className="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between dark:bg-[#1f2937]">
-            <div className="inline-flex mt-2 xs:mt-0">
-              <button onClick={toggleModal} className={styles.button}>
-                Create New Task
-              </button>
+          {userData.data.role === "client" ? (
+            <div className="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between dark:bg-[#1f2937]">
+              <div className="inline-flex mt-2 xs:mt-0">
+                <button onClick={toggleModal} className={styles.button}>
+                  Create New Task
+                </button>
+              </div>
             </div>
-          </div>
+          ) : (
+            <p className={styles.tdP}>No tasks accepted yet.</p>
+          )}
         </div>
       </div>
 
