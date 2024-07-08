@@ -5,6 +5,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import TaskCard from "./TaskCard";
 
+const deploy = import.meta.env.VITE_DEPLOY_URL;
+
 const styles = {
   wrapper:
     "p-4 text-center bg-white border border-gray-200 rounded-md shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700",
@@ -25,7 +27,7 @@ function OpenTasksSlider() {
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        const response = await axios.get("http://localhost:8001/tasks/open", {
+        const response = await axios.get(`${deploy}/tasks/open`, {
           withCredentials: true,
         });
         setTasks(response.data);

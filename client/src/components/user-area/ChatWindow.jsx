@@ -1,6 +1,9 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import axios from "axios";
 import { useAuth } from "../../context/UserProvider";
+import axios from "axios";
+
+const deploy = import.meta.env.VITE_DEPLOY_URL;
 import { useChat } from "../../context/ChatProvider";
 import socketIO from "socket.io-client";
 import ChatBubble from "./ChatBubble";
@@ -81,11 +84,13 @@ const ChatWindow = () => {
   useEffect(() => {
     if (userData) {
       const fetchChat = async () => {
-        let url =
-          userData.data && userData.data.role === "client"
-            ? `http://localhost:8001/chats/client_chat/`
-            : `http://localhost:8001/chats/pro_chat/`;
-
+        let url = "";
+        if (userData.data && userData.data.role === "client") {
+          url = `${deploy}/chats/client_chat/`;
+        } else {
+          url = `${deploy}/chats/pro_chat/`;
+        }
+        console.log(url);
         try {
           const response = await axios.get(url, { withCredentials: true });
           setChats(response.data);

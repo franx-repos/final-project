@@ -25,7 +25,8 @@ const UpdateTask = ({
 
   const [documents, setDocuments] = useState([]);
   const [error, setError] = useState("");
-  const [file, setFile] = useState("");
+  const [file, setFile] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setEditTaskId(entryToUpdate?.content?._id || null);
@@ -38,46 +39,64 @@ const UpdateTask = ({
 
   const fileInputRef = useRef(null);
 
+  const deploy = import.meta.env.VITE_DEPLOY_URL;
+
   const types = [
     { value: "tax declaration", label: "tax declaration" },
     { value: "insolvency law", label: "insolvency law" },
   ];
 
   const handleFileChange = (event) => {
-    const files = Array.from(event.target.files);
-    const filePreviews = files.map((file) => ({
-      url: URL.createObjectURL(file),
-      name: file.name,
-      preview: ["jpg", "jpeg", "png", "gif", "pdf", "webp"].includes(
-        file.name.split(".").pop().toLowerCase()
-      ),
-      size:
-        file.size > 1024
-          ? file.size > 1048576
-            ? Math.round(file.size / 1048576) + "mb"
-            : Math.round(file.size / 1024) + "kb"
-          : file.size + "b",
-    }));
-    setImages(filePreviews);
-    setDocuments;
+    const file = event.target.files[0];
+    if (file) {
+      const filePreview = {
+        url: URL.createObjectURL(file),
+        name: file.name,
+        preview: ["jpg", "jpeg", "png", "gif", "pdf", "webp"].includes(
+          file.name.split(".").pop().toLowerCase()
+        ),
+        size:
+          file.size > 1024
+            ? file.size > 1048576
+              ? Math.round(file.size / 1048576) + "mb"
+              : Math.round(file.size / 1024) + "kb"
+            : file.size + "b",
+      };
+      setImages([filePreview]);
+      setFile(file);
+    }
   };
 
   const handleRemoveImage = (index) => {
-    setImages(images.filter((_, i) => i !== index));
-    setDocuments(documents.filter((_, i) => i !== index));
+    setImages([]);
+    setDocuments([]);
+    setFile(null);
   };
 
   const handleUpdate = async (_id) => {
+    setIsLoading(true);
     try {
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("description", description);
+      formData.append("industry", industry);
+      formData.append("task_type", task_type);
+      formData.append("documentstitle", title);
+      formData.append("icon", "");
+
+      if (file) {
+        formData.append("doc", file);
+      }
+
       const response = await axios.put(
         `http://localhost:8001/tasks/${_id}`,
+        formData,
         {
-          title: title,
-          description: description,
-          industry: industry,
-          task_type: task_type,
-        },
-        { withCredentials: true }
+          withCredentials: true,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
 
       if (response.status === 200) {
@@ -86,15 +105,16 @@ const UpdateTask = ({
       }
     } catch (error) {
       setError(error.message || "Something went wrong with updating the task");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleDelete = async (_id) => {
     try {
-      const response = await axios.delete(
-        `http://localhost:8001/tasks/${_id}`,
-        { withCredentials: true }
-      );
+      const response = await axios.delete(`${deploy}/tasks/${_id}`, {
+        withCredentials: true,
+      });
       checkUser();
       toggleUpdateModal();
     } catch (error) {
@@ -120,16 +140,11 @@ const UpdateTask = ({
       id="authentication-modal"
       tabIndex="-1"
       aria-hidden="true"
-      className=" fixed inset-0 z-50 flex justify-center items-center w-full h-full bg-gray-900 bg-opacity-90"
+      className="fixed inset-0 z-50 flex justify-center items-center w-full h-full bg-gray-900 bg-opacity-90"
     >
-      {" "}
       <div className="relative w-full max-w-3xl mt-8 max-h-full shadow py-8 rounded-md bg-white dark:bg-[#1f2937] overflow-auto">
         <div className="editor mx-auto w-10/12 flex flex-col text-gray-800   p-4 max-w-2xl ">
-          {/* {entries.map((entry) => ( */}
-          <div
-            // key={entry._id}
-            className="border border-gray-300 p-4 shadow-lg mb-3 rounded-md bg-white dark:bg-[#1f2937]"
-          >
+          <div className="border border-gray-300 p-4 shadow-lg mb-3 rounded-md bg-white dark:bg-[#1f2937]">
             <div className="px-5 py-5 bg-white dark:bg-[#1f2937]  text-sm text-center">
               <div className="absolute top-0 right-0 p-4 ">
                 <button
@@ -198,7 +213,6 @@ const UpdateTask = ({
                   <Select
                     options={types}
                     value={types.find((type) => type.value === task_type)}
-                    // value={task_type}
                     onChange={(selectedOption) =>
                       setTask_type(selectedOption.value)
                     }
@@ -268,13 +282,11 @@ const UpdateTask = ({
                 <input
                   hidden
                   type="file"
-                  multiple
+                  name="doc"
                   onChange={handleFileChange}
                   ref={fileInputRef}
-                  value={file}
                 />
               </label>
-              {/* <div className="count ml-auto text-gray-400 text-xs font-semibold">0/300</div> */}
             </div>
 
             {/* Preview image here */}
@@ -327,9 +339,13 @@ const UpdateTask = ({
               ))}
             </div>
           </div>
-          {/* ))} */}
         </div>
       </div>
+      {isLoading && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-gray-900 bg-opacity-75">
+          <div className="text-white">Uploading...</div>
+        </div>
+      )}
     </div>
   ) : null;
 };

@@ -3,6 +3,8 @@ import { useAuth } from "../../context/UserProvider";
 import axios from "axios";
 import { useChat } from "../../context/ChatProvider";
 
+const deploy = import.meta.env.VITE_DEPLOY_URL;
+
 const ChatPartnerButton = ({ chat }) => {
   const { userData } = useAuth();
   const { messages, setMessages, room, setRoom, socket } = useChat();
@@ -14,10 +16,10 @@ const ChatPartnerButton = ({ chat }) => {
       let url = "";
       if (userData.data && userData.data.role === "client") {
         //pros als chatpartner fetchen
-        url = `http://localhost:8001/pros/${chat.pro}`;
+        url = `${deploy}/pros/${chat.pro_id}`;
       } else {
         //clients als chatpartner fetchen
-        url = `http://localhost:8001/clients/${chat.client}`;
+        url = `${deploy}/clients/${chat.client_id}`;
       }
       // console.log(url);
       try {

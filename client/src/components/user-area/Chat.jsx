@@ -3,6 +3,8 @@ import axios from "axios";
 import { useAuth } from "../../context/UserProvider";
 import ChatWindow from "./ChatWindow";
 
+const deploy = import.meta.env.VITE_DEPLOY_URL;
+
 function Chat() {
   const { isLoggedIn, setIsLoggedIn, userData, setUserData } = useAuth();
 

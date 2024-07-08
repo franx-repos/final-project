@@ -4,6 +4,8 @@ import Select from "react-select";
 import { useAuth } from "../../context/UserProvider";
 import { useActionData } from "react-router-dom";
 
+const deploy = import.meta.env.VITE_DEPLOY_URL;
+
 const CreateTask = ({ isCreateTaskOpen, toggleModal, checkUser }) => {
   const [images, setImages] = useState([]);
   const [title, setTitle] = useState("");
@@ -17,6 +19,7 @@ const CreateTask = ({ isCreateTaskOpen, toggleModal, checkUser }) => {
   const [error, setError] = useState("");
   const [file, setFile] = useState([]);
   const { userData } = useAuth();
+
   const options = [
     { value: "craft", label: "craft" },
     { value: "it", label: "IT" },
@@ -60,7 +63,7 @@ const CreateTask = ({ isCreateTaskOpen, toggleModal, checkUser }) => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `http://localhost:8001/tasks`,
+        `${deploy}/tasks`,
         {
           content: {
             title,
