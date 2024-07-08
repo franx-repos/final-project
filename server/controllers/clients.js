@@ -66,7 +66,7 @@ export const addNewClient = async (req, res, next) => {
 // }
 
 export const updateClient = async (req, res, next) => {
-  const { data, email_verified, role, industry, languages, image_url } =
+  const { data, email_verified, role, industry, languages, image_url, tasks } =
     req.body;
   const { cid } = req;
 
@@ -87,6 +87,7 @@ export const updateClient = async (req, res, next) => {
         role,
         languages,
         industry,
+        tasks,
       },
       { new: true }
     );
