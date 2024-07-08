@@ -80,46 +80,84 @@ export const CreateTask = async (req, res, next) => {
 // };
 
 //mit multer und cloudinary
+// export const updateTask = async (req, res, next) => {
+//   const { id } = req.params;
+//   const { documentstitle, icon, title, industry, task_type, description } =
+//     req.body;
+//   const documents = { documentstitle, icon };
+//   const content = { title, industry, task_type, description };
+//   // res.status(200).json(updateTask);
+
+//   console.log(documents);
+//   console.log(content);
+//   try {
+//     if (req.file) {
+//       console.log(req.file);
+//       const url = req.file.path;
+//       console.log(url);
+//       documents.url = url;
+//       documents.public_id = req.file.filename;
+//     }
+
+//     const task = await Task.findById(id).populate("content.created_by");
+
+//     if (!task) {
+//       throw { statusCode: 404, message: "Task not found" };
+//     }
+
+//     let keys = Object.keys(content);
+
+//     keys.map((x) => {
+//       task.content[x] = content[x];
+//     });
+//     if (req.file) {
+//       task.documents.push(documents); // document zum alten hinzufügen
+//       console.log(documents);
+//     }
+
+//     //Delete Document
+
+//     const updatedTask = await task.save();
+//     res.json(updatedTask);
+//   } catch (error) {
+//     next(error);
+//   }
+// };
+
 export const updateTask = async (req, res, next) => {
   const { id } = req.params;
   const { documentstitle, icon, title, industry, task_type, description } =
     req.body;
-  const documents = { documentstitle, icon };
   const content = { title, industry, task_type, description };
-  // res.status(200).json(updateTask);
 
-  console.log(documents);
-  console.log(content);
+  console.log("Content:", content);
+
   try {
-    if (req.file) {
-      console.log(req.file);
-      const url = req.file.path;
-      console.log(url);
-      documents.url = url;
-      documents.public_id = req.file.filename;
-    }
-
     const task = await Task.findById(id).populate("content.created_by");
 
     if (!task) {
       throw { statusCode: 404, message: "Task not found" };
     }
 
-    let keys = Object.keys(content);
-
-    keys.map((x) => {
-      task.content[x] = content[x];
+    Object.keys(content).forEach((key) => {
+      task.content[key] = content[key];
     });
+
     if (req.file) {
-      task.documents.push(documents); // document zum alten hinzufügen
-      console.log(documents);
+      const document = {
+        documentstitle: documentstitle || req.file.originalname,
+        url: req.file.path,
+        public_id: req.file.filename,
+        icon: icon || "",
+      };
+      task.documents.push(document);
     }
 
-    //Delete Document
-
     const updatedTask = await task.save();
+    console.log("Updated Task:", updatedTask);
     res.json(updatedTask);
   } catch (error) {
+    console.error("Error updating task:", error);
     next(error);
   }
 };
