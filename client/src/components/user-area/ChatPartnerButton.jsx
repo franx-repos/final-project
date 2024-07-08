@@ -7,6 +7,7 @@ const ChatPartnerButton = ({ chat }) => {
   const { userData } = useAuth();
   const { messages, setMessages, room, setRoom, socket } = useChat();
   const [entry, setEntry] = useState([]);
+  const [task, setTask] = useState();
 
   useEffect(() => {
     const fetchChatPartner = async () => {
@@ -28,8 +29,25 @@ const ChatPartnerButton = ({ chat }) => {
       }
     };
 
+    const fetchChatTask = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8001/tasks/${chat.task}`,
+          { withCredentials: true }
+        );
+        setTask(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchChatTask();
+
     fetchChatPartner();
   }, [chat]);
+
+  useEffect(() => {
+    console.log(task);
+  }, [task]);
 
   useEffect(() => {
     if (socket && socket.connected && room !== "") {
@@ -62,11 +80,12 @@ const ChatPartnerButton = ({ chat }) => {
               {entry.data.first_name} {entry.data.last_name}
             </h4>
           )}
-          {chat.messages && (
+          {task && <div className="text-[13px]">{task.content.title}</div>}
+          {/* {chat.messages[chat.messages.length - 1].text && (
             <div className="text-[13px]">
               {chat.messages[chat.messages.length - 1].text}
             </div>
-          )}
+          )} */}
         </div>
       </div>
     </button>

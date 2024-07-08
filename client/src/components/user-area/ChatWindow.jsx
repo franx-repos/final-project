@@ -21,6 +21,10 @@ const ChatWindow = () => {
     setSaveNewMessage,
   } = useChat();
 
+  // useEffect(() => {
+  //   console.log(message);
+  // }, []);
+
   const debouncedSaveMessages = useRef(
     debounce(async (messagesToSave, room, setSaveNewMessage) => {
       try {
@@ -98,14 +102,20 @@ const ChatWindow = () => {
       <div className="flex">
         <ChatSideBar chats={chats} />
       </div>
-      <div className="flex flex-col w-full mx-9 shadow-lg rounded-lg">
-        <div className="flex-1 overflow-y-scroll border-gray-200 dark:bg-gray-800">
-          {messages.map((message, index) => (
-            <ChatBubble key={index} message={message} />
-          ))}
+      <div></div>
+      {room ? (
+        <div className="flex flex-col w-full mx-9 shadow-lg rounded-lg">
+          <div className="flex-1 overflow-y-scroll border-gray-200 dark:bg-gray-800">
+            {messages.map((message, index) => (
+              <ChatBubble key={index} message={message} />
+            ))}
+          </div>
+
+          <ChatInput />
         </div>
-        <ChatInput />
-      </div>
+      ) : (
+        <div className="flex flex-col w-full mx-9 shadow-lg rounded-lg"></div>
+      )}
     </section>
   );
 };

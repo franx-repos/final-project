@@ -13,7 +13,6 @@ const MatchingPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { userData, checkUser } = useAuth();
-  
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -50,45 +49,56 @@ const MatchingPage = () => {
   }, []);
 
   const acceptTask = async (_id) => {
-
     try {
       const proId = userData._id;
-      const name = userData.data.first_name
+      const name = userData.data.first_name;
       const newtasks = [...userData.tasks, _id];
       const response = await axios.patch(
         `http://localhost:8001/tasks/${_id}`,
         {
           content: {
-            status: 'IN PROGRESS',
+            status: "IN PROGRESS",
             assigned_to: proId,
           },
         },
         { withCredentials: true }
       );
-    
+
       const responsepro = await axios.patch(
         `http://localhost:8001/pros`,
-        { data:{
-          first_name: name
-        },
+        {
+          data: {
+            first_name: name,
+          },
 
-          tasks: newtasks 
+          tasks: newtasks,
         },
         { withCredentials: true }
       );
-    
-      console.log('Response from PATCH request to /pros:', responsepro);
-      console.log('Response from put request to /tasks:', response)
-    
+
+      console.log("Response from PATCH request to /pros:", responsepro);
+      console.log("Response from put request to /tasks:", response);
+
       if (responsepro.status === 200) {
         console.log("Professional updated with task.");
         checkUser();
       }
     } catch (error) {
-      console.error('Error in PATCH request to /pros:', error);
+      console.error("Error in PATCH request to /pros:", error);
       setError(error.message || "Something went wrong");
-    } }
-  
+    }
+  };
+
+  useEffect(() => {
+    console.log(tasks);
+  }, [tasks]);
+
+  //Initiates contact with client through chat it creates a chat using
+  //the backend
+  // const contactClient = () => {
+  //   //search client
+
+  // }
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -96,7 +106,7 @@ const MatchingPage = () => {
   return (
     <div className="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
       <h5 className="mb-2 text-3xl font-bold text-gray-900 dark:text-white">
-        Tasks for you 
+        Tasks for you
       </h5>
       <div className="flex">
         {tasks.map((task) => (
@@ -121,7 +131,11 @@ const MatchingPage = () => {
               {task.content.description}
             </p>
             <div className="flex justify-evenly">
-              <a to="#" className={styles.button} onClick={() => acceptTask(task._id)}>
+              <a
+                to="#"
+                className={styles.button}
+                onClick={() => acceptTask(task._id)}
+              >
                 Accept
               </a>
               <a to="#" className={styles.button}>
