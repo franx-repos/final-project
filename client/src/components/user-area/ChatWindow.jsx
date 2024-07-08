@@ -1,7 +1,6 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import axios from "axios";
 import { useAuth } from "../../context/UserProvider";
-import axios from "axios";
 
 const deploy = import.meta.env.VITE_DEPLOY_URL;
 import { useChat } from "../../context/ChatProvider";
@@ -33,7 +32,7 @@ const ChatWindow = () => {
       try {
         console.log("Saving messages to DB:", messagesToSave);
         await axios.patch(
-          `http://localhost:8001/chats/${room}`,
+          `${deploy}/chats/${room}`,
           { messages: messagesToSave },
           { withCredentials: true }
         );

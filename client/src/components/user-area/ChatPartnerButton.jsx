@@ -33,10 +33,9 @@ const ChatPartnerButton = ({ chat }) => {
 
     const fetchChatTask = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:8001/tasks/${chat.task}`,
-          { withCredentials: true }
-        );
+        const response = await axios.get(`${deploy}/tasks/${chat.task}`, {
+          withCredentials: true,
+        });
         setTask(response.data);
       } catch (error) {
         console.log(error);
