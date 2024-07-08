@@ -17,7 +17,6 @@ const CreateTask = ({ isCreateTaskOpen, toggleModal, checkUser }) => {
   const [error, setError] = useState("");
   const [file, setFile] = useState([]);
 
-  
   const options = [
     { value: "craft", label: "craft" },
     { value: "it", label: "IT" },

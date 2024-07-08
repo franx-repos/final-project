@@ -6,9 +6,6 @@ import { Label, Checkbox } from "flowbite-react";
 import { Dropdown } from "flowbite-react";
 import Toastify, { notify } from "./Toastify";
 
-
-const deploy = import.meta.env.VITE_DEPLOY_URL;
-
 const styles = {
   input:
     "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500",
@@ -35,6 +32,7 @@ const fields = [
 function UserProfile() {
   const { isLoggedIn, setIsLoggedIn, userData, setUserData } = useAuth();
   const navigate = useNavigate();
+  const deploy = import.meta.env.VITE_DEPLOY_URL;
 
   const [formState, setFormState] = useState({
     first_name: "",
@@ -47,6 +45,7 @@ function UserProfile() {
     email: "",
     languages: [],
     industry: [],
+    description: "",
   });
 
   const languages = [
@@ -66,6 +65,7 @@ function UserProfile() {
         ...userData.data,
         languages: userData.languages || [],
         industry: userData.industry || [],
+        description: userData.description || "no description available yet",
       });
     }
   }, [userData]);
@@ -100,12 +100,14 @@ function UserProfile() {
       phone_number,
       languages,
       industry,
+      description,
     } = formState;
 
     try {
+      const deploy = import.meta.env.VITE_DEPLOY_URL;
       const response = await axios.patch(
         userData.data.role === "client"
-          ? `${deploy}/clients"`
+          ? `${deploy}/clients`
           : `${deploy}/pros`,
         {
           data: {
@@ -120,6 +122,7 @@ function UserProfile() {
           },
           languages,
           industry,
+          description,
         },
         { withCredentials: true }
       );
@@ -135,7 +138,7 @@ function UserProfile() {
       console.log(error || "Updating user data failed");
     }
   };
-
+  console.log(userData);
   return (
     <>
       <Toastify />
@@ -236,6 +239,26 @@ function UserProfile() {
                     ))}
                   </Dropdown>
                 </fieldset>
+                <div className="flex items-center space-x-4 mt-6">
+                  <button type="submit" className={styles.submitButton}>
+                    Update User
+                  </button>
+                  <button type="button" className={styles.deleteButton}>
+                    <svg
+                      className="w-5 h-5 mr-1 -ml-1"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d={styles.icon}
+                        class-rule="evenodd"
+                      ></path>
+                    </svg>
+                    Delete
+                  </button>
+                </div>
               </form>
             </div>
           </section>
@@ -266,26 +289,21 @@ function UserProfile() {
                 ))}
               </div>
 
-              <div className="flex items-center space-x-4">
-                <button type="submit" className={styles.submitButton}>
-                  Update User Data
-                </button>
-                <button type="button" className={styles.deleteButton}>
-                  <svg
-                    className="w-5 h-5 mr-1 -ml-1"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d={styles.icon}
-                      class-rule="evenodd"
-                    ></path>
-                  </svg>
-                  Delete
-                </button>
-              </div>
+              <label
+                htmlFor="message"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white text-left pl-2"
+              >
+                Description
+              </label>
+              <textarea
+                id="message"
+                rows="4"
+                className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                onChange={handleChange}
+                name="description"
+                value={formState.description}
+                placeholder="Add your description here..."
+              ></textarea>
             </form>
           </div>
         </section>
