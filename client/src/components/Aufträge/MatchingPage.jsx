@@ -14,12 +14,10 @@ const MatchingPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { userData, checkUser } = useAuth();
-  
 
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        
         const response = await axios.get(`${deploy}/tasks/open`, {
           withCredentials: true,
         });
@@ -52,53 +50,54 @@ const MatchingPage = () => {
   }, []);
 
   const acceptTask = async (_id) => {
-
     try {
       const proId = userData._id;
-      const name = userData.data.first_name
+      const name = userData.data.first_name;
       const newtasks = [...userData.tasks, _id];
       const response = await axios.patch(
         `http://localhost:8001/tasks/${_id}`,
         {
           content: {
-            status: 'IN PROGRESS',
+            status: "IN PROGRESS",
             assigned_to: proId,
           },
         },
         { withCredentials: true }
       );
-    
+
       const responsepro = await axios.patch(
         `http://localhost:8001/pros`,
-        { data:{
-          first_name: name
-        },
+        {
+          data: {
+            first_name: name,
+          },
 
-          tasks: newtasks 
+          tasks: newtasks,
         },
         { withCredentials: true }
       );
-    
-      console.log('Response from PATCH request to /pros:', responsepro);
-      console.log('Response from put request to /tasks:', response)
-    
+
+      console.log("Response from PATCH request to /pros:", responsepro);
+      console.log("Response from put request to /tasks:", response);
+
       if (responsepro.status === 200) {
         console.log("Professional updated with task.");
         checkUser();
       }
     } catch (error) {
-      console.error('Error in PATCH request to /pros:', error);
+      console.error("Error in PATCH request to /pros:", error);
       setError(error.message || "Something went wrong");
-    } }
-  
+    }
+  };
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
-
+  console.log(userData.data);
   return (
+    // {userData.data.role === "client" ? null}
     <div className="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
       <h5 className="mb-2 text-3xl font-bold text-gray-900 dark:text-white">
-        Tasks for you 
+        Tasks for you
       </h5>
       <div className="flex">
         {tasks.map((task) => (
@@ -123,7 +122,11 @@ const MatchingPage = () => {
               {task.content.description}
             </p>
             <div className="flex justify-evenly">
-              <a to="#" className={styles.button} onClick={() => acceptTask(task._id)}>
+              <a
+                to="#"
+                className={styles.button}
+                onClick={() => acceptTask(task._id)}
+              >
                 Accept
               </a>
               <a to="#" className={styles.button}>
