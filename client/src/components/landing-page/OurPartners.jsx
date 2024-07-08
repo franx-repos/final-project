@@ -65,7 +65,7 @@ function OurPartners() {
             {pros.map((pro, index) => (
               <div
                 key={index}
-                className=" flex flex-col justify-center max-w-[15rem] max-h-[40rem] overflow-hidden my-2 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 "
+                className=" flex flex-col justify-center max-w-[15rem] max-h-[40rem]  overflow-hidden my-2 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 "
               >
                 <a href="#">
                   <img
