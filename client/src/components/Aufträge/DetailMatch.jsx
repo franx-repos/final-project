@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { format } from "date-fns";
-
+import { useAuth } from "../../context/UserProvider";
+const deploy = import.meta.env.VITE_DEPLOY_URL;
 const styles = {
   label:
     "flex pl-2 text-gray-700 text-sm font-bold mb-1 dark:bg-[#1f2937] dark:text-gray-400",
@@ -12,24 +13,25 @@ const DetailMatch = ({
   toggleUpdateModal,
   entryToUpdate,
   checkUser,
-  userData, 
 }) => {
+  const { userData } = useAuth();
+
   useEffect(() => {
+    console.log(entryToUpdate);
   }, [entryToUpdate]);
 
-  const deploy = import.meta.env.VITE_DEPLOY_URL;
-
-  const acceptTask = async (_id) => {
+  const acceptTask = async (id) => {
     try {
       const proId = userData._id;
       const name = userData.data.first_name;
-      const newtasks = [...userData.tasks, _id];
-      console.log(name, proId, newtasks)
+      const newtasks = [...userData.tasks, id];
+      console.log(name, proId, newtasks);
+
       const response = await axios.patch(
-        `${deploy}/tasks/${_id}`,
+        `${deploy}/tasks/${id}`,
         {
           content: {
-            status: 'IN PROGRESS',
+            status: "IN PROGRESS",
             assigned_to: proId,
           },
         },
@@ -40,23 +42,23 @@ const DetailMatch = ({
         `${deploy}/pros`,
         {
           data: {
-            first_name: name
+            first_name: name,
           },
-          tasks: newtasks
+          tasks: newtasks,
         },
         { withCredentials: true }
       );
 
-      console.log('Response from PATCH request to /pros:', responsepro);
-      console.log('Response from put request to /tasks:', response);
+      console.log("Response from PATCH request to /pros:", responsepro);
+      console.log("Response from put request to /tasks:", response);
 
       if (responsepro.status === 200) {
         console.log("Professional updated with task.");
         checkUser();
       }
     } catch (error) {
-      console.error('Error in PATCH request to /pros:', error);
-      setError(error.message || "Something went wrong");
+      console.error("Error in PATCH request to /pros:", error);
+      // setError(error.message || "Something went wrong");
     }
   };
 
@@ -70,6 +72,22 @@ const DetailMatch = ({
         return "bg-red-200 text-red-800";
       default:
         return "";
+    }
+  };
+
+  const createChat = async () => {
+    // console.log(`Task ${task_id} was created by ${created_by}`);
+    try {
+      const response = await axios.post(
+        `${deploy}/chats`,
+        {
+          client: entryToUpdate.content.created_by,
+          task: entryToUpdate._id,
+        },
+        { withCredentials: true }
+      );
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -168,6 +186,7 @@ const DetailMatch = ({
               <button
                 type="button"
                 className="text-white bg-red-500 hover:bg-red-700  focus:outline-none font-medium rounded-lg text-sm ml-4 px-4 py-2 text-center dark:bg-red-500 dark:hover:bg-red-700"
+                onClick={createChat}
               >
                 Contact
               </button>
