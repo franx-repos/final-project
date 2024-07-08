@@ -47,7 +47,14 @@ export const signUp = asyncHandler(async(req,res,next) => {
         specialization
       });
       const token = jwt.sign({ cid: newPro._id}, process.env.JWT_SECRET);
-      res.status(201).send ({token}) //sendung vom token an die datenbank
+      res.cookie('token', token, {
+        maxAge: 1800000,
+        httpOnly: true,
+        secure: true,
+        sameSite: 'None',
+      });
+    
+      res.send({ status: 'cool thing' });
 })
 
 //funktion für Log in
@@ -62,7 +69,12 @@ if (!existingPro) throw new ErrorResponse("Email does not exists", 404);
   if (!match) throw new ErrorResponse('Password is incorrect', 401);
 // Passwort überprüfung
 const token = jwt.sign({ cid: existingPro._id}, process.env.JWT_SECRET, { expiresIn: "30min",});
-res.cookie('token', token, { maxAge: 1800000 }); // 30mn
+res.cookie('token', token, {
+  maxAge: 1800000,
+  httpOnly: true,
+  secure:true,
+  sameSite: "none",
+}); // 30mn
 res.send({ status: 'success' });
 })
 //verification
@@ -73,7 +85,12 @@ export const getPro = asyncHandler(async (req, res, next) => {
 
 // logout 
 export const logout = asyncHandler(async (req, res, next) => {
-  res.clearCookie('token');
+  res.clearCookie('token',{
+    maxAge: 1800000,
+    httpOnly: true,
+    secure:true,
+    sameSite: "none",
+  });
   res.send({ status: 'success' });
 });
 

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../../context/UserProvider";
 
+const deploy = import.meta.env.VITE_DEPLOY_URL;
 const styles = {
   button:
     "inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-teal-700 rounded-lg hover:bg-teal-800 focus:ring-4 focus:outline-none focus:ring-teal-300 dark:bg-teal-600 dark:hover:bg-teal-700 dark:focus:ring-teal-800",
@@ -18,7 +19,8 @@ const MatchingPage = () => {
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        const response = await axios.get("http://localhost:8001/tasks/open", {
+        
+        const response = await axios.get(`${deploy}/tasks/open`, {
           withCredentials: true,
         });
         const industry = userData.industry;

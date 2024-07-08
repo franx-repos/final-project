@@ -47,7 +47,15 @@ export const signUp = asyncHandler(async(req,res,next) => {
       });
       console.log(role, first_name, last_name, email, password, vat_id, tax_id, street, zip, city, country, phone_number, industry, languages)
       const token = jwt.sign({ cid: newClient._id}, process.env.JWT_SECRET);
-      res.status(201).send ({token}) //sendung vom token an die datenbank
+      res.cookie('token', token, {
+        maxAge: 1800000,
+        httpOnly: true,
+        secure: true,
+        sameSite: 'None',
+      });
+    
+      res.send({ status: 'cool thing' });
+      
 })
 
 //funktion für Log in
@@ -82,7 +90,11 @@ export const getClient = asyncHandler(async (req, res, next) => {
 
 // logout
 export const logout = asyncHandler(async (req, res, next) => {
-  res.clearCookie("token");
+  res.clearCookie("token",{
+    maxAge: 1800000,
+    httpOnly: true,
+    secure:true,
+    sameSite: "none"} );
   res.send({ status: "success" });
 });
 
