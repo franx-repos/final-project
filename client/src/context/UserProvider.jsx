@@ -12,12 +12,9 @@ export const AuthProvider = ({ children }) => {
   const [userData, setUserData] = useState({});
   const checkUser = async () => {
     try {
-      const responseClient = await axios.get(
-        `${deploy}/clients/me`,
-        {
-          withCredentials: true,
-        }
-      );
+      const responseClient = await axios.get(`${deploy}/clients/me`, {
+        withCredentials: true,
+      });
 
       if (
         responseClient.data &&
