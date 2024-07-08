@@ -6,9 +6,6 @@ import { Label, Checkbox } from "flowbite-react";
 import { Dropdown } from "flowbite-react";
 import Toastify, { notify } from "./Toastify";
 
-
-const deploy = import.meta.env.VITE_DEPLOY_URL;
-
 const styles = {
   input:
     "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500",
@@ -35,6 +32,7 @@ const fields = [
 function UserProfile() {
   const { isLoggedIn, setIsLoggedIn, userData, setUserData } = useAuth();
   const navigate = useNavigate();
+  const deploy = import.meta.env.VITE_DEPLOY_URL;
 
   const [formState, setFormState] = useState({
     first_name: "",
@@ -103,9 +101,10 @@ function UserProfile() {
     } = formState;
 
     try {
+      const deploy = import.meta.env.VITE_DEPLOY_URL;
       const response = await axios.patch(
         userData.data.role === "client"
-          ? `${deploy}/clients"`
+          ? `${deploy}/clients`
           : `${deploy}/pros`,
         {
           data: {

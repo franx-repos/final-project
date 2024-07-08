@@ -27,59 +27,51 @@ function Signup() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [client, setClient] = useState(false);
-const [error, setError] = useState(null);
-const [error2, setError2] = useState(null);
+  const [error, setError] = useState(null);
+  const [error2, setError2] = useState(null);
   const navigate = useNavigate();
 
   const deploy = import.meta.env.VITE_DEPLOY_URL;
 
   const handleRegister = async (e) => {
     e.preventDefault();
- 
 
     if (client === false) {
       if (password !== confirmPassword) {
-
         // console.log("Passwords do not match");
         setError("Passwords do not match");
 
         return;
-      }
-      else
-
-
-      try {
-        const response = await axios.post(
-          `${deploy}/clients/register`,
-          {
-            data: {
-              role,
-              first_name,
-              last_name,
-              email,
-              password,
-              tax_id,
-              street,
-              zip,
-              city,
-              country,
-              phone_number,
+      } else
+        try {
+          const response = await axios.post(
+            `${deploy}/clients/register`,
+            {
+              data: {
+                role,
+                first_name,
+                last_name,
+                email,
+                password,
+                tax_id,
+                street,
+                zip,
+                city,
+                country,
+                phone_number,
+              },
             },
-          },
-          { withCredentials: true }
-        );
+            { withCredentials: true }
+          );
 
-        navigate("/Dashboard");
-        if (response.status === 201) {
-          
+          navigate("/Dashboard");
+          if (response.status === 201) {
+          }
+        } catch (error) {
+          // console.log(error);
+          // console.log(error.response.data.error || "Registration failed");
+          setError2("An account with this Email already exists");
         }
-      } catch (error) {
-
-        // console.log(error);
-        // console.log(error.response.data.error || "Registration failed");
-        setError2("An account with this Email already exists");
-
-      }
     } else {
       if (password !== confirmPassword) {
         // console.log("Passwords do not match");
@@ -92,7 +84,7 @@ const [error2, setError2] = useState(null);
 
   const handleRegisterprofi = async (e) => {
     e.preventDefault();
-    
+
     try {
       const response = await axios.post(
         `${deploy}/pros/register`,
@@ -122,9 +114,9 @@ const [error2, setError2] = useState(null);
     }
   };
 
-  useEffect(() => {
-    console.log(role,first_name, last_name, street, city, zip, country, tax_id, phone_number, email, password,client);
-  }, [ role,first_name, last_name, street, city, zip, country, tax_id, phone_number, email, password,client ]);
+  // useEffect(() => {
+  //   console.log(role,first_name, last_name, street, city, zip, country, tax_id, phone_number, email, password,client);
+  // }, [ role,first_name, last_name, street, city, zip, country, tax_id, phone_number, email, password,client ]);
 
   return (
     <>
@@ -236,7 +228,6 @@ const [error2, setError2] = useState(null);
                     <p>{error2}</p>
                   </div>
                 )}
-
 
                 <div className="sm:col-span-6">
                   <label htmlFor="email" className={styles.label}>
