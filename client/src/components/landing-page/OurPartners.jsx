@@ -4,8 +4,6 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-
-
 function OurPartners() {
   const [pros, setPros] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -39,49 +37,50 @@ function OurPartners() {
 
   const settings = {
     className:
-      "flex flex-wrap w-full space-x-4 gap-8 mb-6 lg:mb-6 lg:space-x-8 lg:gap-8 lg:flex-row lg:w-full lg:space-x-4 lg:gap-8   border border-gray-200 rounded-md shadow dark:bg-gray-800 dark:border-gray-700",
+      "flex flex-wrap w-full space-x-4 gap-8 mb-6 lg:mb-6 lg:space-x-8 lg:gap-8 lg:flex-row lg:w-full lg:space-x-4 lg:gap-8 rounded-md shadow dark:border-gray-700",
     dots: true,
     infinitfalse: false,
-    speed: 500,
+    speed: 250,
     slidesToShow: 4,
-    slidesToScroll: 4,
+    slidesToScroll: 1,
     adaptiveHeight: true,
   };
 
   return (
     <section className="bg-white dark:bg-gray-900">
       <div className="py-6 px-4 mx-auto max-w-screen-xl lg:py6 lg:px-6">
-        <div className="mx-auto max-w-screen-sm text-center mb-8 lg:mb-16">
+        <div className="mx-auto max-w-screen-sm text-center mb-8">
           <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
             Our Partners
           </h2>
-          <p className="font-light text-gray-500 lg:mb-16 sm:text-xl dark:text-gray-400">
-            Explore Our tax experts specialize in various areas to meet diverse
+          <p className="font-light text-gray-500 sm:text-xl dark:text-gray-400">
+            Explore Our tax experts specialized in various areas to meet diverse
             client needs
           </p>
         </div>
-        <div className="  w-full p-1">
+        <div className="w-full p-1">
           <Slider {...settings}>
             {pros.map((pro, index) => (
               <div
                 key={index}
-                className=" flex flex-col justify-center max-w-[15rem] max-h-[40rem]  overflow-hidden my-2 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 "
+                className="flex flex-col justify-center max-w-[15rem] max-h-[30rem] overflow-hidden my-2 bg-white border border-gray-200 rounded-md shadow dark:bg-gray-800 dark:border-gray-700 "
               >
-                <a href="#">
-                  <img
-                    className="rounded-t-lg "
-                    src="public\tax_consultant1.jpg"
-                    alt="Foto"
-                  />
-                </a>
-                <div className="p-1">
+                <div className="flex">
                   <a href="#">
-                    <h2 className="mb-1 text-1xl  font-bold tracking-tight text-gray-900 dark:text-white">
+                    <img
+                      className="h-28 rounded-tl-md"
+                      src="public\tax_consultant1.jpg"
+                      alt="Foto"
+                    />
+                  </a>
+                  <a href="#" className="flex mx-auto">
+                    <h2 className="self-center m-2 text-1xl font-bold tracking-tight text-gray-900 dark:text-white">
                       {pro.data.first_name} {pro.data.last_name}
                     </h2>
                   </a>
-
-                  <p className="mb-1 text-sm text-left w-[14rem] mx-1 text-gray-500 dark:text-gray-400">
+                </div>
+                <div className="mt-2 p-2">
+                  <p className="h-28 flex mb-3 font-normal text-gray-700 dark:text-gray-400 scrollbar-thin overflow-auto">
                     {pro.description}
                   </p>
                 </div>
