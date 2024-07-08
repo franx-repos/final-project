@@ -39,8 +39,10 @@ const [error2, setError2] = useState(null);
 
     if (client === false) {
       if (password !== confirmPassword) {
+
         // console.log("Passwords do not match");
         setError("Passwords do not match");
+
         return;
       }
       else
@@ -72,9 +74,11 @@ const [error2, setError2] = useState(null);
           
         }
       } catch (error) {
+
         // console.log(error);
         // console.log(error.response.data.error || "Registration failed");
         setError2("An account with this Email already exists");
+
       }
     } else {
       if (password !== confirmPassword) {
