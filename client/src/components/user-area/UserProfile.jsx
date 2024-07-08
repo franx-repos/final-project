@@ -8,7 +8,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 
-const deploy = import.meta.env.VITE_DEPLOY_URL;
+
 
 const styles = {
   input:
@@ -36,6 +36,7 @@ const fields = [
 function UserProfile() {
   const { isLoggedIn, setIsLoggedIn, userData, setUserData } = useAuth();
   const navigate = useNavigate();
+ 
   const notify = () =>
     toast.success("User data has been updated.", {
       position: "top-right",
@@ -117,9 +118,10 @@ function UserProfile() {
     } = formState;
 
     try {
+      const deploy = import.meta.env.VITE_DEPLOY_URL;
       const response = await axios.patch(
         userData.data.role === "client"
-          ? `${deploy}/clients"`
+          ? `${deploy}/clients`
           : `${deploy}/pros`,
         {
           data: {

@@ -67,7 +67,7 @@ function OurPartners() {
     dots: true,
     infinitfalse: false,
     speed: 500,
-    slidesToShow: 4,
+    slidesToShow: 3,
     slidesToScroll: 4,
     adaptiveHeight: true,
     
@@ -92,7 +92,7 @@ function OurPartners() {
            
                 <div
                   key={index}
-                  className=" max-w-64 p-4 max-h-[50rem] bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 overflow-auto" >
+                  className=" max-w-80 p-4 max-h-[50rem] mx-2 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 overflow-auto" >
                   <a href="#">
                     <img
                       className="rounded-t-lg"
@@ -103,19 +103,21 @@ function OurPartners() {
                   <div className="p-5">
                     <a href="#">
                       <h2 className="mb-1 text-1xl font-bold tracking-tight text-gray-900 dark:text-white">
-                        {pro.data.first_name} {""}
+                        {pro.data.first_name} {" "}
                         {pro.data.last_name}
                       </h2>
                     </a>
 
-                    {/* <p className="mb-2 text-gray-500 dark:text-gray-400">
-                      {pro.specialization}
-                    </p> */}
-
-                    <p className="font-normal text-gray-700 dark:text-gray-400">
+                    <p className="mb-2 h-[10rem] text-gray-500 dark:text-gray-400">
+                      {pro.description}
                       Here are the biggest enterprise technology acquisitions of
                       2021 so far, in reverse chronological order.
                     </p>
+
+                    {/* <p className="font-normal text-gray-700 dark:text-gray-400">
+                      Here are the biggest enterprise technology acquisitions of
+                      2021 so far, in reverse chronological order.
+                    </p> */}
                   </div>
 
                     {/* <a
@@ -142,25 +144,8 @@ function OurPartners() {
 
                   <div className="flex items-center mb-3">
                     <svg
-                      className="w-4 h-4 text-yellow-300 ms-1"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="currentColor"
-                      viewBox="0 0 22 20"
-                    >
-                      <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                    </svg>
-                    <svg
-                      className="w-4 h-4 text-yellow-300 ms-1"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="currentColor"
-                      viewBox="0 0 22 20"
-                    >
-                      <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                    </svg>
-                    <svg
-                      className="w-4 h-4 text-yellow-300 ms-1"
+                      // className="w-4 h-4 text-yellow-300 ms-1"
+                      className="w-4 h-4 text-gray-300 ms-1"
                       aria-hidden="true"
                       xmlns="http://www.w3.org/2000/svg"
                       fill="currentColor"
@@ -178,7 +163,26 @@ function OurPartners() {
                       <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
                     </svg>
                     <svg
-                      className="w-4 h-4 ms-1 text-gray-300 dark:text-gray-500"
+                      className="w-4 h-4 text-gray-300 ms-1"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="currentColor"
+                      viewBox="0 0 22 20"
+                    >
+                      <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                    </svg>
+                    <svg
+                      className="w-4 h-4 text-gray-300 ms-1"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="currentColor"
+                      viewBox="0 0 22 20"
+                    >
+                      <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                    </svg>
+                    <svg
+                      // className="w-4 h-4 ms-1 text-gray-300 dark:text-gray-500"
+                      className="w-4 h-4 text-gray-300 ms-1"
                       aria-hidden="true"
                       xmlns="http://www.w3.org/2000/svg"
                       fill="currentColor"
