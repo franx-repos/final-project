@@ -66,29 +66,27 @@ export const addNewClient = async (req, res, next) => {
 // }
 
 export const updateClient = async (req, res, next) => {
- 
   const { data, email_verified, role, industry, languages, image_url } =
     req.body;
-  const {cid} = req;
+  const { cid } = req;
 
   try {
     const updatedClient = await Client.findByIdAndUpdate(
       cid,
       {
-        
-        'data.first_name': data.first_name,
-        'data.email': data.email,
-        'data.tax_id': data.tax_id,
-        'data.street': data.street,
-        'data.zip': data.zip,
-        'data.city': data.city,
-        'data.country':data.country,
-        'data.phone_number': data.phone_number,
+        "data.first_name": data.first_name,
+        "data.email": data.email,
+        "data.tax_id": data.tax_id,
+        "data.street": data.street,
+        "data.zip": data.zip,
+        "data.city": data.city,
+        "data.country": data.country,
+        "data.phone_number": data.phone_number,
         image_url,
         email_verified,
         role,
-        industry,
         languages,
+        industry,
       },
       { new: true }
     );
