@@ -26,7 +26,7 @@ const DetailMatch = ({
       const newtasks = [...userData.tasks, _id];
       console.log(name, proId, newtasks)
       const response = await axios.patch(
-        `http://localhost:8001/tasks/${_id}`,
+        `${deploy}/tasks/${_id}`,
         {
           content: {
             status: 'IN PROGRESS',
@@ -37,7 +37,7 @@ const DetailMatch = ({
       );
 
       const responsepro = await axios.patch(
-        `http://localhost:8001/pros`,
+        `${deploy}/pros`,
         {
           data: {
             first_name: name
