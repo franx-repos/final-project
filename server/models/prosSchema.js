@@ -81,7 +81,6 @@ const proSchema = new mongoose.Schema({
   },
   description: {
     type: String,
-    required: [true, "last name is required"],
   },
   chats: {
     type: [String],
