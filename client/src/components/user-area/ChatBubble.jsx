@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../../context/UserProvider";
 import axios from "axios";
-
-const ChatBubble = ({message}) => {
+const deploy = import.meta.env.VITE_DEPLOY_URL;
+const ChatBubble = ({ message }) => {
   const { userData } = useAuth();
 
   const [entry, setEntry] = useState([]);
@@ -12,10 +12,10 @@ const ChatBubble = ({message}) => {
       let url = "";
       if (userData.data && userData.data.role === "client") {
         //pros als chatpartner fetchen
-        url = `http://localhost:8001/pros/${message.author_id}`;
+        url = `${deploy}/pros/${message.author_id}`;
       } else {
         //clients als chatpartner fetchen
-        url = `http://localhost:8001/clients/${message.author_id}`;
+        url = `${deploy}/clients/${message.author_id}`;
       }
       console.log(url);
       try {
@@ -31,10 +31,9 @@ const ChatBubble = ({message}) => {
   }, []);
 
   useEffect(() => {
-    if(entry.length >0){
+    if (entry.length > 0) {
       console.log(entry);
     }
-    
   }, [entry]);
 
   function bubble() {
