@@ -70,13 +70,6 @@ const Signin = () => {
     }
   };
 
-  // useEffect(() => {
-  //   console.log(`email:  ${email}`);
-  //   console.log(`password: ${password}`);
-  //   console.log(`client: ${client}`);
-  //   console.log(`role: ${role}`);
-  //   }, [email,password,client,role]);
-
   return (
     <>
       <form
@@ -95,6 +88,13 @@ const Signin = () => {
                 alt="TAXMAX"
               />
             </Link>
+
+            {error && (
+                  <div className="text-sm text-red-500 mt-3">
+                    <p>{"your email or password is incorrect"}</p>
+                  </div>
+                )}       
+                        
             <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight  text-gray-900 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
               Sign in!
             </h2>
@@ -178,13 +178,11 @@ const Signin = () => {
                 </label>
 
                 <div className="text-sm">
-                  <Link to="/reset-pass">
-                    <a
-                      href="#"
-                      className="font-semibold text-indigo-600 hover:text-indigo-500  dark:text-blue-500 dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
-                    >
-                      Forgot password?
-                    </a>
+                  <Link
+                    to="/reset-pass"
+                    className="font-semibold text-indigo-600 hover:text-indigo-500  dark:text-blue-500 dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
+                  >
+                    Forgot password?
                   </Link>
                 </div>
               </div>

@@ -4,6 +4,7 @@ import HowItWorks from "./landing-page/HowItWorks";
 import NavigationTop from "./NavigationTop";
 import OurPartners from "./landing-page/OurPartners";
 import ParticlesBackground from "./ParticlesBackground";
+import OpenTasksSlider from "./user-area/OpenTasksSlider";
 
 function TaxMax() {
   return (
@@ -14,6 +15,7 @@ function TaxMax() {
         <HeroSection />
         <HowItWorks />
         <OurPartners />
+        <OpenTasksSlider />
         <Footer />
       </div>
     </>
