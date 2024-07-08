@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../../context/UserProvider";
+import DetailMatch from "./DetailMatch";
 
 const deploy = import.meta.env.VITE_DEPLOY_URL;
 const styles = {
@@ -14,6 +15,8 @@ const MatchingPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { userData, checkUser } = useAuth();
+  const [isDetailMatchOpen, setIsDetailMatchOpen] = useState(false);
+  const [entryToUpdate, setEntryToUpdate] = useState(null);
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -47,47 +50,11 @@ const MatchingPage = () => {
     };
 
     fetchTasks();
-  }, []);
+  }, [userData]);
 
-  const acceptTask = async (_id) => {
-    try {
-      const proId = userData._id;
-      const name = userData.data.first_name;
-      const newtasks = [...userData.tasks, _id];
-      const response = await axios.patch(
-        `http://localhost:8001/tasks/${_id}`,
-        {
-          content: {
-            status: "IN PROGRESS",
-            assigned_to: proId,
-          },
-        },
-        { withCredentials: true }
-      );
-
-      const responsepro = await axios.patch(
-        `http://localhost:8001/pros`,
-        {
-          data: {
-            first_name: name,
-          },
-
-          tasks: newtasks,
-        },
-        { withCredentials: true }
-      );
-
-      console.log("Response from PATCH request to /pros:", responsepro);
-      console.log("Response from put request to /tasks:", response);
-
-      if (responsepro.status === 200) {
-        console.log("Professional updated with task.");
-        checkUser();
-      }
-    } catch (error) {
-      console.error("Error in PATCH request to /pros:", error);
-      setError(error.message || "Something went wrong");
-    }
+  const toggleUpdateModal = (entry) => {
+    setEntryToUpdate(entry);
+    setIsDetailMatchOpen(!isDetailMatchOpen);
   };
 
   if (loading) return <div>Loading...</div>;
@@ -99,11 +66,11 @@ const MatchingPage = () => {
       <h5 className="mb-2 text-3xl font-bold text-gray-900 dark:text-white">
         Tasks for you
       </h5>
-      <div className="flex">
+      <div className="flex flex-wrap justify-center">
         {tasks.map((task) => (
           <div
             key={task._id}
-            className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+            className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow m-4 dark:bg-gray-800 dark:border-gray-700"
           >
             <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
               {task.content.title}
@@ -122,20 +89,25 @@ const MatchingPage = () => {
               {task.content.description}
             </p>
             <div className="flex justify-evenly">
-              <a
-                to="#"
+              <button
+                type="button"
+                onClick={() => toggleUpdateModal(task)}
                 className={styles.button}
-                onClick={() => acceptTask(task._id)}
               >
-                Accept
-              </a>
-              <a to="#" className={styles.button}>
-                Contact
-              </a>
+                Details
+              </button>
             </div>
           </div>
         ))}
       </div>
+      {isDetailMatchOpen && (
+        <DetailMatch
+          isUpdateTaskOpen={isDetailMatchOpen}
+          toggleUpdateModal={toggleUpdateModal}
+          entryToUpdate={entryToUpdate}
+          checkUser={checkUser}
+        />
+      )}
     </div>
   );
 };
