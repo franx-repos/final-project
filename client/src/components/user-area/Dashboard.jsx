@@ -4,7 +4,7 @@ import DashboardSidebar from "./Sidebar";
 import { useAuth } from "../../context/UserProvider";
 import ParticlesBackground from "../ParticlesBackground";
 import Signin from "../Signin";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DashboardContainer from "./DashboardContainer";
 import DashboardHeader from "./DashboardHeader";
 
@@ -40,7 +40,11 @@ const tasks = {
 };
 
 function Dashboard() {
-  const { isLoggedIn, setIsLoggedIn, userData, setUserData } = useAuth();
+  const { isLoggedIn, setIsLoggedIn, userData, setUserData, checkUser } = useAuth();
+ 
+useEffect(() => {
+  checkUser();
+}, [])
 
   const [currentLocation, setCurrentLocation] = useState("Dashboard");
   // console.log(userData);
