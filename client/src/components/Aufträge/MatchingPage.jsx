@@ -18,39 +18,45 @@ const MatchingPage = () => {
   const [isDetailMatchOpen, setIsDetailMatchOpen] = useState(false);
   const [entryToUpdate, setEntryToUpdate] = useState(null);
 
+  
   useEffect(() => {
     const fetchTasks = async () => {
-      try {
-        const response = await axios.get(`${deploy}/tasks/open`, {
-          withCredentials: true,
-        });
-        const industry = userData.industry;
-        const specialization = userData.specialization;
+      let success = false;
+      while (!success) {
+        try {
+          const response = await axios.get(`${deploy}/tasks/open`, {
+            withCredentials: true,
+          });
+          const industry = userData.industry;
+          const specialization = userData.specialization;
 
-        const filteredTasks = response.data.filter((task) => {
-          const matchIndustry =
-            industry.length > 0
-              ? industry.some((ind) => task.content.industry.includes(ind))
-              : true;
-          const matchSpecialization =
-            specialization.length > 0
-              ? specialization.some((spec) =>
-                  task.content.task_type.includes(spec)
-                )
-              : true;
+          const filteredTasks = response.data.filter((task) => {
+            const matchIndustry =
+              industry.length > 0
+                ? industry.some((ind) => task.content.industry.includes(ind))
+                : true;
+            const matchSpecialization =
+              specialization.length > 0
+                ? specialization.some((spec) =>
+                    task.content.task_type.includes(spec)
+                  )
+                : true;
 
-          return matchIndustry && matchSpecialization;
-        });
-        setTasks(filteredTasks);
-        setLoading(false);
-      } catch (err) {
-        setError(err.message);
-        setLoading(false);
+            return matchIndustry && matchSpecialization;
+          });
+          setTasks(filteredTasks);
+          setLoading(false);
+          setError(null);
+          success = true; 
+        } catch (err) {
+          setError(err.message);
+          setLoading(false);
+          await delay(1000);
+        }
       }
     };
 
     fetchTasks();
-    // console.log("Role: " + userData?.data.role);
   }, [userData]);
 
   const toggleUpdateModal = (entry) => {
@@ -86,15 +92,11 @@ const MatchingPage = () => {
             <div className={styles.types}>
               <strong>Task:</strong> {task.content.task_type.join(", ")}
             </div>
-            <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-              {task.content.description}
-            </p>
             <div className="flex justify-evenly">
               <button
                 type="button"
                 onClick={() => toggleUpdateModal(task)}
-                className={styles.button}
-              >
+                className={styles.button}>
                 Details
               </button>
             </div>

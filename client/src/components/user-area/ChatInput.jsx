@@ -20,6 +20,7 @@ const ChatInput = () => {
   };
 
   const sendMessage = async () => {
+    console.log(socket);
     if (input.trim() && room !== "" && socket.connected) {
       const d = new Date();
       let formatDate = d.toUTCString();

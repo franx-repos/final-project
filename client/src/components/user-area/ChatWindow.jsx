@@ -12,6 +12,7 @@ import debounce from "lodash/debounce";
 
 const ChatWindow = () => {
   const { userData } = useAuth();
+  const [isListenerSetup, setIsListenerSetup] = useState(false);
   const [chats, setChats] = useState([]);
   const {
     messages,
@@ -44,41 +45,68 @@ const ChatWindow = () => {
   ).current;
 
   useEffect(() => {
-    const s = socketIO.connect("http://localhost:3000");
+    const s = socketIO.connect(`${deploy}`);
+
     setSocket(s);
-    return () => {
-      s.disconnect();
-    };
-  }, [setSocket]);
+    // return () => {
+    //   s.disconnect();
+    // };
+  }, []);
 
   useEffect(() => {
-    if (socket) {
+    console.log(socket);
+  }, [socket]);
+
+  // useEffect(() => {
+  //   if (socket) {
+  //     console.log("Socket is connected");
+  //     socket
+  //       .on("recieve-message", (message) => {
+  //         console.log("Received message:", message);
+
+  //         setMessages((prevMessages) => [...prevMessages, message]);
+  //         // setSaveNewMessage(true);
+  //       })
+  //       .on("error", (error) => {
+  //         console.error("Error handling recieve-message event:", error);
+  //       });
+  //   } else {
+  //     console.log("Socket is not connected");
+  //   }
+  // }, [socket, setMessages, setSaveNewMessage]);
+
+  useEffect(() => {
+    if (socket && isListenerSetup === false) {
       console.log("Socket is connected");
+
       socket
         .on("recieve-message", (message) => {
           console.log("Received message:", message);
+
           setMessages((prevMessages) => [...prevMessages, message]);
-          setSaveNewMessage(true);
+          // setSaveNewMessage(true);
         })
         .on("error", (error) => {
           console.error("Error handling recieve-message event:", error);
         });
+      setIsListenerSetup(true);
     } else {
       console.log("Socket is not connected");
     }
-  }, [socket, setMessages, setSaveNewMessage]);
+  }, [socket, isListenerSetup]);
 
-  useEffect(() => {
-    if (saveNewMessage) {
-      debouncedSaveMessages(messages, room, setSaveNewMessage);
-    }
-  }, [
-    messages,
-    saveNewMessage,
-    room,
-    debouncedSaveMessages,
-    setSaveNewMessage,
-  ]);
+  //wenn man das auskommentiert werden die messages gesendet
+  // useEffect(() => {
+  //   if (saveNewMessage) {
+  //     debouncedSaveMessages(messages, room, setSaveNewMessage);
+  //   }
+  // }, [
+  //   messages,
+  //   saveNewMessage,
+  //   room,
+  //   debouncedSaveMessages,
+  //   setSaveNewMessage,
+  // ]);
 
   useEffect(() => {
     if (userData) {
@@ -110,9 +138,12 @@ const ChatWindow = () => {
       {room ? (
         <div className="flex flex-col w-full mx-9 shadow-lg rounded-lg">
           <div className="flex-1 overflow-y-scroll border-gray-200 dark:bg-gray-800">
-            {messages.map((message, index) => (
-              <ChatBubble key={index} message={message} />
-            ))}
+            {messages.map((message, index) => {
+              console.log(message);
+              if (message !== messages[index - 1]) {
+                return <ChatBubble key={index} message={message} />;
+              }
+            })}
           </div>
 
           <ChatInput />
