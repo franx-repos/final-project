@@ -20,7 +20,11 @@ const PORT = 8001;
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: ["http://localhost:5173", "https://admin.socket.io/"],
+    origin: [
+      "http://localhost:5173",
+      "https://admin.socket.io/",
+      "https://tax-max-rm6g.onrender.com",
+    ],
     credentials: true,
   },
 });
@@ -88,7 +92,12 @@ instrument(io, {
   mode: "development",
 });
 
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(
+  cors({
+    origin: ["http://localhost:5173", "https://tax-max-rm6g.onrender.com"],
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(cookieParser());
 
