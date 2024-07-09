@@ -104,7 +104,9 @@ const Taskoverview = () => {
                     <p className={styles.tdP}>{entry.content.description}</p>
                   </td>
                   <td className={styles.td}>
-                    <p className={styles.tdP}>{entry.content.industry}</p>
+                    <p className={styles.tdP}>
+                      {entry.content.industry.join(", ")}
+                    </p>
                   </td>
                   <td className={styles.td}>
                     <p className={styles.tdP}>
