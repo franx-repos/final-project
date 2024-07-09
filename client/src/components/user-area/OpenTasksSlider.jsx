@@ -27,7 +27,7 @@ function OpenTasksSlider() {
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        const response = await axios.get(`${deploy}/tasks/open`, {
+        const response = await axios.get(`${deploy}/tasks/open_free`, {
           withCredentials: true,
         });
         setTasks(response.data);
