@@ -13,7 +13,7 @@ import debounce from "lodash/debounce";
 const ChatWindow = () => {
   const { userData } = useAuth();
   const [isListenerSetup, setIsListenerSetup] = useState(false);
-  const [chats, setChats] = useState([]);
+
   const {
     messages,
     setMessages,
@@ -22,34 +22,69 @@ const ChatWindow = () => {
     room,
     saveNewMessage,
     setSaveNewMessage,
+    chats, setChats,
+    saveMessages
   } = useChat();
 
-  // useEffect(() => {
-  //   console.log(message);
-  // }, []);
-
-  const debouncedSaveMessages = useRef(
-    debounce(async (messagesToSave, room, setSaveNewMessage) => {
+  useEffect(()=>{
+    const fetchChat = async () => {
+      let url = "";
+      if (userData.data && userData.data.role === "client") {
+        url = `${deploy}/chats/client_chat/`;
+      } else {
+        url = `${deploy}/chats/pro_chat/`;
+      }
+      console.log(url);
       try {
-        console.log("Saving messages to DB:", messagesToSave);
-        await axios.patch(
-          `${deploy}/chats/${room}`,
-          { messages: messagesToSave },
-          { withCredentials: true }
-        );
-        setSaveNewMessage(false);
+        const response = await axios.get(url, { withCredentials: true });
+        setChats(response.data);
       } catch (error) {
         console.log(error);
       }
+    };
+
+    if (userData) {
+      
+      console.log("fetching chat");
+      fetchChat();
+    }
+  },[])
+
+  useEffect(() => {
+    console.log(chats);
+  }, [chats]);
+
+
+  // const debouncedSaveMessages = useRef(
+  //   debounce(async (messagesToSave, room, setSaveNewMessage) => {
+  //     // try {
+  //     //   console.log("Saving messages to DB:", messagesToSave);
+  //     //   await axios.patch(
+  //     //     `${deploy}/chats/${room}`,
+  //     //     { messages: messagesToSave },
+  //     //     { withCredentials: true }
+  //     //   );
+  //     //   setSaveNewMessage(false);
+  //     // } catch (error) {
+  //     //   console.log(error);
+  //     // }
+  //     saveMessages(userData);
+  //   }, 1000)
+  // ).current;
+
+
+  const debouncedSaveMessages = useRef(
+    debounce(() => {
+      saveMessages(userData);
     }, 1000)
   ).current;
 
   useEffect(() => {
     const s = socketIO.connect(`${deploy}`);
-
     setSocket(s);
     // return () => {
-    //   s.disconnect();
+    //   socket.disconnect();
+      
     // };
   }, []);
 
@@ -75,6 +110,14 @@ const ChatWindow = () => {
   //   }
   // }, [socket, setMessages, setSaveNewMessage]);
 
+
+  //useEffect is trigerred whenever messages change to save them to the according room
+  useEffect(()=>{
+    if (room !== "" && messages.length > 0 && saveNewMessage) {
+      saveMessages(userData);
+    }
+  },[saveNewMessage])
+
   useEffect(() => {
     if (socket && isListenerSetup === false) {
       console.log("Socket is connected");
@@ -84,7 +127,7 @@ const ChatWindow = () => {
           console.log("Received message:", message);
 
           setMessages((prevMessages) => [...prevMessages, message]);
-          // setSaveNewMessage(true);
+          setSaveNewMessage(true);
         })
         .on("error", (error) => {
           console.error("Error handling recieve-message event:", error);
@@ -97,8 +140,8 @@ const ChatWindow = () => {
 
   //wenn man das auskommentiert werden die messages gesendet
   // useEffect(() => {
-  //   if (saveNewMessage) {
-  //     debouncedSaveMessages(messages, room, setSaveNewMessage);
+  //   if (saveNewMessage && messages.length>0) {
+  //     debouncedSaveMessages();
   //   }
   // }, [
   //   messages,
@@ -125,6 +168,7 @@ const ChatWindow = () => {
           console.log(error);
         }
       };
+      console.log("fetching chat");
       fetchChat();
     }
   }, [userData]);
