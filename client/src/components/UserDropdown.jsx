@@ -28,6 +28,13 @@ const UserDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
+  // useEffect(() => {
+  //   const storedAuth = localStorage.getItem('auth');
+  //   if (storedAuth === 'true') {
+  //     setIsLoggedIn(true);
+  //   }
+  // }, []);
+
   const handleLogout = async () => {
     try {
       await axios.post(
@@ -35,6 +42,7 @@ const UserDropdown = () => {
         {},
         { withCredentials: true }
       );
+      localStorage.removeItem('auth');
       setIsLoggedIn(false);
       setIsDropdownOpen(false);
       setUserData({});
