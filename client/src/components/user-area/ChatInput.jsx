@@ -46,7 +46,7 @@ const ChatInput = () => {
       <label htmlFor="chat" className="sr-only">
         Your input
       </label>
-      <div className="flex items-center px-3 py-2 bg-gray-50 dark:bg-gray-800">
+      <div className="flex items-center px-3 py-2 bg-gray-50 dark:bg-gray-800 rounded-b-md">
         <button
           type="button"
           className="inline-flex justify-center p-2 text-gray-500 rounded-md cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
