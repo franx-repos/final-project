@@ -51,6 +51,10 @@ const ChatPartnerButton = ({ chat }) => {
   }, [task]);
 
   useEffect(() => {
+    console.log(entry);
+  }, [entry]);
+
+  useEffect(() => {
     if (socket && socket.connected && room !== "") {
       socket.emit("join-room", room);
     }
@@ -58,6 +62,25 @@ const ChatPartnerButton = ({ chat }) => {
 
   function joinChat() {
     //save old chat
+
+    // const saveMessages = async () => {
+    //   const messagesToSave = messages;
+    //   try {
+    //     console.log("Saving messages to DB:", messagesToSave);
+    //     await axios.patch(
+    //       `${deploy}/chats/${room}`,
+    //       { messages: messagesToSave },
+    //       { withCredentials: true }
+    //     );
+    //     // setSaveNewMessage(false);
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // };
+
+    // if (room !== "" && messages.length > 0) {
+    //   saveMessages();
+    // }
 
     setMessages(chat.messages);
     setRoom(chat._id);
