@@ -38,7 +38,8 @@ function DashboardSidebar({ currentLocation, setCurrentLocation }) {
           icon: HiChartPie,
           label: "",
           onclick: handleLocation("Dashboard"),
-        })
+          
+        }), setCurrentLocation("Dashboard")
       }
     } else {
       const timer = setTimeout(() => {
