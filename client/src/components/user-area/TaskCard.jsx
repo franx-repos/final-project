@@ -1,7 +1,4 @@
-import React, { useState } from "react"; // Hinzufügen der fehlenden Importe
 import axios from "axios";
-import DetailMatch from "../Aufträge/DetailMatch"; // Stellen Sie sicher, dass der Pfad korrekt ist
-
 const deploy = import.meta.env.VITE_DEPLOY_URL;
 const styles = {
   wrapper:
@@ -23,27 +20,22 @@ const TaskCard = ({
   task_type,
   description,
   created_by,
-  checkUser, // Hinzufügen der fehlenden Prop
 }) => {
-  const [isDetailMatchOpen, setIsDetailMatchOpen] = useState(false);
-  const [entryToUpdate, setEntryToUpdate] = useState(null);
-  
-
-  const toggleUpdateModal = (entry) => {
-    setEntryToUpdate(entry);
-    setIsDetailMatchOpen(!isDetailMatchOpen);
+  const createChat = async () => {
+    // console.log(`Task ${task_id} was created by ${created_by}`);
+    try {
+      const response = await axios.post(
+        `${deploy}/chats`,
+        {
+          client: created_by,
+          task: task_id,
+        },
+        { withCredentials: true }
+      );
+    } catch (error) {
+      console.log(error);
+    }
   };
-
-  const task = {
-    task_id,
-    title,
-    industry,
-    create_date,
-    task_type,
-    description,
-    created_by,
-  };
-
   return (
     <div className={styles.card}>
       <h5 className={styles.cardHeading}>{title}</h5>
@@ -57,23 +49,6 @@ const TaskCard = ({
       <div className={styles.types}>
         <strong>Task:</strong> {task_type}
       </div>
-      <div className="flex justify-evenly">
-        <button
-          type="button"
-          onClick={() => toggleUpdateModal(task)}
-          className={styles.button}
-        >
-          Details
-        </button>
-      </div>
-      {isDetailMatchOpen && (
-        <DetailMatch
-          isUpdateTaskOpen={isDetailMatchOpen}
-          toggleUpdateModal={toggleUpdateModal}
-          entryToUpdate={entryToUpdate}
-          checkUser={checkUser}
-        />
-      )}
     </div>
   );
 };
