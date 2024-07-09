@@ -25,7 +25,7 @@ function Chat() {
 
   return (
     <>
-      <div className="flex w-full flex-col bg-white rounded-md dark:text-white dark:bg-[#1f2937]">
+      <div className="flex w-full h-[calc(100%-5.5rem)] flex-col bg-white rounded-md dark:text-white dark:bg-gray-900">
         <ChatWindow />
       </div>
     </>

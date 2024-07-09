@@ -104,9 +104,7 @@ const Taskoverview = () => {
                     <p className={styles.tdP}>{entry.content.description}</p>
                   </td>
                   <td className={styles.td}>
-                    <p className={styles.tdP}>
-                      {entry.content.industry.join(", ")}
-                    </p>
+                    <p className={styles.tdP}>{entry.content.industry}</p>
                   </td>
                   <td className={styles.td}>
                     <p className={styles.tdP}>
@@ -145,7 +143,7 @@ const Taskoverview = () => {
               ))}
             </tbody>
           </table>
-          {userData.data.role === "client" ? (
+          {userData.data.role === "client" && (
             <div className="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between dark:bg-[#1f2937]">
               <div className="inline-flex mt-2 xs:mt-0">
                 <button onClick={toggleModal} className={styles.button}>
@@ -153,8 +151,6 @@ const Taskoverview = () => {
                 </button>
               </div>
             </div>
-          ) : (
-            <p className={styles.tdP}>No tasks accepted yet.</p>
           )}
         </div>
       </div>

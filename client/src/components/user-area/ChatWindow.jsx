@@ -22,11 +22,12 @@ const ChatWindow = () => {
     room,
     saveNewMessage,
     setSaveNewMessage,
-    chats, setChats,
-    saveMessages
+    chats,
+    setChats,
+    saveMessages,
   } = useChat();
 
-  useEffect(()=>{
+  useEffect(() => {
     const fetchChat = async () => {
       let url = "";
       if (userData.data && userData.data.role === "client") {
@@ -44,16 +45,14 @@ const ChatWindow = () => {
     };
 
     if (userData) {
-      
       console.log("fetching chat");
       fetchChat();
     }
-  },[])
+  }, []);
 
   useEffect(() => {
     console.log(chats);
   }, [chats]);
-
 
   // const debouncedSaveMessages = useRef(
   //   debounce(async (messagesToSave, room, setSaveNewMessage) => {
@@ -72,7 +71,6 @@ const ChatWindow = () => {
   //   }, 1000)
   // ).current;
 
-
   const debouncedSaveMessages = useRef(
     debounce(() => {
       saveMessages(userData);
@@ -84,7 +82,7 @@ const ChatWindow = () => {
     setSocket(s);
     // return () => {
     //   socket.disconnect();
-      
+
     // };
   }, []);
 
@@ -110,13 +108,12 @@ const ChatWindow = () => {
   //   }
   // }, [socket, setMessages, setSaveNewMessage]);
 
-
   //useEffect is trigerred whenever messages change to save them to the according room
-  useEffect(()=>{
+  useEffect(() => {
     if (room !== "" && messages.length > 0 && saveNewMessage) {
       saveMessages(userData);
     }
-  },[saveNewMessage])
+  }, [saveNewMessage]);
 
   useEffect(() => {
     if (socket && isListenerSetup === false) {
@@ -174,14 +171,14 @@ const ChatWindow = () => {
   }, [userData]);
 
   return (
-    <section className="flex w-full h-screen justify-start antialiased text-gray-600 p-4 pb-24">
+    <section className="flex w-full h-screen justify-start antialiased">
       <div className="flex">
         <ChatSideBar chats={chats} />
       </div>
       <div></div>
       {room ? (
-        <div className="flex flex-col w-full mx-9 shadow-lg rounded-lg">
-          <div className="flex-1 overflow-y-scroll border-gray-200 dark:bg-gray-800">
+        <div className="flex flex-col w-full ml-3 shadow-lg rounded-t-md">
+          <div className="flex-1 scrollbar-thin overflow-auto border-gray-200 dark:bg-gray-800 rounded-t-md">
             {messages.map((message, index) => {
               console.log(message);
               if (message !== messages[index - 1]) {

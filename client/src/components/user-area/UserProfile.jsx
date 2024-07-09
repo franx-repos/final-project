@@ -164,7 +164,7 @@ function UserProfile() {
   return (
     <>
       <Toastify />
-      <div className="flex">
+      <div className="flex h-[calc(100%-4rem)]">
         <div className="flex flex-col">
           {/* user picture and name */}
           <div className="flex w-fit h-fit p-3 bg-gray-50 rounded-md shadow dark:bg-gray-800 dark:border-gray-700">

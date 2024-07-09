@@ -7,7 +7,16 @@ const deploy = import.meta.env.VITE_DEPLOY_URL;
 
 const ChatPartnerButton = ({ chat }) => {
   const { userData } = useAuth();
-  const { messages, setMessages, room, setRoom, socket, chats, setChats, saveMessages} = useChat();
+  const {
+    messages,
+    setMessages,
+    room,
+    setRoom,
+    socket,
+    chats,
+    setChats,
+    saveMessages,
+  } = useChat();
   const [entry, setEntry] = useState([]);
   const [task, setTask] = useState();
 
@@ -77,11 +86,10 @@ const ChatPartnerButton = ({ chat }) => {
     // };
 
     // if (userData) {
-      
+
     //   console.log("fetching chat");
     //    fetchChat();
     // }
-
   }, [room]);
 
   function joinChat() {
@@ -119,13 +127,17 @@ const ChatPartnerButton = ({ chat }) => {
       <div className="flex items-center">
         <img
           className="rounded-full items-start flex-shrink-0 mr-3"
-          src={entry.image_url && entry.image_url}
+          src={
+            !userData.image_url
+              ? "src/assets/abstract-user-flat-3.svg"
+              : userData.image_url
+          }
           width="32"
           height="32"
         />
         <div>
           {entry.data && (
-            <h4 className="text-sm font-semibold text-gray-900">
+            <h4 className="text-sm font-semibold text-gray-400">
               {entry.data.first_name} {entry.data.last_name}
             </h4>
           )}

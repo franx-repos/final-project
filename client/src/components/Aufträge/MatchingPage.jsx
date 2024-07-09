@@ -26,10 +26,10 @@ const MatchingPage = ({ currentLocation, setCurrentLocation }) => {
     dots: true,
     infinitfalse: false,
     speed: 250,
-    slidesToShow: 3,
+    slidesToShow: 4,
     slidesToScroll: 1,
     adaptiveHeight: true,
-    centerPadding: "30px",
+    // centerPadding: "30px",
   };
 
   useEffect(() => {

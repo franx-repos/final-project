@@ -19,8 +19,8 @@ const UpdateTask = ({
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [deadline, setDeadline] = useState("");
-  const [task_type, setTask_type] = useState([]);
-  const [industry, setIndustry] = useState([]);
+  const [task_type, setTask_type] = useState("");
+  const [industry, setIndustry] = useState("");
   const [create_date, setCreate_date] = useState("");
 
   const [documents, setDocuments] = useState([]);
@@ -32,8 +32,8 @@ const UpdateTask = ({
     setEditTaskId(entryToUpdate?.content?._id || null);
     setTitle(entryToUpdate?.content?.title || "");
     setDescription(entryToUpdate?.content?.description || "");
-    setIndustry(entryToUpdate?.content?.industry || []);
-    setTask_type(entryToUpdate?.content?.task_type || []);
+    setIndustry(entryToUpdate?.content?.industry || "");
+    setTask_type(entryToUpdate?.content?.task_type || "");
     setDocuments(entryToUpdate?.content?.documents || []);
   }, [entryToUpdate]);
 
@@ -47,26 +47,26 @@ const UpdateTask = ({
   ];
 
   const options = [
-    { value: "it", label: "IT" },
-    { value: "gastronomy", label: "Gastronomy" },
-    { value: "retail", label: "Retail" },
-    { value: "consulting", label: "Consulting" },
-    { value: "healthcare", label: "Healthcare" },
-    { value: "construction", label: "Construction" },
-    { value: "education", label: "Education" },
-    { value: "finance", label: "Finance" },
-    { value: "real_estate", label: "Real Estate" },
-    { value: "marketing", label: "Marketing" },
-    { value: "transportation", label: "Transportation" },
-    { value: "manufacturing", label: "Manufacturing" },
-    { value: "entertainment", label: "Entertainment" },
-    { value: "legal_services", label: "Legal Services" },
-    { value: "arts", label: "Arts" },
-    { value: "personal_services", label: "Personal Services" },
-    { value: "agriculture", label: "Agriculture" },
-    { value: "wellness", label: "Wellness" },
-    { value: "media", label: "Media" },
-    { value: "tourism", label: "Tourism" },
+    { value: "IT", label: "IT" },
+    { value: "Gastronomy", label: "Gastronomy" },
+    { value: "Retail", label: "Retail" },
+    { value: "Consulting", label: "Consulting" },
+    { value: "Healthcare", label: "Healthcare" },
+    { value: "Construction", label: "Construction" },
+    { value: "Education", label: "Education" },
+    { value: "Finance", label: "Finance" },
+    { value: "Real Estate", label: "Real Estate" },
+    { value: "Marketing", label: "Marketing" },
+    { value: "Transportation", label: "Transportation" },
+    { value: "Manufacturing", label: "Manufacturing" },
+    { value: "Entertainment", label: "Entertainment" },
+    { value: "Legal Services", label: "Legal Services" },
+    { value: "Arts", label: "Arts" },
+    { value: "Personal Services", label: "Personal Services" },
+    { value: "Agriculture", label: "Agriculture" },
+    { value: "Wellness", label: "Wellness" },
+    { value: "Media", label: "Media" },
+    { value: "Tourism", label: "Tourism" },
   ];
 
   const handleFileChange = (event) => {
@@ -153,7 +153,7 @@ const UpdateTask = ({
         return "";
     }
   };
-
+  console.log(industry);
   return isUpdateTaskOpen ? (
     <div
       id="authentication-modal"
@@ -220,14 +220,13 @@ const UpdateTask = ({
 
                   <Select
                     options={options}
-                    value={industry.map((ind) =>
-                      options.find((option) => option.value === ind)
+                    value={options.find(
+                      (option) => option.value === industry[0]
                     )}
-                    onChange={(selectedOptions) =>
-                      setIndustry(selectedOptions.map((option) => option.value))
+                    onChange={(selectedOption) =>
+                      setIndustry(selectedOption.value)
                     }
                     placeholder="Choose one of the following"
-                    isMulti
                   />
                 </div>
                 <div className="w-full ml-2">
@@ -236,17 +235,13 @@ const UpdateTask = ({
                   </label>
 
                   <Select
+                    className="capitalize"
                     options={types}
-                    value={task_type.map((type) =>
-                      types.find((t) => t.value === type)
-                    )}
-                    onChange={(selectedOptions) =>
-                      setTask_type(
-                        selectedOptions.map((option) => option.value)
-                      )
+                    value={types.find((type) => type.value === task_type[0])}
+                    onChange={(selectedOption) =>
+                      setTask_type(selectedOption.value)
                     }
                     placeholder="Choose one of the following"
-                    isMulti
                   />
                 </div>
               </div>

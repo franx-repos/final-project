@@ -2,7 +2,6 @@ import Chat from "./Chat";
 import Taskoverview from "../Aufträge/Taskoverview";
 import UserProfile from "./UserProfile";
 import MatchingPage from "../Aufträge/MatchingPage";
-import { useEffect } from "react";
 
 const DashboardContainer = ({
   currentLocation,
