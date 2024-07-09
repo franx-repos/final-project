@@ -49,7 +49,7 @@ export const signUp = asyncHandler(async (req, res, next) => {
   });
   const token = jwt.sign({ cid: newPro._id }, process.env.JWT_SECRET);
   res.cookie("token", token, {
-    maxAge: 1800000,
+    maxAge: 86400000,
     httpOnly: true,
     secure: true,
     sameSite: "None",

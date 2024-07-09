@@ -23,6 +23,7 @@ const Taskoverview = () => {
   const [isCreateTaskOpen, setIsCreateTaskOpen] = useState(false);
   const [isUpdateTaskOpen, setIsUpdateTaskOpen] = useState(false);
   const [isTaskDetailOpen, setIsTaskDetailOpen] = useState(false);
+  const [updateTask, setUpdateTask] = useState(false);
   const [entryToUpdate, setEntryToUpdate] = useState({});
   const [entryToShow, setEntryToShow] = useState({});
 
@@ -45,7 +46,7 @@ const Taskoverview = () => {
       const detailedTasksData = detailedTasksResults
         .filter((result) => result.status === "fulfilled")
         .map((result) => result.value.data);
-
+      // console.log(detailedTasksData);
       setEntries(detailedTasksData);
 
       setLoading(false);
@@ -57,14 +58,14 @@ const Taskoverview = () => {
   };
 
   useEffect(() => {
-    if(userData){
+    if (userData) {
       fetchTasks();
     }
   }, []);
 
   useEffect(() => {
     fetchTasks();
-  }, [userData]);
+  }, [userData, isUpdateTaskOpen]);
 
   const handleStatus = (status) => {
     if (status === "OPEN") {
@@ -84,11 +85,10 @@ const Taskoverview = () => {
     setIsUpdateTaskOpen(!isUpdateTaskOpen);
   };
 
-  const toggleDetailModal = (entry) =>{
+  const toggleDetailModal = (entry) => {
     setEntryToShow(entry);
     setIsTaskDetailOpen(!isTaskDetailOpen);
-    
-  }
+  };
 
   return (
     <div className="w-full dark:text-white dark:bg-[#1f2937] rounded-md">
@@ -142,17 +142,17 @@ const Taskoverview = () => {
                     </span>
                   </td>
                   <td className={styles.td}>
-                      <button
-                        type="button"
-                        // onClick={toggleUpdateModal}
-                        onClick={() => {
-                          toggleDetailModal(entries[index]);
-                        }}
-                        className={styles.button}
-                      >
-                        Details
-                      </button>
-                    </td>
+                    <button
+                      type="button"
+                      // onClick={toggleUpdateModal}
+                      onClick={() => {
+                        toggleDetailModal(entries[index]);
+                      }}
+                      className={styles.button}
+                    >
+                      Details
+                    </button>
+                  </td>
                   {userData.data.role === "client" ? (
                     <td className={styles.td}>
                       <button
@@ -194,9 +194,12 @@ const Taskoverview = () => {
         entryToUpdate={entryToUpdate}
         checkUser={checkUser}
       />
-      <TaskDetail isTaskDetailOpen={isTaskDetailOpen} toggleDetailModal={toggleDetailModal} entryToShow={entryToShow} checkUser={checkUser}/>
-
-
+      <TaskDetail
+        isTaskDetailOpen={isTaskDetailOpen}
+        toggleDetailModal={toggleDetailModal}
+        entryToShow={entryToShow}
+        checkUser={checkUser}
+      />
     </div>
   );
 };
