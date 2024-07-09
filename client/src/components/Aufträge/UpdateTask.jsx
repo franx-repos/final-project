@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState, useRef, useEffect } from "react";
 import { format } from "date-fns";
 import Select from "react-select";
+import { Link } from "react-router-dom";
 
 const styles = {
   label:
@@ -34,8 +35,14 @@ const UpdateTask = ({
     setDescription(entryToUpdate?.content?.description || "");
     setIndustry(entryToUpdate?.content?.industry || []);
     setTask_type(entryToUpdate?.content?.task_type || []);
-    setDocuments(entryToUpdate?.content?.documents || []);
+    setDocuments(entryToUpdate?.documents || []);
   }, [entryToUpdate]);
+
+  useEffect(()=>{
+    console.log(documents)
+  },[documents])
+
+
 
   const fileInputRef = useRef(null);
 
@@ -92,7 +99,7 @@ const UpdateTask = ({
 
   const handleRemoveImage = (index) => {
     setImages([]);
-    setDocuments([]);
+    // setDocuments([]);
     setFile(null);
   };
 
@@ -104,7 +111,7 @@ const UpdateTask = ({
       formData.append("description", description);
       formData.append("industry", industry);
       formData.append("task_type", task_type);
-      formData.append("documentstitle", title);
+      // formData.append("documentstitle", title);
       formData.append("icon", "");
       console.log(formData);
       if (file) {
@@ -153,6 +160,22 @@ const UpdateTask = ({
         return "";
     }
   };
+
+  const deleteDocument = async (documentID) =>{
+    console.log(entryToUpdate);
+    let docs = documents.filter((document)=> document._id !== documentID);
+    console.log(docs);
+    setDocuments(docs);
+    try {
+      const response = await axios.delete(`${deploy}/tasks/${entryToUpdate._id}/${documentID}`, {
+        withCredentials: true,
+      })
+      // checkUser();
+      // toggleUpdateModal();
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return isUpdateTaskOpen ? (
     <div
@@ -368,6 +391,34 @@ const UpdateTask = ({
                 </div>
               ))}
             </div>
+            <div>{documents.length>0 ? documents.map((document)=>{
+                
+                return <div className="rounded-md flex justify-between p-2" key={document._id}>
+                <Link to={document.url} target="_blank" className="grow">{document.documentstitle}</Link>
+                <button
+                  type="button"
+                  onClick={()=> deleteDocument(document._id)}
+                  className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                >
+                  <svg
+                    className="w-3 h-3"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 14 14"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M1 1l6 6m0 0l6 6M7 7l6-6M7 7l-6 6"
+                    />
+                  </svg>
+                  <span className="sr-only">Delete Document</span>
+                </button>
+              </div>
+              }) : <p>No Documents</p>}</div>
           </div>
         </div>
       </div>
