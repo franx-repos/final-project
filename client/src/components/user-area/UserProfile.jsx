@@ -58,8 +58,28 @@ function UserProfile() {
     { title: "polish", short: "PL" },
     { title: "french", short: "FR" },
   ];
-  const industries = ["IT", "Gastronomy"];
-
+  const industries = [
+    "IT",
+    "Gastronomy",
+    "Retail",
+    "Consulting",
+    "Healthcare",
+    "Construction",
+    "Education",
+    "Finance",
+    "Real Estate",
+    "Marketing",
+    "Transportation",
+    "Manufacturing",
+    "Entertainment",
+    "Legal Services",
+    "Arts",
+    "Personal Services",
+    "Agriculture",
+    "Wellness",
+    "Media",
+    "Tourism",
+  ];
   useEffect(() => {
     if (userData) {
       setFormState({
@@ -151,7 +171,7 @@ function UserProfile() {
             <div className="flex">
               <a className="w-1/3" href="#">
                 <img
-                  className="rounded-t-lg"
+                  className="rounded-md"
                   src="https://flowbite.com/application-ui/demo/images/users/jese-leos-2x.png"
                   alt={`${formState.first_name} Avatar`}
                 />
@@ -301,7 +321,7 @@ function UserProfile() {
                   <textarea
                     id="message"
                     rows="4"
-                    className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-md border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     onChange={handleChange}
                     name="description"
                     value={formState.description}

@@ -3,6 +3,7 @@ import axios from "axios";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import TaskCard from "./TaskCard";
 
 const deploy = import.meta.env.VITE_DEPLOY_URL;
 
@@ -40,6 +41,10 @@ function OpenTasksSlider() {
     fetchTasks();
   }, []);
 
+  useEffect(() => {
+    console.log(tasks);
+  }, [tasks]);
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
@@ -53,34 +58,34 @@ function OpenTasksSlider() {
     adaptiveHeight: true,
   };
 
+  // const createChat = async () => {
+  //   // console.log(task);
+  //   try {
+  //     const response = await axios.post(`http://localhost:8001/chats`,{
+  //       client: task.created_by,
+  //       task: task._id
+  //     })
+  //   } catch (error) {
+
+  //   }
+  // };
+
   return (
     <div className={styles.wrapper}>
       <h5 className={styles.heading}>Available Tasks</h5>
       <div className="w-full p-3">
         <Slider {...settings}>
           {tasks.map((task) => (
-            <div key={task.id} className={styles.card}>
-              <h5 className={styles.cardHeading}>{task.content.title}</h5>
-              <div className={styles.types}>
-                <strong>Industry:</strong> {task.content.industry.join(", ")}
-              </div>
-              <div className={styles.types}>
-                <strong>Created: </strong>
-                {task.content.create_date.split("T")[0]}
-              </div>
-              <div className={styles.types}>
-                <strong>Task:</strong> {task.content.task_type.join(", ")}
-              </div>
-              <p className={styles.p}>{task.content.description}</p>
-              <div className="flex justify-evenly">
-                <a href="#" className={styles.button}>
-                  Accept
-                </a>
-                <a href="#" className={styles.button}>
-                  Contact
-                </a>
-              </div>
-            </div>
+            <TaskCard
+              key={task._id}
+              task_id={task._id}
+              title={task.content.title}
+              industry={task.content.industry.join(", ")}
+              create_date={task.content.create_date.split("T")[0]}
+              task_type={task.content.task_type.join(", ")}
+              description={task.content.description}
+              created_by={task.content.created_by}
+            />
           ))}
         </Slider>
       </div>

@@ -55,9 +55,9 @@ const HowItWorks = () => {
           </div>
         </div>
         <div className={styles.stepsWrapper}>
-          {steps.map((step) => {
+          {steps.map((step, index) => {
             return (
-              <>
+              <div key={index}>
                 <div className={styles.stepContainer}>
                   <img
                     className="w-36 h-36 m-auto"
@@ -101,7 +101,7 @@ const HowItWorks = () => {
                     </svg>
                   </div>
                 )}
-              </>
+              </div>
             );
           })}
         </div>
