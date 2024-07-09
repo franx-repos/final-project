@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { useAuth } from "../../context/UserProvider.jsx";
 import ChatPartnerButton from "./ChatPartnerButton";
+import { useChat } from "../../context/ChatProvider.jsx";
 
-const ChatSideBar = ({ chats }) => {
+const ChatSideBar = () => {
   const { userData } = useAuth();
-  useEffect(() => {
-    console.log(chats);
-  }, [chats]);
+  const {chats} = useChat();
+
 
   return (
     <div className="relative max-w-[340px] mx-auto bg-gray-50 dark:bg-gray-800 shadow-lg rounded-md">
@@ -81,7 +81,8 @@ const ChatSideBar = ({ chats }) => {
 
         <div className="divide-y divide-gray-200">
           {/* Render chat partner buttons previews */}
-          {chats.map((chat, index) => {
+          {chats && chats.map((chat, index) => {
+            console.log(chat)
             return <ChatPartnerButton key={chat._id} chat={chat} />;
           })}
         </div>

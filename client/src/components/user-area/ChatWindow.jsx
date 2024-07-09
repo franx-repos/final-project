@@ -13,7 +13,7 @@ import debounce from "lodash/debounce";
 const ChatWindow = () => {
   const { userData } = useAuth();
   const [isListenerSetup, setIsListenerSetup] = useState(false);
-  const [chats, setChats] = useState([]);
+
   const {
     messages,
     setMessages,
@@ -22,11 +22,36 @@ const ChatWindow = () => {
     room,
     saveNewMessage,
     setSaveNewMessage,
+    chats, setChats
   } = useChat();
 
-  // useEffect(() => {
-  //   console.log(message);
-  // }, []);
+  useEffect(()=>{
+    const fetchChat = async () => {
+      let url = "";
+      if (userData.data && userData.data.role === "client") {
+        url = `${deploy}/chats/client_chat/`;
+      } else {
+        url = `${deploy}/chats/pro_chat/`;
+      }
+      console.log(url);
+      try {
+        const response = await axios.get(url, { withCredentials: true });
+        setChats(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    if (userData) {
+      
+      console.log("fetching chat");
+      fetchChat();
+    }
+  },[])
+
+  useEffect(() => {
+    console.log(chats);
+  }, [chats]);
 
   const debouncedSaveMessages = useRef(
     debounce(async (messagesToSave, room, setSaveNewMessage) => {
@@ -46,11 +71,11 @@ const ChatWindow = () => {
 
   useEffect(() => {
     const s = socketIO.connect(`${deploy}`);
-
     setSocket(s);
-    // return () => {
-    //   s.disconnect();
-    // };
+    return () => {
+      socket.disconnect();
+      
+    };
   }, []);
 
   useEffect(() => {
@@ -125,6 +150,7 @@ const ChatWindow = () => {
           console.log(error);
         }
       };
+      console.log("fetching chat");
       fetchChat();
     }
   }, [userData]);
