@@ -5,6 +5,7 @@ import GanttChart from "../user-area/GanttChart";
 import { useAuth } from "../../context/UserProvider";
 import UpdateTask from "./UpdateTask";
 import CreateTask from "./CreateTask";
+import TaskDetail from "./TaskDetail";
 
 const styles = {
   th: "px-3 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase dark:text-gray-400 dark:bg-[#1f2937]",
@@ -21,7 +22,9 @@ const Taskoverview = () => {
   const { userData, checkUser } = useAuth();
   const [isCreateTaskOpen, setIsCreateTaskOpen] = useState(false);
   const [isUpdateTaskOpen, setIsUpdateTaskOpen] = useState(false);
+  const [isTaskDetailOpen, setIsTaskDetailOpen] = useState(false);
   const [entryToUpdate, setEntryToUpdate] = useState({});
+  const [entryToShow, setEntryToShow] = useState({});
 
   const deploy = import.meta.env.VITE_DEPLOY_URL;
 
@@ -54,6 +57,12 @@ const Taskoverview = () => {
   };
 
   useEffect(() => {
+    if(userData){
+      fetchTasks();
+    }
+  }, []);
+
+  useEffect(() => {
     fetchTasks();
   }, [userData]);
 
@@ -75,6 +84,12 @@ const Taskoverview = () => {
     setIsUpdateTaskOpen(!isUpdateTaskOpen);
   };
 
+  const toggleDetailModal = (entry) =>{
+    setEntryToShow(entry);
+    setIsTaskDetailOpen(!isTaskDetailOpen);
+    
+  }
+
   return (
     <div className="w-full dark:text-white dark:bg-[#1f2937] rounded-md">
       <div className="bg-white p-4 w-full dark:text-white dark:bg-[#1f2937] rounded-md">
@@ -87,6 +102,7 @@ const Taskoverview = () => {
                 <th className={styles.th}>Industry</th>
                 <th className={styles.th}>Created at</th>
                 <th className={styles.th}>Status</th>
+                <th className={styles.th}></th>
                 <th className={styles.th}></th>
               </tr>
             </thead>
@@ -127,6 +143,18 @@ const Taskoverview = () => {
                       {entry.content.status}
                     </span>
                   </td>
+                  <td className={styles.td}>
+                      <button
+                        type="button"
+                        // onClick={toggleUpdateModal}
+                        onClick={() => {
+                          toggleDetailModal(entries[index]);
+                        }}
+                        className={styles.button}
+                      >
+                        Details
+                      </button>
+                    </td>
                   {userData.data.role === "client" ? (
                     <td className={styles.td}>
                       <button
@@ -170,6 +198,9 @@ const Taskoverview = () => {
         entryToUpdate={entryToUpdate}
         checkUser={checkUser}
       />
+      <TaskDetail isTaskDetailOpen={isTaskDetailOpen} toggleDetailModal={toggleDetailModal} entryToShow={entryToShow} checkUser={checkUser}/>
+
+
     </div>
   );
 };
