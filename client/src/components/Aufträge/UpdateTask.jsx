@@ -7,6 +7,14 @@ import { Link } from "react-router-dom";
 const styles = {
   label:
     "flex pl-2 text-gray-700 text-sm font-bold mb-1 dark:bg-[#1f2937] dark:text-gray-400",
+  input:
+    "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500",
+
+  deleteButton:
+    "text-red-600 inline-flex items-center hover:text-white border border-red-600 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-md text-sm px-5 py-2.5 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900",
+  submitButton:
+    "bg-primary-700 hover:bg-teal-500 ring-2 hover:ring-0 ring-teal-500 font-medium rounded-md text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 text-gray-900 dark:text-white",
+  icon: "M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z",
 };
 
 const UpdateTask = ({
@@ -35,12 +43,12 @@ const UpdateTask = ({
     setDescription(entryToUpdate?.content?.description || "");
     setIndustry(entryToUpdate?.content?.industry || "");
     setTask_type(entryToUpdate?.content?.task_type || "");
-    setDocuments(entryToUpdate?.content?.documents || []);
+    setDocuments(entryToUpdate?.documents || []);
   }, [entryToUpdate]);
 
-  useEffect(() => {
-    console.log(documents);
-  }, [documents]);
+  // useEffect(() => {
+  //   console.log(documents);
+  // }, [documents]);
 
   const fileInputRef = useRef(null);
 
@@ -111,8 +119,10 @@ const UpdateTask = ({
       formData.append("task_type", task_type);
       // formData.append("documentstitle", title);
       formData.append("icon", "");
-      console.log(formData);
+      // console.log(formData);
+
       if (file) {
+        // console.log(file);
         formData.append("doc", file);
       }
 
@@ -125,7 +135,9 @@ const UpdateTask = ({
 
       if (response.status === 200) {
         checkUser();
-        toggleUpdateModal();
+        // toggleUpdateModal();
+        // refreshTaskData();
+        setDocuments(response.data.documents);
       }
     } catch (error) {
       setError(error.message || "Something went wrong with updating the task");
@@ -140,6 +152,7 @@ const UpdateTask = ({
         withCredentials: true,
       });
       checkUser();
+
       toggleUpdateModal();
     } catch (error) {
       setError(error.message || "Something went wrong with deleting the task");
@@ -160,9 +173,9 @@ const UpdateTask = ({
   };
 
   const deleteDocument = async (documentID) => {
-    console.log(entryToUpdate);
+    // console.log(entryToUpdate);
     let docs = documents.filter((document) => document._id !== documentID);
-    console.log(docs);
+    // console.log(docs);
     setDocuments(docs);
     try {
       const response = await axios.delete(
@@ -173,6 +186,8 @@ const UpdateTask = ({
       );
       // checkUser();
       // toggleUpdateModal();
+
+      // console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -222,7 +237,7 @@ const UpdateTask = ({
                   type="text"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  className="w-full px-2 py-2 border border-gray-300 rounded-md "
+                  className={styles.input}
                 />
               </div>
               <div className="py-5 max-full border-b-gray-200 text-wrap  bg-white text-sm dark:bg-[#1f2937] dark:text-gray-400">
@@ -233,7 +248,7 @@ const UpdateTask = ({
                   type="text"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  className="w-full px-2 py-2 border border-gray-300 h-[7rem] rounded-md overflow-auto"
+                  className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-md border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 />
               </div>
               <div className="flex items-stretch">
@@ -303,7 +318,7 @@ const UpdateTask = ({
               <div className="flex px-5 py-5 border-gray-200 bg-white text-sm dark:bg-[#1f2937]">
                 <p className="dark:text-gray-400">Status:</p>
                 <span
-                  className={`relative inline-block px-3 py-1 ml-2 rounded-md font-semibold leading-tight ${handleStatus(
+                  className={`relative inline-block px-3 py-1 ml-2 rounded-md font-semibold dark:text-gray-400 leading-tight ${handleStatus(
                     entryToUpdate.content.status
                   )}`}
                 >
@@ -329,6 +344,7 @@ const UpdateTask = ({
                   />
                 </svg>
                 <input
+                  className="dark:text-gray-400"
                   hidden
                   type="file"
                   name="doc"
@@ -392,7 +408,7 @@ const UpdateTask = ({
                 documents.map((document) => {
                   return (
                     <div
-                      className="rounded-md flex justify-between p-2"
+                      className="rounded-md flex justify-between p-2 dark:text-gray-400"
                       key={document._id}
                     >
                       <Link to={document.url} target="_blank" className="grow">
