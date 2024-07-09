@@ -78,7 +78,7 @@ const ChatPartnerButton = ({ chat }) => {
     //   }
     // };
 
-    // if (room && messages.length > 0) {
+    // if (room !== "" && messages.length > 0) {
     //   saveMessages();
     // }
 
