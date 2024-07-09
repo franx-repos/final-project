@@ -126,7 +126,7 @@ function Signup() {
 
         <form
           onSubmit={handleRegister}
-          className="w-fit mx-auto mt-12 rounded-lg p-6 bg-opacity-50 bg-white/75 dark:bg-gray-900/80"
+          className="w-fit mx-auto mt-12 rounded-lg p-6 bg-opacity-50 bg-slate-200/90 dark:bg-gray-900/80 "
         >
           {/* <ThemeToggle /> */}
           <div className="space-y-12">

@@ -46,6 +46,29 @@ const UpdateTask = ({
     { value: "insolvency law", label: "insolvency law" },
   ];
 
+  const options = [
+    { value: "it", label: "IT" },
+    { value: "gastronomy", label: "Gastronomy" },
+    { value: "retail", label: "Retail" },
+    { value: "consulting", label: "Consulting" },
+    { value: "healthcare", label: "Healthcare" },
+    { value: "construction", label: "Construction" },
+    { value: "education", label: "Education" },
+    { value: "finance", label: "Finance" },
+    { value: "real_estate", label: "Real Estate" },
+    { value: "marketing", label: "Marketing" },
+    { value: "transportation", label: "Transportation" },
+    { value: "manufacturing", label: "Manufacturing" },
+    { value: "entertainment", label: "Entertainment" },
+    { value: "legal_services", label: "Legal Services" },
+    { value: "arts", label: "Arts" },
+    { value: "personal_services", label: "Personal Services" },
+    { value: "agriculture", label: "Agriculture" },
+    { value: "wellness", label: "Wellness" },
+    { value: "media", label: "Media" },
+    { value: "tourism", label: "Tourism" },
+  ];
+
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -83,7 +106,7 @@ const UpdateTask = ({
       formData.append("task_type", task_type);
       formData.append("documentstitle", title);
       formData.append("icon", "");
-
+      console.log(formData);
       if (file) {
         formData.append("doc", file);
       }
@@ -190,15 +213,21 @@ const UpdateTask = ({
                 />
               </div>
               <div className="flex items-stretch">
-                <div className="w-full mr-2 overflow-clip border-b-gray-200 text-wrap bg-white text-sm dark:bg-[#1f2937]">
-                  <label className={styles.label} htmlFor="username">
-                    industry
+                <div className="w-full mr-2">
+                  <label htmlFor="industry" className={styles.label}>
+                    Industry
                   </label>
-                  <input
-                    type="text"
-                    value={industry}
-                    onChange={(e) => setIndustry(e.target.value)}
-                    className="w-full px-2 py-2 border border-gray-300 rounded-md dark:text-gray-400"
+
+                  <Select
+                    options={options}
+                    value={industry.map((ind) =>
+                      options.find((option) => option.value === ind)
+                    )}
+                    onChange={(selectedOptions) =>
+                      setIndustry(selectedOptions.map((option) => option.value))
+                    }
+                    placeholder="Choose one of the following"
+                    isMulti
                   />
                 </div>
                 <div className="w-full ml-2">
@@ -208,11 +237,16 @@ const UpdateTask = ({
 
                   <Select
                     options={types}
-                    value={types.find((type) => type.value === task_type)}
-                    onChange={(selectedOption) =>
-                      setTask_type(selectedOption.value)
+                    value={task_type.map((type) =>
+                      types.find((t) => t.value === type)
+                    )}
+                    onChange={(selectedOptions) =>
+                      setTask_type(
+                        selectedOptions.map((option) => option.value)
+                      )
                     }
                     placeholder="Choose one of the following"
+                    isMulti
                   />
                 </div>
               </div>

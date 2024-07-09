@@ -15,6 +15,15 @@ const Modalsignin = ({ isLoginModalOpen, toggleLoginModal }) => {
   const deploy = import.meta.env.VITE_DEPLOY_URL;
   // ${deploy}
 
+
+  useEffect(() => {
+    const storedAuth = localStorage.getItem('auth');
+    if (storedAuth === 'true') {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
+
   const handleLogin = async (e) => {
     e.preventDefault();
     if (client === false) {
@@ -32,6 +41,7 @@ const Modalsignin = ({ isLoginModalOpen, toggleLoginModal }) => {
         );
 
         if (response.status === 200) {
+          localStorage.setItem('auth', 'true');
           setIsLoggedIn(true);
           checkUser();
           navigate("/Dashboard");
@@ -61,6 +71,7 @@ const Modalsignin = ({ isLoginModalOpen, toggleLoginModal }) => {
       );
 
       if (response.status === 200) {
+        localStorage.setItem('auth', 'true');
         setIsLoggedIn(true);
         checkUser();
         navigate("/Dashboard");
