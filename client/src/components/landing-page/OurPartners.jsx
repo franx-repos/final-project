@@ -37,7 +37,7 @@ function OurPartners() {
 
   const settings = {
     className:
-      "flex flex-wrap w-full space-x-4 gap-8 mb-6 lg:mb-6 lg:space-x-8 lg:gap-8 lg:flex-row lg:w-full lg:space-x-4 lg:gap-8 rounded-md shadow dark:border-gray-700",
+      "flex flex-wrap w-full space-x-4 gap-8 mb-6 lg:mb-6 lg:space-x-8 lg:gap-8 lg:flex-row lg:w-full lg:space-x-4 lg:gap-8 rounded-md dark:border-gray-700",
     dots: true,
     infinitfalse: false,
     speed: 250,
@@ -63,7 +63,7 @@ function OurPartners() {
             {pros.map((pro, index) => (
               <div
                 key={index}
-                className="flex flex-col justify-center max-w-[15rem] max-h-[30rem] overflow-hidden my-2 bg-white border border-gray-200 rounded-md shadow dark:bg-gray-800 dark:border-gray-700 "
+                className="flex flex-col justify-center max-w-[15rem] max-h-[30rem] overflow-hidden my-2 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:border-gray-700 "
               >
                 <div className="flex">
                   <a href="#">
