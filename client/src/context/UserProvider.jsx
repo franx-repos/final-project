@@ -23,6 +23,7 @@ export const AuthProvider = ({ children }) => {
       ) {
         console.log(responseClient);
         setIsLoggedIn(true);
+        
         setUserData(responseClient.data);
         return;
       }
@@ -53,7 +54,8 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const token = Cookies.get("token");
-    if (token) {
+    const auth = localStorage.getItem("auth");
+    if (token, auth) {
       checkUser();
     }
   }, []);
