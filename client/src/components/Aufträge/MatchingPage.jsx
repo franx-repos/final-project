@@ -57,21 +57,13 @@ const MatchingPage = ({ currentLocation, setCurrentLocation }) => {
         withCredentials: true,
       });
       const industry = formState.industry;
-      const specialization = userData.specialization;
 
       const filteredTasks = response.data.filter((task) => {
         const matchIndustry =
           industry.length > 0
             ? industry.some((ind) => task.content.industry.includes(ind))
             : true;
-        const matchSpecialization =
-          specialization.length > 0
-            ? specialization.some((spec) =>
-                task.content.task_type.includes(spec)
-              )
-            : true;
-
-        return matchIndustry && matchSpecialization;
+        return matchIndustry;
       });
       setTasks(filteredTasks);
       setLoading(false);
