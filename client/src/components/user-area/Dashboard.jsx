@@ -4,7 +4,6 @@ import DashboardSidebar from "./Sidebar";
 import { useAuth } from "../../context/UserProvider";
 import ParticlesBackground from "../ParticlesBackground";
 import Signin from "../Signin";
-import { Footer } from "flowbite-react";
 import { useState } from "react";
 import DashboardContainer from "./DashboardContainer";
 import DashboardHeader from "./DashboardHeader";
@@ -44,7 +43,7 @@ function Dashboard() {
   const { isLoggedIn, setIsLoggedIn, userData, setUserData } = useAuth();
 
   const [currentLocation, setCurrentLocation] = useState("Dashboard");
-
+  // console.log(userData);
   return isLoggedIn ? (
     <>
       <div className="h-screen bg-white border-gray-200 dark:bg-gray-900 ">
@@ -59,6 +58,7 @@ function Dashboard() {
             <DashboardContainer
               currentLocation={currentLocation}
               setCurrentLocation={setCurrentLocation}
+              userData={userData}
             />
             {/* <div style={{ width: "100%", height: "500px" }}>
 
