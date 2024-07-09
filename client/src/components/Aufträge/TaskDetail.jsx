@@ -2,16 +2,18 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { format } from "date-fns";
 import { useAuth } from "../../context/UserProvider";
+import { Link } from "react-router-dom";
 const deploy = import.meta.env.VITE_DEPLOY_URL;
+
 const styles = {
   label:
     "flex pl-2 text-gray-700 text-sm font-bold mb-1 dark:bg-[#1f2937] dark:text-gray-400",
 };
 
-const DetailMatch = ({
-  isUpdateTaskOpen,
-  toggleUpdateModal,
-  entryToUpdate,
+const TaskDetail = ({
+  isTaskDetailOpen,
+  toggleDetailModal,
+  entryToShow,
   checkUser,
   currentLocation,
   setCurrentLocation,
@@ -19,68 +21,10 @@ const DetailMatch = ({
   const { userData } = useAuth();
 
   useEffect(() => {
-    console.log(entryToUpdate);
-  }, [entryToUpdate]);
+    console.log(entryToShow);
+  }, [entryToShow]);
 
-  const acceptTask = async (id) => {
-    try {
-      const proId = userData._id;
-      const name = userData.data.first_name;
-      const newtasks = [...userData.tasks, id];
-      console.log(name, proId, newtasks);
-
-      const response = await axios.patch(
-        `${deploy}/tasks/${id}`,
-        {
-          content: {
-            status: "IN PROGRESS",
-            assigned_to: proId,
-          },
-        },
-        { withCredentials: true }
-      );
-
-      const responsepro = await axios.patch(
-        `${deploy}/pros`,
-        {
-          data: {
-            first_name: name,
-          },
-          tasks: newtasks,
-        },
-        { withCredentials: true }
-      );
-
-      // console.log("Response from PATCH request to /pros:", responsepro);
-      // console.log("Response from put request to /tasks:", response);
-
-      // console.log(`Task ${task_id} was created by ${created_by}`);
-
-    //chat wird erstellt
   
-      const responsechat = await axios.post(
-        `${deploy}/chats`,
-        {
-          client: entryToUpdate.content.created_by,
-          task: entryToUpdate._id,
-        },
-        { withCredentials: true }
-      );
-
-    console.log(responsechat)
-
-      if (responsepro.status === 200) {
-        console.log("Professional updated with task.");
-        checkUser();
-        toggleUpdateModal();
-        setCurrentLocation("Taskoverview");
-      }
-    } catch (error) {
-      console.error("Error in PATCH request to /pros:", error);
-      // setError(error.message || "Something went wrong");
-    }
-  };
-
   const handleStatus = (status) => {
     switch (status) {
       case "OPEN":
@@ -94,24 +38,7 @@ const DetailMatch = ({
     }
   };
 
-  const createChat = async () => {
-    // console.log(`Task ${task_id} was created by ${created_by}`);
-    try {
-      const response = await axios.post(
-        `${deploy}/chats`,
-        {
-          client: entryToUpdate.content.created_by,
-          task: entryToUpdate._id,
-        },
-        { withCredentials: true }
-      );
-    } catch (error) {
-      console.log(error);
-    }
-    setCurrentLocation("Chat");
-  };
-
-  return isUpdateTaskOpen ? (
+  return isTaskDetailOpen ? (
     <div
       id="authentication-modal"
       tabIndex="-1"
@@ -125,7 +52,7 @@ const DetailMatch = ({
               <div className="absolute top-0 right-0 p-4 ">
                 <button
                   type="button"
-                  onClick={toggleUpdateModal}
+                  onClick={toggleDetailModal}
                   className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
                 >
                   <svg
@@ -149,23 +76,23 @@ const DetailMatch = ({
 
               <div className="flex flex-col">
                 <label className={styles.label}>
-                  Title: {entryToUpdate?.content?.title || ""}
+                  Title: {entryToShow?.content?.title || ""}
                 </label>
               </div>
               <div className="py-5 max-full border-b-gray-200 text-wrap  bg-white text-sm dark:bg-[#1f2937] dark:text-gray-400">
                 <label className={styles.label}>
-                  Description: {entryToUpdate?.content?.description || ""}
+                  {entryToShow?.content?.description || ""}
                 </label>
               </div>
               <div className="flex items-stretch">
                 <div className="w-full mr-2 overflow-clip border-b-gray-200 text-wrap bg-white text-sm dark:bg-[#1f2937]">
                   <label className={styles.label}>
-                    Industry: {entryToUpdate?.content?.industry || ""}
+                    Industry: {entryToShow?.content?.industry || ""}
                   </label>
                 </div>
                 <div className="w-full ml-2">
                   <label className={styles.label}>
-                    Job Type: {entryToUpdate?.content?.task_type || ""}
+                    Job Type: {entryToShow?.content?.task_type || ""}
                   </label>
                 </div>
               </div>
@@ -175,9 +102,9 @@ const DetailMatch = ({
                 <p className="flex text-gray-900 whitespace-no-wrap dark:text-gray-400">
                   Date Created:
                   <span className="ml-2">
-                    {entryToUpdate.content.create_date
+                    {entryToShow.content.create_date
                       ? format(
-                          new Date(entryToUpdate.content.create_date),
+                          new Date(entryToShow.content.create_date),
                           "dd MMM yyyy, HH:mm"
                         )
                       : ""}
@@ -188,29 +115,22 @@ const DetailMatch = ({
                 <p className="dark:text-gray-400">Status:</p>
                 <span
                   className={`relative inline-block px-3 py-1 ml-2 rounded-md font-semibold leading-tight ${handleStatus(
-                    entryToUpdate.content.status
+                    entryToShow.content.status
                   )}`}
                 >
-                  {entryToUpdate.content.status}
+                  {entryToShow.content.status}
                 </span>
               </div>
+              
+              
             </div>
-            <div className="buttons flex justify-end mt-4">
-              <button
-                onClick={() => acceptTask(entryToUpdate._id)}
-                type="button"
-                className="text-white bg-teal-500 hover:bg-teal-700  focus:outline-none font-medium rounded-lg text-sm  px-4 py-2 text-center dark:bg-teal-500 dark:hover:bg-teal-700"
-              >
-                Accept Task
-              </button>
-              <button
-                type="button"
-                className="text-white bg-red-500 hover:bg-red-700  focus:outline-none font-medium rounded-lg text-sm ml-4 px-4 py-2 text-center dark:bg-red-500 dark:hover:bg-red-700"
-                onClick={createChat}
-              >
-                Contact
-              </button>
-            </div>
+            <div>{entryToShow.documents.length>0 ? entryToShow.documents.map((document)=>{
+                console.log(document);
+                return <div className="rounded-md flex justify-between p-2" key={document._id}>
+                <Link to={document.url} target="_blank" className="grow">{document.documentstitle}</Link>
+                
+              </div>
+              }) : <p>No Documents</p>}</div>
           </div>
         </div>
       </div>
@@ -218,4 +138,4 @@ const DetailMatch = ({
   ) : null;
 };
 
-export default DetailMatch;
+export default TaskDetail;

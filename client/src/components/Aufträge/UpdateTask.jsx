@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState, useRef, useEffect } from "react";
 import { format } from "date-fns";
 import Select from "react-select";
+import { Link } from "react-router-dom";
 
 const styles = {
   label:
@@ -19,8 +20,8 @@ const UpdateTask = ({
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [deadline, setDeadline] = useState("");
-  const [task_type, setTask_type] = useState([]);
-  const [industry, setIndustry] = useState([]);
+  const [task_type, setTask_type] = useState("");
+  const [industry, setIndustry] = useState("");
   const [create_date, setCreate_date] = useState("");
 
   const [documents, setDocuments] = useState([]);
@@ -32,10 +33,14 @@ const UpdateTask = ({
     setEditTaskId(entryToUpdate?.content?._id || null);
     setTitle(entryToUpdate?.content?.title || "");
     setDescription(entryToUpdate?.content?.description || "");
-    setIndustry(entryToUpdate?.content?.industry || []);
-    setTask_type(entryToUpdate?.content?.task_type || []);
+    setIndustry(entryToUpdate?.content?.industry || "");
+    setTask_type(entryToUpdate?.content?.task_type || "");
     setDocuments(entryToUpdate?.content?.documents || []);
   }, [entryToUpdate]);
+
+  useEffect(() => {
+    console.log(documents);
+  }, [documents]);
 
   const fileInputRef = useRef(null);
 
@@ -60,9 +65,9 @@ const UpdateTask = ({
     { value: "Transportation", label: "Transportation" },
     { value: "Manufacturing", label: "Manufacturing" },
     { value: "Entertainment", label: "Entertainment" },
-    { value: "Legal_services", label: "Legal Services" },
+    { value: "Legal Services", label: "Legal Services" },
     { value: "Arts", label: "Arts" },
-    { value: "Personal_services", label: "Personal Services" },
+    { value: "Personal Services", label: "Personal Services" },
     { value: "Agriculture", label: "Agriculture" },
     { value: "Wellness", label: "Wellness" },
     { value: "Media", label: "Media" },
@@ -92,7 +97,7 @@ const UpdateTask = ({
 
   const handleRemoveImage = (index) => {
     setImages([]);
-    setDocuments([]);
+    // setDocuments([]);
     setFile(null);
   };
 
@@ -104,7 +109,7 @@ const UpdateTask = ({
       formData.append("description", description);
       formData.append("industry", industry);
       formData.append("task_type", task_type);
-      formData.append("documentstitle", title);
+      // formData.append("documentstitle", title);
       formData.append("icon", "");
       console.log(formData);
       if (file) {
@@ -151,6 +156,25 @@ const UpdateTask = ({
         return "bg-red-200 text-red-800";
       default:
         return "";
+    }
+  };
+
+  const deleteDocument = async (documentID) => {
+    console.log(entryToUpdate);
+    let docs = documents.filter((document) => document._id !== documentID);
+    console.log(docs);
+    setDocuments(docs);
+    try {
+      const response = await axios.delete(
+        `${deploy}/tasks/${entryToUpdate._id}/${documentID}`,
+        {
+          withCredentials: true,
+        }
+      );
+      // checkUser();
+      // toggleUpdateModal();
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -220,14 +244,13 @@ const UpdateTask = ({
 
                   <Select
                     options={options}
-                    value={industry.map((ind) =>
-                      options.find((option) => option.value === ind)
+                    value={options.find(
+                      (option) => option.value === industry[0]
                     )}
-                    onChange={(selectedOptions) =>
-                      setIndustry(selectedOptions.map((option) => option.value))
+                    onChange={(selectedOption) =>
+                      setIndustry(selectedOption.value)
                     }
                     placeholder="Choose one of the following"
-                    isMulti
                   />
                 </div>
                 <div className="w-full ml-2">
@@ -236,17 +259,13 @@ const UpdateTask = ({
                   </label>
 
                   <Select
+                    className="capitalize"
                     options={types}
-                    value={task_type.map((type) =>
-                      types.find((t) => t.value === type)
-                    )}
-                    onChange={(selectedOptions) =>
-                      setTask_type(
-                        selectedOptions.map((option) => option.value)
-                      )
+                    value={types.find((type) => type.value === task_type[0])}
+                    onChange={(selectedOption) =>
+                      setTask_type(selectedOption.value)
                     }
                     placeholder="Choose one of the following"
-                    isMulti
                   />
                 </div>
               </div>
@@ -367,6 +386,46 @@ const UpdateTask = ({
                   )}
                 </div>
               ))}
+            </div>
+            <div>
+              {documents.length > 0 ? (
+                documents.map((document) => {
+                  return (
+                    <div
+                      className="rounded-md flex justify-between p-2"
+                      key={document._id}
+                    >
+                      <Link to={document.url} target="_blank" className="grow">
+                        {document.documentstitle}
+                      </Link>
+                      <button
+                        type="button"
+                        onClick={() => deleteDocument(document._id)}
+                        className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                      >
+                        <svg
+                          className="w-3 h-3"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 14 14"
+                        >
+                          <path
+                            stroke="currentColor"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M1 1l6 6m0 0l6 6M7 7l6-6M7 7l-6 6"
+                          />
+                        </svg>
+                        <span className="sr-only">Delete Document</span>
+                      </button>
+                    </div>
+                  );
+                })
+              ) : (
+                <p>No Documents</p>
+              )}
             </div>
           </div>
         </div>
