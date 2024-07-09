@@ -29,12 +29,12 @@ const CreateTask = ({ isCreateTaskOpen, toggleModal, checkUser }) => {
     { value: "Construction", label: "Construction" },
     { value: "Education", label: "Education" },
     { value: "Finance", label: "Finance" },
-    { value: "Real_estate", label: "Real Estate" },
+    { value: "Real Estate", label: "Real Estate" },
     { value: "Marketing", label: "Marketing" },
     { value: "Transportation", label: "Transportation" },
     { value: "Manufacturing", label: "Manufacturing" },
     { value: "Entertainment", label: "Entertainment" },
-    { value: "Legal_services", label: "Legal Services" },
+    { value: "Legal Services", label: "Legal Services" },
     { value: "Arts", label: "Arts" },
     { value: "Personal Services", label: "Personal Services" },
     { value: "Agriculture", label: "Agriculture" },
@@ -192,6 +192,7 @@ const CreateTask = ({ isCreateTaskOpen, toggleModal, checkUser }) => {
                 </label>
                 <div className="mt-2">
                   <Select
+                    className="capitalize"
                     options={types}
                     value={types.find((type) => type.value === task_type)}
                     onChange={(selectedOption) =>
