@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../../context/UserProvider";
-import DetailMatch from "./DetailMatch";
 import { Dropdown, Checkbox, Label } from "flowbite-react";
+import DetailMatch from "./DetailMatch";
 
 const deploy = import.meta.env.VITE_DEPLOY_URL;
 const styles = {
@@ -13,39 +13,15 @@ const styles = {
 };
 
 const MatchingPage = () => {
+  const { userData, checkUser } = useAuth();
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { userData, checkUser } = useAuth();
   const [isDetailMatchOpen, setIsDetailMatchOpen] = useState(false);
   const [entryToUpdate, setEntryToUpdate] = useState(null);
-
   const [formState, setFormState] = useState({
     industry: [],
   });
-
-  const industries = [
-    "IT",
-    "Gastronomy",
-    "Retail",
-    "Consulting",
-    "Healthcare",
-    "Construction",
-    "Education",
-    "Finance",
-    "Real Estate",
-    "Marketing",
-    "Transportation",
-    "Manufacturing",
-    "Entertainment",
-    "Legal Services",
-    "Arts",
-    "Personal Services",
-    "Agriculture",
-    "Wellness",
-    "Media",
-    "Tourism",
-  ];
 
   useEffect(() => {
     if (userData) {
@@ -53,45 +29,43 @@ const MatchingPage = () => {
         industry: userData.industry || [],
       });
     }
-
-    const fetchTasks = async () => {
-      let success = false;
-      while (!success) {
-        try {
-          const response = await axios.get(`${deploy}/tasks/open`, {
-            withCredentials: true,
-          });
-          const industry = userData.industry;
-          const specialization = userData.specialization;
-
-          const filteredTasks = response.data.filter((task) => {
-            const matchIndustry =
-              industry.length > 0
-                ? industry.some((ind) => task.content.industry.includes(ind))
-                : true;
-            const matchSpecialization =
-              specialization.length > 0
-                ? specialization.some((spec) =>
-                    task.content.task_type.includes(spec)
-                  )
-                : true;
-
-            return matchIndustry && matchSpecialization;
-          });
-          setTasks(filteredTasks);
-          setLoading(false);
-          setError(null);
-          success = true; 
-        } catch (err) {
-          setError(err.message);
-          setLoading(false);
-          await delay(1000);
-        }
-      }
-    };
-
-    fetchTasks();
   }, [userData]);
+
+  useEffect(() => {
+    fetchTasks();
+  }, [formState]);
+
+  const fetchTasks = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get(`${deploy}/tasks/open`, {
+        withCredentials: true,
+      });
+      const industry = formState.industry;
+      const specialization = userData.specialization;
+
+      const filteredTasks = response.data.filter((task) => {
+        const matchIndustry =
+          industry.length > 0
+            ? industry.some((ind) => task.content.industry.includes(ind))
+            : true;
+        const matchSpecialization =
+          specialization.length > 0
+            ? specialization.some((spec) =>
+                task.content.task_type.includes(spec)
+              )
+            : true;
+
+        return matchIndustry && matchSpecialization;
+      });
+      setTasks(filteredTasks);
+      setLoading(false);
+      setError(null);
+    } catch (err) {
+      setError(err.message);
+      setLoading(false);
+    }
+  };
 
   const handleOptionChange = (optionValue) => {
     setFormState((prevState) => ({
@@ -119,7 +93,7 @@ const MatchingPage = () => {
             label={<span className="text-gray-900 dark:text-white">{formState.industry.join(" | ") || "None"}</span>}
             dismissOnClick={false}
           >
-            {industries.map((i) => (
+            {userData.industry.map((i) => (
               <Dropdown.Item key={i}>
                 <div className="flex items-center gap-2">
                   <Checkbox
@@ -162,7 +136,8 @@ const MatchingPage = () => {
               <button
                 type="button"
                 onClick={() => toggleUpdateModal(task)}
-                className={styles.button}>
+                className={styles.button}
+              >
                 Details
               </button>
             </div>
