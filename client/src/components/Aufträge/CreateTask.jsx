@@ -22,7 +22,7 @@ const CreateTask = ({ isCreateTaskOpen, toggleModal, checkUser }) => {
 
   const options = [
     { value: "craft", label: "craft" },
-    { value: "it", label: "IT" },
+    { value: "IT", label: "IT" },
     { value: "gastronomy", label: "gastronomy" },
     { value: "privat", label: "privat" },
     { value: "other", label: "other" },
