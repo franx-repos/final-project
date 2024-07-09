@@ -7,21 +7,22 @@ const deploy = import.meta.env.VITE_DEPLOY_URL;
 
 const ChatPartnerButton = ({ chat }) => {
   const { userData } = useAuth();
-  const { messages, setMessages, room, setRoom, socket } = useChat();
+  const { messages, setMessages, room, setRoom, socket, chats, setChats, saveMessages} = useChat();
   const [entry, setEntry] = useState([]);
   const [task, setTask] = useState();
 
   useEffect(() => {
+    // console.log(chat)
     const fetchChatPartner = async () => {
       let url = "";
       if (userData.data && userData.data.role === "client") {
         //pros als chatpartner fetchen
-        url = `${deploy}/pros/${chat.pro_id}`;
+        url = `${deploy}/pros/${chat.pro}`;
       } else {
         //clients als chatpartner fetchen
-        url = `${deploy}/clients/${chat.client_id}`;
+        url = `${deploy}/clients/${chat.client}`;
       }
-      // console.log(url);
+      console.log(url);
       try {
         const response = await axios.get(url);
         // console.log(response);
@@ -46,18 +47,41 @@ const ChatPartnerButton = ({ chat }) => {
     fetchChatPartner();
   }, [chat]);
 
-  useEffect(() => {
-    console.log(task);
-  }, [task]);
+  // useEffect(() => {
+  //   console.log(task);
+  // }, [task]);
 
-  useEffect(() => {
-    console.log(entry);
-  }, [entry]);
+  // useEffect(() => {
+  //   console.log(entry);
+  // }, [entry]);
 
   useEffect(() => {
     if (socket && socket.connected && room !== "") {
       socket.emit("join-room", room);
     }
+
+    // const fetchChat = async () => {
+    //   let url = "";
+    //   if (userData.data && userData.data.role === "client") {
+    //     url = `${deploy}/chats/client_chat/`;
+    //   } else {
+    //     url = `${deploy}/chats/pro_chat/`;
+    //   }
+    //   console.log(url);
+    //   try {
+    //     const response = await axios.get(url, { withCredentials: true });
+    //     setChats(response.data);
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // };
+
+    // if (userData) {
+      
+    //   console.log("fetching chat");
+    //    fetchChat();
+    // }
+
   }, [room]);
 
   function joinChat() {
@@ -67,20 +91,21 @@ const ChatPartnerButton = ({ chat }) => {
     //   const messagesToSave = messages;
     //   try {
     //     console.log("Saving messages to DB:", messagesToSave);
-    //     await axios.patch(
+    //     const response = await axios.patch(
     //       `${deploy}/chats/${room}`,
     //       { messages: messagesToSave },
     //       { withCredentials: true }
     //     );
+    //     console.log(response)
     //     // setSaveNewMessage(false);
     //   } catch (error) {
     //     console.log(error);
     //   }
     // };
 
-    // if (room !== "" && messages.length > 0) {
-    //   saveMessages();
-    // }
+    if (room !== "" && messages.length > 0) {
+      saveMessages(userData);
+    }
 
     setMessages(chat.messages);
     setRoom(chat._id);

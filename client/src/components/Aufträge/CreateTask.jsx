@@ -21,7 +21,7 @@ const CreateTask = ({ isCreateTaskOpen, toggleModal, checkUser }) => {
   const { userData } = useAuth();
 
   const options = [
-    { value: "IT", label: "IT" },
+    { value: "it", label: "IT" },
     { value: "gastronomy", label: "Gastronomy" },
     { value: "retail", label: "Retail" },
     { value: "consulting", label: "Consulting" },

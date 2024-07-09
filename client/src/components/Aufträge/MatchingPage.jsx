@@ -24,7 +24,28 @@ const MatchingPage = () => {
     industry: [],
   });
 
-  const industries = userData.industry
+  const industries = [
+    "IT",
+    "Gastronomy",
+    "Retail",
+    "Consulting",
+    "Healthcare",
+    "Construction",
+    "Education",
+    "Finance",
+    "Real Estate",
+    "Marketing",
+    "Transportation",
+    "Manufacturing",
+    "Entertainment",
+    "Legal Services",
+    "Arts",
+    "Personal Services",
+    "Agriculture",
+    "Wellness",
+    "Media",
+    "Tourism",
+  ];
 
   useEffect(() => {
     if (userData) {
