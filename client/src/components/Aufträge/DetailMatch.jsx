@@ -13,6 +13,8 @@ const DetailMatch = ({
   toggleUpdateModal,
   entryToUpdate,
   checkUser,
+  currentLocation,
+  setCurrentLocation,
 }) => {
   const { userData } = useAuth();
 
@@ -49,12 +51,13 @@ const DetailMatch = ({
         { withCredentials: true }
       );
 
-      console.log("Response from PATCH request to /pros:", responsepro);
-      console.log("Response from put request to /tasks:", response);
+      // console.log("Response from PATCH request to /pros:", responsepro);
+      // console.log("Response from put request to /tasks:", response);
 
       if (responsepro.status === 200) {
         console.log("Professional updated with task.");
         checkUser();
+        toggleUpdateModal();
       }
     } catch (error) {
       console.error("Error in PATCH request to /pros:", error);
@@ -89,6 +92,7 @@ const DetailMatch = ({
     } catch (error) {
       console.log(error);
     }
+    setCurrentLocation("Chat");
   };
 
   return isUpdateTaskOpen ? (

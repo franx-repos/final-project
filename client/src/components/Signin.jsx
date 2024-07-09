@@ -16,6 +16,16 @@ const Signin = () => {
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const storedAuth = localStorage.getItem('userData');
+    if (storedAuth === 'true') {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
+
+
+
   const handleLogin = async (e) => {
     e.preventDefault();
     if (client === false) {
@@ -33,6 +43,8 @@ const Signin = () => {
         );
 
         if (response.status === 200) {
+          localStorage.setItem('auth', 'true');
+          
           setIsLoggedIn(true);
           checkUser();
           navigate("/Dashboard");
@@ -61,6 +73,7 @@ const Signin = () => {
       );
 
       if (response.status === 200) {
+        localStorage.setItem('auth', 'true');
         setIsLoggedIn(true);
         checkUser();
         navigate("/Dashboard");
@@ -69,6 +82,8 @@ const Signin = () => {
       setError(error.message || "Something went wrong with Login");
     }
   };
+
+
 
   return (
     <>

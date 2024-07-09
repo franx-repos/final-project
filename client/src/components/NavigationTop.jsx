@@ -78,14 +78,18 @@ const NavigationTop = () => {
         >
           <ul className={styles.navList}>
             <li>
+            <Link to="/" className={styles.menuItem} aria-current="page">
               <a href="#" className={styles.menuItem} aria-current="page">
                 Home
               </a>
+              </Link>
             </li>
             <li>
+             <Link to="/about" className={styles.menuItem}>
               <a href="#" className={styles.menuItem}>
                 About
               </a>
+              </Link>
             </li>
             <li>
               <a href="#" className={styles.menuItem}>

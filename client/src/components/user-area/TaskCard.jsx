@@ -49,15 +49,6 @@ const TaskCard = ({
       <div className={styles.types}>
         <strong>Task:</strong> {task_type}
       </div>
-      <p className={styles.p}>{description}</p>
-      <div className="flex justify-evenly">
-        <a href="#" className={styles.button}>
-          Accept
-        </a>
-        <a href="#" className={styles.button} onClick={createChat}>
-          Contact
-        </a>
-      </div>
     </div>
   );
 };
