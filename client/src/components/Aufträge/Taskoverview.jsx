@@ -57,19 +57,13 @@ const Taskoverview = () => {
   };
 
   useEffect(() => {
-    if(userData){
-      fetchTasks();
-    }
-  }, []);
-
-  useEffect(() => {
     fetchTasks();
   }, [userData]);
 
   const handleStatus = (status) => {
     if (status === "OPEN") {
       return "bg-green-200 text-green-800";
-    } else if (status === "SUSPENDED") {
+    } else if (status === "IN PROGRESS") {
       return "bg-yellow-200 text-yellow-800";
     } else if (status === "CLOSED") {
       return "bg-red-200 text-red-800";
@@ -84,11 +78,10 @@ const Taskoverview = () => {
     setIsUpdateTaskOpen(!isUpdateTaskOpen);
   };
 
-  const toggleDetailModal = (entry) =>{
+  const toggleDetailModal = (entry) => {
     setEntryToShow(entry);
     setIsTaskDetailOpen(!isTaskDetailOpen);
-    
-  }
+  };
 
   return (
     <div className="w-full dark:text-white dark:bg-[#1f2937] rounded-md">
@@ -142,17 +135,17 @@ const Taskoverview = () => {
                     </span>
                   </td>
                   <td className={styles.td}>
-                      <button
-                        type="button"
-                        // onClick={toggleUpdateModal}
-                        onClick={() => {
-                          toggleDetailModal(entries[index]);
-                        }}
-                        className={styles.button}
-                      >
-                        Details
-                      </button>
-                    </td>
+                    <button
+                      type="button"
+                      // onClick={toggleUpdateModal}
+                      onClick={() => {
+                        toggleDetailModal(entries[index]);
+                      }}
+                      className={styles.button}
+                    >
+                      Details
+                    </button>
+                  </td>
                   {userData.data.role === "client" ? (
                     <td className={styles.td}>
                       <button
@@ -194,9 +187,12 @@ const Taskoverview = () => {
         entryToUpdate={entryToUpdate}
         checkUser={checkUser}
       />
-      <TaskDetail isTaskDetailOpen={isTaskDetailOpen} toggleDetailModal={toggleDetailModal} entryToShow={entryToShow} checkUser={checkUser}/>
-
-
+      <TaskDetail
+        isTaskDetailOpen={isTaskDetailOpen}
+        toggleDetailModal={toggleDetailModal}
+        entryToShow={entryToShow}
+        checkUser={checkUser}
+      />
     </div>
   );
 };

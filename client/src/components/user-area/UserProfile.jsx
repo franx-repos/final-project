@@ -160,7 +160,7 @@ function UserProfile() {
       console.log(error || "Updating user data failed");
     }
   };
-  console.log(userData);
+
   return (
     <>
       <Toastify />
