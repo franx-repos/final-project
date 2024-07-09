@@ -48,8 +48,9 @@ export const ChatProvider = ({ children }) => {
       console.log(response)
       if(response){
         fetchChat(userData);
+        setSaveNewMessage(false);
       }
-      // setSaveNewMessage(false);
+      
     } catch (error) {
       console.log(error);
     }
