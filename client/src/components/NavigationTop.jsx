@@ -102,9 +102,11 @@ const NavigationTop = () => {
               </a>
             </li>
             <li>
+           <Link to="/contact">
               <a href="#" className={styles.menuItem}>
                 Contact
               </a>
+              </Link>
             </li>
           </ul>
         </div>
