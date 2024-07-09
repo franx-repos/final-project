@@ -2,12 +2,12 @@ import { Sidebar } from "flowbite-react";
 import {
   HiChartPie,
   HiInbox,
-  HiShoppingBag,
-  HiTable,
   HiUser,
   HiViewBoards,
 } from "react-icons/hi";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../context/UserProvider";
+import React, { useEffect, useState } from 'react';
 
 const styles = {
   sidebarItem: "justify-start text-left text-xl p-4",
@@ -19,15 +19,38 @@ function DashboardSidebar({ currentLocation, setCurrentLocation }) {
     setCurrentLocation(location);
   };
 
-  const sbItems = [
-    {
-      title: "Dashboard",
-      path: "#",
-      icon: HiChartPie,
-      label: "",
+  const { userData } = useAuth();
+  const [loading, setLoading] = useState(true);
+  const [dashboardFilter, setDashboardFilter] = useState("");
 
-      onclick: handleLocation("Dashboard"),
-    },
+  
+  useEffect(() => {
+    setCurrentLocation("")
+    if (userData?.data?.role) {
+      setLoading(false); 
+      if (userData.data.role === "client") {
+        setCurrentLocation("Task Overview")
+        setDashboardFilter("")
+      } else{
+        setDashboardFilter({
+          title: "Dashboard",
+          path: "#",
+          icon: HiChartPie,
+          label: "",
+          onclick: handleLocation("Dashboard"),
+        })
+      }
+    } else {
+      const timer = setTimeout(() => {
+        setLoading(false);
+      }, 2000);
+  
+      return () => clearTimeout(timer);
+    }
+  }, [userData]);
+
+  const sbItems = [
+   dashboardFilter,
     {
       title: "Tasks",
       path: "#",
