@@ -57,6 +57,12 @@ const Taskoverview = () => {
   };
 
   useEffect(() => {
+    if(userData){
+      fetchTasks();
+    }
+  }, []);
+
+  useEffect(() => {
     fetchTasks();
   }, [userData]);
 

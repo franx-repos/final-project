@@ -54,10 +54,26 @@ const DetailMatch = ({
       // console.log("Response from PATCH request to /pros:", responsepro);
       // console.log("Response from put request to /tasks:", response);
 
+      // console.log(`Task ${task_id} was created by ${created_by}`);
+
+    //chat wird erstellt
+  
+      const responsechat = await axios.post(
+        `${deploy}/chats`,
+        {
+          client: entryToUpdate.content.created_by,
+          task: entryToUpdate._id,
+        },
+        { withCredentials: true }
+      );
+
+    console.log(responsechat)
+
       if (responsepro.status === 200) {
         console.log("Professional updated with task.");
         checkUser();
         toggleUpdateModal();
+        setCurrentLocation("Taskoverview");
       }
     } catch (error) {
       console.error("Error in PATCH request to /pros:", error);
