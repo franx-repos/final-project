@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../../context/UserProvider";
 import DetailMatch from "./DetailMatch";
+import { Dropdown, Checkbox, Label } from "flowbite-react";
 
 const deploy = import.meta.env.VITE_DEPLOY_URL;
 const styles = {
   button:
     "inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-teal-700 rounded-lg hover:bg-teal-800 focus:ring-4 focus:outline-none focus:ring-teal-300 dark:bg-teal-600 dark:hover:bg-teal-700 dark:focus:ring-teal-800",
   types: "mb-2 text-base text-gray-500 dark:text-gray-400",
+  label: "block mb-2 text-left text-sm pl-2 font-medium text-gray-900 dark:text-white",
 };
 
 const MatchingPage = () => {
@@ -18,8 +20,19 @@ const MatchingPage = () => {
   const [isDetailMatchOpen, setIsDetailMatchOpen] = useState(false);
   const [entryToUpdate, setEntryToUpdate] = useState(null);
 
-  
+  const [formState, setFormState] = useState({
+    industry: [],
+  });
+
+  const industries = userData.industry
+
   useEffect(() => {
+    if (userData) {
+      setFormState({
+        industry: userData.industry || [],
+      });
+    }
+
     const fetchTasks = async () => {
       let success = false;
       while (!success) {
@@ -59,6 +72,15 @@ const MatchingPage = () => {
     fetchTasks();
   }, [userData]);
 
+  const handleOptionChange = (optionValue) => {
+    setFormState((prevState) => ({
+      ...prevState,
+      industry: prevState.industry.includes(optionValue)
+        ? prevState.industry.filter((item) => item !== optionValue)
+        : [...prevState.industry, optionValue],
+    }));
+  };
+
   const toggleUpdateModal = (entry) => {
     setEntryToUpdate(entry);
     setIsDetailMatchOpen(!isDetailMatchOpen);
@@ -68,8 +90,31 @@ const MatchingPage = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    // {userData.data.role === "client" ? null}
     <div className="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+      <div>
+        <fieldset className="flex flex-col">
+          <p className={`pl-0 ${styles.label}`}>Filter:</p>
+          <Dropdown
+            label={<span className="text-gray-900 dark:text-white">{formState.industry.join(" | ") || "None"}</span>}
+            dismissOnClick={false}
+          >
+            {industries.map((i) => (
+              <Dropdown.Item key={i}>
+                <div className="flex items-center gap-2">
+                  <Checkbox
+                    id={i}
+                    checked={formState.industry.includes(i)}
+                    onChange={() => handleOptionChange(i)}
+                  />
+                  <Label className="capitalize" htmlFor={i}>
+                    {i}
+                  </Label>
+                </div>
+              </Dropdown.Item>
+            ))}
+          </Dropdown>
+        </fieldset>
+      </div>
       <h5 className="mb-2 text-3xl font-bold text-gray-900 dark:text-white">
         Tasks for you
       </h5>
