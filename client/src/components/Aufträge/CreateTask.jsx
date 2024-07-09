@@ -21,11 +21,26 @@ const CreateTask = ({ isCreateTaskOpen, toggleModal, checkUser }) => {
   const { userData } = useAuth();
 
   const options = [
-    { value: "craft", label: "craft" },
     { value: "it", label: "IT" },
-    { value: "gastronomy", label: "gastronomy" },
-    { value: "privat", label: "privat" },
-    { value: "other", label: "other" },
+    { value: "gastronomy", label: "Gastronomy" },
+    { value: "retail", label: "Retail" },
+    { value: "consulting", label: "Consulting" },
+    { value: "healthcare", label: "Healthcare" },
+    { value: "construction", label: "Construction" },
+    { value: "education", label: "Education" },
+    { value: "finance", label: "Finance" },
+    { value: "real_estate", label: "Real Estate" },
+    { value: "marketing", label: "Marketing" },
+    { value: "transportation", label: "Transportation" },
+    { value: "manufacturing", label: "Manufacturing" },
+    { value: "entertainment", label: "Entertainment" },
+    { value: "legal_services", label: "Legal Services" },
+    { value: "arts", label: "Arts" },
+    { value: "personal_services", label: "Personal Services" },
+    { value: "agriculture", label: "Agriculture" },
+    { value: "wellness", label: "Wellness" },
+    { value: "media", label: "Media" },
+    { value: "tourism", label: "Tourism" },
   ];
 
   const types = [
