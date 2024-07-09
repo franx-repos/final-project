@@ -97,6 +97,7 @@ const Taskoverview = () => {
                 <th className={styles.th}>Created at</th>
                 <th className={styles.th}>Status</th>
                 <th className={styles.th}></th>
+                <th className={styles.th}></th>
               </tr>
             </thead>
             <tbody>
