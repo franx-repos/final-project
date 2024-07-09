@@ -121,7 +121,7 @@ const ChatPartnerButton = ({ chat }) => {
 
   return (
     <button
-      className="w-full text-left py-2 focus:outline-none focus-visible:bg-indigo-50"
+      className="w-full text-left py-2 focus:outline-none focus-visible:bg-indigo-50 focus:bg-teal-400 focus:text-gray-800 p-2"
       onClick={joinChat}
     >
       <div className="flex items-center">

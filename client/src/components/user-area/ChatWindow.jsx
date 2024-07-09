@@ -190,7 +190,7 @@ const ChatWindow = () => {
           <ChatInput />
         </div>
       ) : (
-        <div className="flex flex-col w-full mx-9 shadow-lg rounded-lg"></div>
+        <div className="h-[calc(100%-1.35rem)] flex flex-col w-full ml-9 shadow-lg rounded-md scrollbar-thin overflow-auto"></div>
       )}
     </section>
   );
