@@ -25,15 +25,21 @@ const MatchingPage = ({ currentLocation, setCurrentLocation }) => {
   const [formState, setFormState] = useState({
     industry: [],
   });
+  const [retryCount, setRetryCount] = useState(0);
 
   useEffect(() => {
     if (userData) {
       setFormState({
         industry: userData.industry || [],
       });
+    } else if (retryCount < 5) {
+      const timer = setTimeout(() => {
+        setRetryCount(retryCount + 1);
+        checkUser(); // Assuming checkUser will update the userData
+      }, 2000);
+      return () => clearTimeout(timer);
     }
-  }, [userData]);
-
+  }, [userData, retryCount, checkUser]);
 
   const settings = {
     className: "slider variable-width",
@@ -88,7 +94,6 @@ const MatchingPage = ({ currentLocation, setCurrentLocation }) => {
     setIsDetailMatchOpen(!isDetailMatchOpen);
   };
 
-  if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
   return (
@@ -100,7 +105,7 @@ const MatchingPage = ({ currentLocation, setCurrentLocation }) => {
             label={<span className="text-gray-900 dark:text-white">{formState.industry.join(" | ") || "None"}</span>}
             dismissOnClick={false}
           >
-            {userData.industry.map((i) => (
+            {userData?.industry?.map((i) => (
               <Dropdown.Item key={i}>
                 <div className="flex items-center gap-2">
                   <Checkbox
