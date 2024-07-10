@@ -1,14 +1,16 @@
+import { Link } from "react-router-dom";
+
 function Footer() {
   return (
-    <footer className="bg-white/75 dark:bg-gray-900/80">
+    <footer className="bg-slate-200/90 dark:bg-gray-900/80">
       <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
         <div className="md:flex md:justify-between">
           <div className="mb-6 md:mb-0">
-            <a href="https://flowbite.com/" className="flex items-center">
+            <a href="/" className="flex items-center">
               <img
                 src="\src\assets\TaxMax-Logo3.png"
                 className="h-8 me-3"
-                alt="FlowBite Logo"
+                alt="Logo"
               />
               <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"></span>
             </a>
@@ -16,17 +18,19 @@ function Footer() {
           <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
             <div>
               <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
-                Resources
+              COMPANY
               </h2>
               <ul className="text-gray-500 dark:text-gray-400 font-medium">
                 <li className="mb-4">
-                  <a href="#" className="hover:underline">
-                    Flowbite
+                  <Link to="about" >
+                  <a href="#" className="hover:underline  text-gray-900 uppercase dark:text-white ">
+                 About
                   </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="hover:underline">
-                    Tailwind CSS
+                  <a href="#" className="hover:underline  text-gray-900 uppercase dark:text-white ">
+                  contact
                   </a>
                 </li>
               </ul>
@@ -39,33 +43,33 @@ function Footer() {
                 <li className="mb-4">
                   <a
                     href="https://github.com/franx-repos/final-project"
-                    className="hover:underline "
+                    className="hover:underline  text-gray-900 uppercase dark:text-white "
                   >
-                    Github
+                   Linkedin
                   </a>
                 </li>
                 <li>
                   <a
                     href="https://discord.gg/4eeurUVvTy"
-                    className="hover:underline"
+                    className="hover:underline  text-gray-900 uppercase dark:text-white "
                   >
-                    Discord
+                    instagram
                   </a>
                 </li>
               </ul>
             </div>
             <div>
               <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
-                Legal
+              HELP
               </h2>
               <ul className="text-gray-500 dark:text-gray-400 font-medium">
                 <li className="mb-4">
-                  <a href="#" className="hover:underline">
-                    Privacy Policy
+                  <a href="#" className="hover:underline  text-gray-900 uppercase dark:text-white ">
+                  Support Center
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:underline">
+                  <a href="#" className="hover:underline  text-gray-900 uppercase dark:text-white ">
                     Terms &amp; Conditions
                   </a>
                 </li>
@@ -77,7 +81,7 @@ function Footer() {
         <div className="sm:flex sm:items-center sm:justify-between">
           <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
             © 2024{" "}
-            <a href="https://flowbite.com/" className="hover:underline">
+            <a href="/" className="hover:underline">
               Team TaxMax™
             </a>
             . All Rights Reserved.

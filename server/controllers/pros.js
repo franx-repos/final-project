@@ -25,13 +25,13 @@ export const getProById = async (req, res, next) => {
 
 export const getProByEmail = async (req, res, next) => {
   const { email } = req.params;
-  console.log(email);
+
   try {
     const pro = await Pro.find({ "data.email": email });
     if (!pro) {
       throw { statusCode: 404, message: "Client not found" };
     }
-    console.log(pro);
+   
     res.json(pro);
   } catch (error) {
     next(error);
@@ -51,27 +51,36 @@ export const addNewPro = async (req, res, next) => {
 };
 
 export const updatePro = async (req, res, next) => {
-  const {cid} = req;
-  const { data, email_verified, role, industry, languages, image_url } =
-    req.body;
+  const { cid } = req;
+  const {
+    data,
+    email_verified,
+    role,
+    industry,
+    languages,
+    image_url,
+    tasks,
+    description,
+  } = req.body;
 
   try {
     const updatedPro = await Pro.findByIdAndUpdate(
       cid,
       {
-       
-        'data.first_name': data.first_name,
-        'data.email': data.email,
-        'data.street': data.street,
-        'data.zip': data.zip,
-        'data.city': data.city,
-        'data.country':data.country,
-        'data.phone_number': data.phone_number,
+        "data.first_name": data.first_name,
+        "data.email": data.email,
+        "data.street": data.street,
+        "data.zip": data.zip,
+        "data.city": data.city,
+        "data.country": data.country,
+        "data.phone_number": data.phone_number,
         image_url,
         email_verified,
         role,
-        industry,
         languages,
+        industry,
+        tasks,
+        description,
       },
       { new: true }
     );

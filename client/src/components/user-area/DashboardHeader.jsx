@@ -2,7 +2,6 @@ import ThemeToggle from "../ThemeToggle";
 import UserDropdown from "../UserDropdown";
 
 function DashboardHeader(currentLocation) {
-  console.log(currentLocation);
   return (
     <>
       <div className="flex items-center justify-between">

@@ -25,13 +25,13 @@ export const getClientById = async (req, res, next) => {
 
 export const getClientByEmail = async (req, res, next) => {
   const { email } = req.params;
-  console.log(email);
+ 
   try {
     const client = await Client.find({ "data.email": email });
     if (!client) {
       throw { statusCode: 404, message: "Client not found" };
     }
-    console.log(client);
+  
     res.json(client);
   } catch (error) {
     next(error);
@@ -40,8 +40,7 @@ export const getClientByEmail = async (req, res, next) => {
 
 export const addNewClient = async (req, res, next) => {
   const { role, ...data } = req.body;
-  // console.log(data);
-  // console.log(role);
+
   try {
     const newClient = new Client({ data, role });
     const savedClient = await newClient.save();
@@ -66,29 +65,28 @@ export const addNewClient = async (req, res, next) => {
 // }
 
 export const updateClient = async (req, res, next) => {
- 
-  const { data, email_verified, role, industry, languages, image_url } =
+  const { data, email_verified, role, industry, languages, image_url, tasks } =
     req.body;
-  const {cid} = req;
+  const { cid } = req;
 
   try {
     const updatedClient = await Client.findByIdAndUpdate(
       cid,
       {
-        
-        'data.first_name': data.first_name,
-        'data.email': data.email,
-        'data.tax_id': data.tax_id,
-        'data.street': data.street,
-        'data.zip': data.zip,
-        'data.city': data.city,
-        'data.country':data.country,
-        'data.phone_number': data.phone_number,
+        "data.first_name": data.first_name,
+        "data.email": data.email,
+        "data.tax_id": data.tax_id,
+        "data.street": data.street,
+        "data.zip": data.zip,
+        "data.city": data.city,
+        "data.country": data.country,
+        "data.phone_number": data.phone_number,
         image_url,
         email_verified,
         role,
-        industry,
         languages,
+        industry,
+        tasks,
       },
       { new: true }
     );

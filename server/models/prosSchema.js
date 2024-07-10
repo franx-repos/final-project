@@ -79,8 +79,11 @@ const proSchema = new mongoose.Schema({
   tasks: {
     type: [String],
   },
-  chats:{
-    type:[String],
+  description: {
+    type: String,
+  },
+  chats: {
+    type: [String],
   },
   comments: [
     {

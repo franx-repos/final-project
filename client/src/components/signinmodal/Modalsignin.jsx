@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/UserProvider.jsx";
 import axios from "axios";
 
-const Modalsignin = ({ isModalOpen, toggleModal }) => {
+const Modalsignin = ({ isLoginModalOpen, toggleLoginModal }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -12,16 +12,24 @@ const Modalsignin = ({ isModalOpen, toggleModal }) => {
   const [role, setRole] = useState("client");
 
   const navigate = useNavigate();
-
   const deploy = import.meta.env.VITE_DEPLOY_URL;
   // ${deploy}
+
+
+  useEffect(() => {
+    const storedAuth = localStorage.getItem('auth');
+    if (storedAuth === 'true') {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
 
   const handleLogin = async (e) => {
     e.preventDefault();
     if (client === false) {
       try {
         const response = await axios.post(
-          `http://localhost:8001/clients/login`,
+          `${deploy}/clients/login`,
           {
             data: {
               role,
@@ -33,10 +41,11 @@ const Modalsignin = ({ isModalOpen, toggleModal }) => {
         );
 
         if (response.status === 200) {
+          localStorage.setItem('auth', 'true');
           setIsLoggedIn(true);
           checkUser();
           navigate("/Dashboard");
-          toggleModal();
+          toggleLoginModal();
         }
       } catch (error) {
         setError(error.message || "Something went wrong with Login");
@@ -50,7 +59,7 @@ const Modalsignin = ({ isModalOpen, toggleModal }) => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `http://localhost:8001/pros/login`,
+        `${deploy}/pros/login`,
         {
           data: {
             role,
@@ -62,17 +71,18 @@ const Modalsignin = ({ isModalOpen, toggleModal }) => {
       );
 
       if (response.status === 200) {
+        localStorage.setItem('auth', 'true');
         setIsLoggedIn(true);
         checkUser();
-        navigate("/");
-        toggleModal();
+        navigate("/Dashboard");
+        toggleLoginModal();
       }
     } catch (error) {
       setError(error.message || "Something went wrong with Login");
     }
   };
 
-  if (!isModalOpen) return null;
+  if (!isLoginModalOpen) return null;
 
   return (
     <>
@@ -81,7 +91,7 @@ const Modalsignin = ({ isModalOpen, toggleModal }) => {
         id="authentication-modal"
         tabIndex="-1"
         aria-hidden="true"
-        className="fixed inset-0 z-50 flex justify-center items-center w-full h-full overflow-y-auto bg-gray-500 bg-opacity-90"
+        className="fixed inset-0 z-50 flex justify-center items-center w-full h-full overflow-y-auto bg-gray-900/70"
       >
         <div className="relative p-4 w-full max-w-md max-h-full">
           {/* Modal content */}
@@ -91,11 +101,11 @@ const Modalsignin = ({ isModalOpen, toggleModal }) => {
             method="POST"
             onSubmit={handleLogin}
           >
-            <div className="flex flex-1 flex-col w-fit m-auto justify-center px-6 py-12 lg:px-8 shadow shadow-gray-900 rounded-lg p-6 border-gray-200 bg-white/75 dark:bg-gray-900/80">
+            <div className="flex flex-1 flex-col w-fit m-auto justify-center px-6 py-12 lg:px-8 shadow shadow-gray-900 rounded-lg p-6 border-gray-200 bg-white dark:bg-gray-900 dark:border-teal-300">
               <div className="absolute top-0 right-0 p-4 mr-8 mt-4 ">
                 <button
                   type="button"
-                  onClick={toggleModal}
+                  onClick={toggleLoginModal}
                   className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
                 >
                   <svg
@@ -218,14 +228,7 @@ const Modalsignin = ({ isModalOpen, toggleModal }) => {
                     </label>
 
                     <div className="text-sm">
-                      <Link to="/reset-pass">
-                        <a
-                          href="#"
-                          className="font-semibold text-indigo-600 hover:text-indigo-500 dark:text-blue-500 dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
-                        >
-                          Forgot password?
-                        </a>
-                      </Link>
+                      <Link to="/reset-pass">Forgot password?</Link>
                     </div>
                   </div>
 
@@ -254,7 +257,7 @@ const Modalsignin = ({ isModalOpen, toggleModal }) => {
                     Not registered ?{" "}
                     <Link
                       to="/signup"
-                      onClick={toggleModal}
+                      onClick={toggleLoginModal}
                       className="text-blue-500 underline"
                     >
                       Register here

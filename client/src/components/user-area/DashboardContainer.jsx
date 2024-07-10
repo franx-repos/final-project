@@ -1,17 +1,20 @@
 import Chat from "./Chat";
 import Taskoverview from "../Aufträge/Taskoverview";
 import UserProfile from "./UserProfile";
-import OpenTasksSlider from "./OpenTasksSlider";
+import MatchingPage from "../Aufträge/MatchingPage";
 
-const DashboardContainer = (currentLocation) => {
-  console.log(currentLocation);
-
-  switch (currentLocation.currentLocation) {
+const DashboardContainer = ({
+  currentLocation,
+  setCurrentLocation,
+  userData,
+}) => {
+  switch (currentLocation) {
     case "Dashboard":
       return (
-        <>
-          <OpenTasksSlider />
-        </>
+        <MatchingPage
+          currentLocation={currentLocation}
+          setCurrentLocation={setCurrentLocation}
+        />
       );
     case "Chat":
       return <Chat />;

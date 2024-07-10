@@ -23,11 +23,11 @@ const styles = {
 
 const NavigationTop = () => {
   const { isLoggedIn, setIsLoggedIn, userData, setUserData } = useAuth();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isNavbarOpen, setIsNavbarOpen] = useState(false);
 
-  const toggleModal = () => {
-    setIsModalOpen(!isModalOpen);
+  const toggleLoginModal = () => {
+    setIsLoginModalOpen(!isLoginModalOpen);
   };
 
   const toggleNavbar = () => {
@@ -55,7 +55,7 @@ const NavigationTop = () => {
             <div className="flex">
               {/* <Link to="modalsignin"> */}{" "}
               <button
-                onClick={toggleModal}
+                onClick={toggleLoginModal}
                 type="button"
                 className={styles.button}
               >
@@ -78,14 +78,18 @@ const NavigationTop = () => {
         >
           <ul className={styles.navList}>
             <li>
-              <a href="#" className={styles.activeMenuItem} aria-current="page">
+            <Link to="/" className={styles.menuItem} aria-current="page">
+              <a href="#" className={styles.menuItem} aria-current="page">
                 Home
               </a>
+              </Link>
             </li>
             <li>
+             <Link to="/about" className={styles.menuItem}>
               <a href="#" className={styles.menuItem}>
                 About
               </a>
+              </Link>
             </li>
             <li>
               <a href="#" className={styles.menuItem}>
@@ -106,7 +110,10 @@ const NavigationTop = () => {
         </div>
       </div>
       {/* <Modalsignin isModalOpen={isModalOpen} toggleModal={toggleModal} /> */}
-      <Modalsignin isModalOpen={isModalOpen} toggleModal={toggleModal} />
+      <Modalsignin
+        isLoginModalOpen={isLoginModalOpen}
+        toggleLoginModal={toggleLoginModal}
+      />
     </nav>
   );
 };

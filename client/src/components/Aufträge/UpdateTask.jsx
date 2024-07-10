@@ -2,97 +2,145 @@ import axios from "axios";
 import { useState, useRef, useEffect } from "react";
 import { format } from "date-fns";
 import Select from "react-select";
+import { Link } from "react-router-dom";
+
+const styles = {
+  label:
+    "flex pl-2 text-gray-700 text-sm font-bold mb-1 dark:bg-[#1f2937] dark:text-gray-400",
+  input:
+    "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500",
+
+  deleteButton:
+    "text-red-600 inline-flex items-center hover:text-white border border-red-600 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-md text-sm px-5 py-2.5 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900",
+  submitButton:
+    "bg-primary-700 hover:bg-teal-500 ring-2 hover:ring-0 ring-teal-500 font-medium rounded-md text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 text-gray-900 dark:text-white",
+  icon: "M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z",
+};
 
 const UpdateTask = ({
   isUpdateTaskOpen,
   toggleUpdateModal,
   entryToUpdate,
-  setEntryToUpdate,
+  checkUser,
 }) => {
   const [editTaskId, setEditTaskId] = useState(null);
   const [images, setImages] = useState([]);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [deadline, setDeadline] = useState("");
-  const [task_type, setTask_type] = useState([]);
-  const [industry, setIndustry] = useState([]);
+  const [task_type, setTask_type] = useState("");
+  const [industry, setIndustry] = useState("");
   const [create_date, setCreate_date] = useState("");
 
   const [documents, setDocuments] = useState([]);
   const [error, setError] = useState("");
-  // const [entries, setEntries] = useState([]);
-  // const [loading, setLoading] = useState(true);
-  const [file, setFile] = useState("");
+  const [file, setFile] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setEditTaskId(entryToUpdate?.content?._id || null);
     setTitle(entryToUpdate?.content?.title || "");
     setDescription(entryToUpdate?.content?.description || "");
-    setIndustry(entryToUpdate?.content?.industry || []);
-    setTask_type(entryToUpdate?.content?.task_type || []);
-    setDocuments(entryToUpdate?.content?.documents || []);
-    console.log(entryToUpdate?.content?.task_type);
+    setIndustry(entryToUpdate?.content?.industry || "");
+    setTask_type(entryToUpdate?.content?.task_type || "");
+    setDocuments(entryToUpdate?.documents || []);
   }, [entryToUpdate]);
 
+  // useEffect(() => {
+  //   console.log(documents);
+  // }, [documents]);
+
   const fileInputRef = useRef(null);
+
+  const deploy = import.meta.env.VITE_DEPLOY_URL;
 
   const types = [
     { value: "tax declaration", label: "tax declaration" },
     { value: "insolvency law", label: "insolvency law" },
   ];
 
+  const options = [
+    { value: "IT", label: "IT" },
+    { value: "Gastronomy", label: "Gastronomy" },
+    { value: "Retail", label: "Retail" },
+    { value: "Consulting", label: "Consulting" },
+    { value: "Healthcare", label: "Healthcare" },
+    { value: "Construction", label: "Construction" },
+    { value: "Education", label: "Education" },
+  ];
+
   const handleFileChange = (event) => {
-    const files = Array.from(event.target.files);
-    const filePreviews = files.map((file) => ({
-      url: URL.createObjectURL(file),
-      name: file.name,
-      preview: ["jpg", "jpeg", "png", "gif", "pdf", "webp"].includes(
-        file.name.split(".").pop().toLowerCase()
-      ),
-      size:
-        file.size > 1024
-          ? file.size > 1048576
-            ? Math.round(file.size / 1048576) + "mb"
-            : Math.round(file.size / 1024) + "kb"
-          : file.size + "b",
-    }));
-    setImages(filePreviews);
-    setDocuments;
+    const file = event.target.files[0];
+    if (file) {
+      const filePreview = {
+        url: URL.createObjectURL(file),
+        name: file.name,
+        preview: ["jpg", "jpeg", "png", "gif", "pdf", "webp"].includes(
+          file.name.split(".").pop().toLowerCase()
+        ),
+        size:
+          file.size > 1024
+            ? file.size > 1048576
+              ? Math.round(file.size / 1048576) + "mb"
+              : Math.round(file.size / 1024) + "kb"
+            : file.size + "b",
+      };
+      setImages([filePreview]);
+      setFile(file);
+    }
   };
 
   const handleRemoveImage = (index) => {
-    setImages(images.filter((_, i) => i !== index));
-    setDocuments(documents.filter((_, i) => i !== index));
+    setImages([]);
+    // setDocuments([]);
+    setFile(null);
   };
 
   const handleUpdate = async (_id) => {
+    setIsLoading(true);
     try {
-      const response = await axios.put(
-        `http://localhost:8001/tasks/${_id}`,
-        {
-          title: title,
-          description: description,
-          industry: industry,
-          task_type: task_type,
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("description", description);
+      formData.append("industry", industry);
+      formData.append("task_type", task_type);
+      // formData.append("documentstitle", title);
+      formData.append("icon", "");
+      // console.log(formData);
+
+      if (file) {
+        // console.log(file);
+        formData.append("doc", file);
+      }
+
+      const response = await axios.put(`${deploy}/tasks/${_id}`, formData, {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "multipart/form-data",
         },
-        { withCredentials: true }
-      );
+      });
 
       if (response.status === 200) {
-        toggleUpdateModal();
-        console.log("Updated successfully.");
+        checkUser();
+        // toggleUpdateModal();
+        // refreshTaskData();
+        setDocuments(response.data.documents);
       }
     } catch (error) {
       setError(error.message || "Something went wrong with updating the task");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleDelete = async (_id) => {
     try {
-      const response = await axios.delete(
-        `http://localhost:8001/tasks/${_id}`,
-        { withCredentials: true }
-      );
+      const response = await axios.delete(`${deploy}/tasks/${_id}`, {
+        withCredentials: true,
+      });
+      checkUser();
+
+      toggleUpdateModal();
     } catch (error) {
       setError(error.message || "Something went wrong with deleting the task");
     }
@@ -111,22 +159,38 @@ const UpdateTask = ({
     }
   };
 
+  const deleteDocument = async (documentID) => {
+    // console.log(entryToUpdate);
+    let docs = documents.filter((document) => document._id !== documentID);
+    // console.log(docs);
+    setDocuments(docs);
+    try {
+      const response = await axios.delete(
+        `${deploy}/tasks/${entryToUpdate._id}/${documentID}`,
+        {
+          withCredentials: true,
+        }
+      );
+      // checkUser();
+      // toggleUpdateModal();
+
+      // console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return isUpdateTaskOpen ? (
     <div
       id="authentication-modal"
       tabIndex="-1"
       aria-hidden="true"
-      className=" fixed inset-0 z-50 flex justify-center items-center w-full h-full bg-gray-900 bg-opacity-90"
+      className="fixed inset-0 z-50 flex justify-center items-center w-full h-full bg-gray-900 bg-opacity-90"
     >
-      {" "}
       <div className="relative w-full max-w-3xl mt-8 max-h-full shadow py-8 rounded-md bg-white dark:bg-[#1f2937] overflow-auto">
-        <div className="editor mx-auto w-10/12 flex flex-col text-gray-800   p-4 max-w-2xl">
-          {/* {entries.map((entry) => ( */}
-          <div
-            // key={entry._id}
-            className="border border-gray-300 p-4 shadow-lg mb-3 rounded-md bg-white dark:bg-[#1f2937]"
-          >
-            <div className="px-5 py-5 bg-white text-sm text-center">
+        <div className="editor mx-auto w-10/12 flex flex-col text-gray-800   p-4 max-w-2xl ">
+          <div className="border border-gray-300 p-4 shadow-lg mb-3 rounded-md bg-white dark:bg-[#1f2937]">
+            <div className="px-5 py-5 bg-white dark:bg-[#1f2937]  text-sm text-center">
               <div className="absolute top-0 right-0 p-4 ">
                 <button
                   type="button"
@@ -153,60 +217,53 @@ const UpdateTask = ({
               </div>
 
               <div className="flex flex-col">
-                <label
-                  class="flex pl-2 text-gray-700 text-sm font-bold mb-1"
-                  for="username"
-                >
+                <label className={styles.label} htmlFor="username">
                   title
                 </label>
                 <input
                   type="text"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  className="w-full px-2 py-2 border border-gray-300 rounded-md"
+                  className={styles.input}
                 />
               </div>
-              <div className="py-5 max-full border-b-gray-200 text-wrap dark:border-x-0 dark:border-r-white dark:border bg-white text-sm">
-                <label
-                  class="flex pl-2 text-gray-700 text-sm font-bold mb-1"
-                  for="username"
-                >
+              <div className="py-5 max-full border-b-gray-200 text-wrap  bg-white text-sm dark:bg-[#1f2937] dark:text-gray-400">
+                <label className={styles.label} htmlFor="username">
                   description
                 </label>
                 <textarea
                   type="text"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  className="w-full px-2 py-2 border border-gray-300 h-[7rem] rounded-md overflow-auto"
+                  className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-md border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 />
               </div>
               <div className="flex items-stretch">
-                <div className="w-full mr-2 overflow-clip border-b-gray-200 text-wrap dark:border-x-0 dark:border-r-white dark:border bg-white text-sm">
-                  <label
-                    class="flex pl-2 text-gray-700 text-sm font-bold mb-1"
-                    for="username"
-                  >
-                    industry
+                <div className="w-full mr-2">
+                  <label htmlFor="industry" className={styles.label}>
+                    Industry
                   </label>
-                  <input
-                    type="text"
-                    value={industry}
-                    onChange={(e) => setIndustry(e.target.value)}
-                    className="w-full px-2 py-2 border border-gray-300 rounded-md"
+
+                  <Select
+                    options={options}
+                    value={options.find(
+                      (option) => option.value === industry[0]
+                    )}
+                    onChange={(selectedOption) =>
+                      setIndustry(selectedOption.value)
+                    }
+                    placeholder="Choose one of the following"
                   />
                 </div>
                 <div className="w-full ml-2">
-                  <label
-                    class="flex pl-2 text-gray-700 text-sm font-bold mb-1"
-                    for="username"
-                  >
+                  <label className={styles.label} htmlFor="username">
                     job type
                   </label>
 
                   <Select
+                    className="capitalize"
                     options={types}
-                    // value={types.find((type) => type.value === task_type)}
-                    value={task_type}
+                    value={types.find((type) => type.value === task_type[0])}
                     onChange={(selectedOption) =>
                       setTask_type(selectedOption.value)
                     }
@@ -217,7 +274,6 @@ const UpdateTask = ({
               <div className="buttons flex justify-end mt-4">
                 <button
                   onClick={() => handleUpdate(entryToUpdate._id)}
-                  // onClick={() => console.log(entryToUpdate.content)}
                   type="button"
                   className="text-white bg-teal-500 hover:bg-teal-700  focus:outline-none font-medium rounded-lg text-sm  px-4 py-2 text-center dark:bg-teal-500 dark:hover:bg-teal-700"
                 >
@@ -233,21 +289,26 @@ const UpdateTask = ({
               </div>
             </div>
             <div className="flex justify-evenly">
-              <div className="px-5 py-5 border-gray-200 bg-white text-sm">
-                <p className="flex text-gray-900 whitespace-no-wrap">
-                  <p>date created: </p>
-                  {entryToUpdate.content.create_date
-                    ? format(
-                        new Date(entryToUpdate.content.create_date),
-                        "dd MMM yyyy, HH:mm"
-                      )
-                    : ""}
+              <div className="px-5 py-5 border-gray-200 bg-white text-sm dark:bg-[#1f2937]">
+                <p className="flex text-gray-900 whitespace-no-wrap dark:text-gray-400">
+                  date created:
+                  <span className="ml-2">
+                    {entryToUpdate.content.create_date
+                      ? format(
+                          new Date(entryToUpdate.content.create_date),
+                          "dd MMM yyyy, HH:mm"
+                        )
+                      : ""}
+                  </span>
                 </p>
               </div>
-              <div className="flex px-5 py-5 border-gray-200 bg-white text-sm">
-                <p>Status: </p>
+              <div className="flex px-5 py-5 border-gray-200 bg-white text-sm dark:bg-[#1f2937]">
+                <p className="dark:text-gray-400">Status:</p>
                 <span
-                  className={`relative inline-block px-3 py-1 rounded-lg font-semibold leading-tight ${handleStatus(entryToUpdate.content.status)}`}>
+                  className={`relative inline-block px-3 py-1 ml-2 rounded-md font-semibold dark:text-gray-400 leading-tight ${handleStatus(
+                    entryToUpdate.content.status
+                  )}`}
+                >
                   {entryToUpdate.content.status}
                 </span>
               </div>
@@ -270,15 +331,14 @@ const UpdateTask = ({
                   />
                 </svg>
                 <input
+                  className="dark:text-gray-400"
                   hidden
                   type="file"
-                  multiple
+                  name="doc"
                   onChange={handleFileChange}
                   ref={fileInputRef}
-                  value={file}
                 />
               </label>
-              {/* <div className="count ml-auto text-gray-400 text-xs font-semibold">0/300</div> */}
             </div>
 
             {/* Preview image here */}
@@ -330,10 +390,54 @@ const UpdateTask = ({
                 </div>
               ))}
             </div>
+            <div>
+              {documents.length > 0 ? (
+                documents.map((document) => {
+                  return (
+                    <div
+                      className="rounded-md flex justify-between p-2 dark:text-gray-400"
+                      key={document._id}
+                    >
+                      <Link to={document.url} target="_blank" className="grow">
+                        {document.documentstitle}
+                      </Link>
+                      <button
+                        type="button"
+                        onClick={() => deleteDocument(document._id)}
+                        className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                      >
+                        <svg
+                          className="w-3 h-3"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 14 14"
+                        >
+                          <path
+                            stroke="currentColor"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M1 1l6 6m0 0l6 6M7 7l6-6M7 7l-6 6"
+                          />
+                        </svg>
+                        <span className="sr-only">Delete Document</span>
+                      </button>
+                    </div>
+                  );
+                })
+              ) : (
+                <p>No Documents</p>
+              )}
+            </div>
           </div>
-          {/* ))} */}
         </div>
       </div>
+      {isLoading && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-gray-900 bg-opacity-75">
+          <div className="text-white">Uploading...</div>
+        </div>
+      )}
     </div>
   ) : null;
 };

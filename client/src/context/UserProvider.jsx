@@ -5,30 +5,30 @@ import Cookies from "js-cookie";
 const AuthContext = createContext();
 export const useAuth = () => useContext(AuthContext);
 
+const deploy = import.meta.env.VITE_DEPLOY_URL;
+
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userData, setUserData] = useState({});
   const checkUser = async () => {
     try {
-      const responseClient = await axios.get(
-        `http://localhost:8001/clients/me`,
-        {
-          withCredentials: true,
-        }
-      );
+      const responseClient = await axios.get(`${deploy}/clients/me`, {
+        withCredentials: true,
+      });
 
       if (
         responseClient.data &&
         responseClient.data._id &&
         responseClient.data.data.role === "client"
       ) {
-        console.log(responseClient);
+       // console.log(responseClient);
         setIsLoggedIn(true);
+        
         setUserData(responseClient.data);
         return;
       }
 
-      const responsePro = await axios.get(`http://localhost:8001/pros/me`, {
+      const responsePro = await axios.get(`${deploy}/pros/me`, {
         withCredentials: true,
       });
 
@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }) => {
         responsePro.data._id &&
         responsePro.data.data.role === "pro"
       ) {
-        console.log(responseClient);
+       // console.log(responseClient);
         setIsLoggedIn(true);
         setUserData(responsePro.data);
         return;
@@ -54,7 +54,8 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const token = Cookies.get("token");
-    if (token) {
+    const auth = localStorage.getItem("auth");
+    if (token, auth) {
       checkUser();
     }
   }, []);
