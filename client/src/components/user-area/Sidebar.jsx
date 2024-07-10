@@ -36,7 +36,7 @@ function DashboardSidebar({ currentLocation, setCurrentLocation }) {
       title: "Chat",
       path: "#",
       icon: HiInbox,
-      label: "3",
+      label: "",
       onclick: handleLocation("Chat"),
     },
     {
