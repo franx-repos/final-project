@@ -11,7 +11,7 @@ const deploy = import.meta.env.VITE_DEPLOY_URL;
 const styles = {
   button:
     "inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-teal-700 rounded-lg hover:bg-teal-800 focus:ring-4 focus:outline-none focus:ring-teal-300 dark:bg-teal-600 dark:hover:bg-teal-700 dark:focus:ring-teal-800",
-  types: "mb-2 text-base text-gray-500 dark:text-gray-400",
+  types: "mb-2 text-base text-gray-500 dark:text-gray-400 h-[2rem]",
   label:
     "block mb-2 text-left text-sm pl-2 font-medium text-gray-900 dark:text-white",
 };
@@ -45,7 +45,7 @@ const MatchingPage = ({ currentLocation, setCurrentLocation }) => {
   const settings = {
     className: "slider variable-width",
     dots: true,
-    infinitfalse: false,
+    infinite: false,
     speed: 250,
     slidesToShow: 4,
     slidesToScroll: 1,
@@ -98,82 +98,87 @@ const MatchingPage = ({ currentLocation, setCurrentLocation }) => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className="w-full p-4 text-center bg-slate-50 rounded-md sm:p-8 dark:bg-gray-800 ">
-      <div>
-        <fieldset className="flex flex-col">
-          <p className={`pl-0 ${styles.label}`}>Filter:</p>
-          <Dropdown
-            label={
-              <span className="text-gray-900 dark:text-white">
-                {formState.industry.join(" | ") || "None"}
-              </span>
-            }
-            dismissOnClick={false}
-          >
-            {userData?.industry?.map((i) => (
-              <Dropdown.Item key={i}>
-                <div className="flex items-center gap-2 ">
-                  <Checkbox
-                    id={i}
-                    checked={formState.industry.includes(i)}
-                    onChange={() => handleOptionChange(i)}
-                  />
-                  <Label className="capitalize" htmlFor={i}>
-                    {i}
-                  </Label>
-                </div>
-              </Dropdown.Item>
-            ))}
-          </Dropdown>
-        </fieldset>
-      </div>
-      <h5 className="mb-10 text-3xl font-bold text-gray-900 dark:text-white ">
-        Tasks for you
-      </h5>
-      <div className="w-full mb-5 ">
-        <Slider {...settings}>
-          {tasks.map((task) => (
-            <div
-              key={task._id}
-              className="max-w-64 p-4 h-[20rem] bg-slate-50 border border-gray-200 rounded-md shadow dark:bg-gray-800 dark:border-gray-700 overflow-auto mb-20"
-            >
-              <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                {task.content.title}
-              </h5>
-              <div className={styles.types}>
-                <strong>Industry:</strong> {task.content.industry.join(", ")}
-              </div>
-              <div className={styles.types}>
-                <strong>Created: </strong>
-                {task.content.create_date.split("T")[0]}
-              </div>
-              <div className={styles.types}>
-                <strong>Task:</strong> {task.content.task_type.join(", ")}
-              </div>
-              <div className="flex justify-evenly">
-                <button
-                  type="button"
-                  onClick={() => toggleUpdateModal(task)}
-                  className={styles.button}
+    <>
+      {userData?.data?.role === "pro" && (
+        <div className="w-full p-4 text-center bg-white rounded-md sm:p-8 dark:bg-gray-800">
+          <div>
+            <fieldset className="flex flex-col">
+              <p className={`pl-0 ${styles.label}`}>Filter:</p>
+              <Dropdown
+                label={
+                  <span className="text-gray-900 dark:text-white">
+                    {formState.industry.join(" | ") || "None"}
+                  </span>
+                }
+                dismissOnClick={false}
+              >
+                {userData?.industry?.map((i) => (
+                  <Dropdown.Item key={i}>
+                    <div className="flex items-center gap-2">
+                      <Checkbox
+                        id={i}
+                        checked={formState.industry.includes(i)}
+                        onChange={() => handleOptionChange(i)}
+                      />
+                      <Label className="capitalize" htmlFor={i}>
+                        {i}
+                      </Label>
+                    </div>
+                  </Dropdown.Item>
+                ))}
+              </Dropdown>
+            </fieldset>
+          </div>
+          <h5 className="mb-10 h-[2rem] text-3xl font-bold text-gray-900 dark:text-white ">
+            Tasks for you
+          </h5>
+          <div className="w-full mb-5">
+            <Slider {...settings}>
+              {tasks.map((task) => (
+                <div
+                  key={task._id}
+                  className="max-w-64 p-4 h-[20rem] bg-slate-50 border border-gray-200 rounded-md shadow dark:bg-gray-800 dark:border-gray-700 overflow-auto"
                 >
-                  Details
-                </button>
-              </div>
-            </div>
-          ))}
-        </Slider>
-      </div>
-      {isDetailMatchOpen && (
-        <DetailMatch
-          isUpdateTaskOpen={isDetailMatchOpen}
-          toggleUpdateModal={toggleUpdateModal}
-          entryToUpdate={entryToUpdate}
-          checkUser={checkUser}
-          currentLocation={currentLocation}
-          setCurrentLocation={setCurrentLocation}
-        />
+                  <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                    {task.content.title}
+                  </h5>
+                  <div className={styles.types}>
+                    <strong>Industry:</strong>{" "}
+                    {task.content.industry.join(", ")}
+                  </div>
+                  <div className={styles.types}>
+                    <strong>Created: </strong>
+                    {task.content.create_date.split("T")[0]}
+                  </div>
+                  <div className={styles.types}>
+                    <strong>Task:</strong> {task.content.task_type.join(", ")}
+                  </div>
+                  <div className="flex justify-evenly">
+                    <button
+                      type="button"
+                      onClick={() => toggleUpdateModal(task)}
+                      className={styles.button}
+                    >
+                      Details
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </Slider>
+          </div>
+          {isDetailMatchOpen && (
+            <DetailMatch
+              isUpdateTaskOpen={isDetailMatchOpen}
+              toggleUpdateModal={toggleUpdateModal}
+              entryToUpdate={entryToUpdate}
+              checkUser={checkUser}
+              currentLocation={currentLocation}
+              setCurrentLocation={setCurrentLocation}
+            />
+          )}
+        </div>
       )}
-    </div>
+    </>
   );
 };
 

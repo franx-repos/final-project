@@ -31,7 +31,7 @@ const ChatPartnerButton = ({ chat }) => {
         //clients als chatpartner fetchen
         url = `${deploy}/clients/${chat.client}`;
       }
-        //console.log(url);
+      // console.log(url);
       try {
         const response = await axios.get(url);
         // console.log(response);

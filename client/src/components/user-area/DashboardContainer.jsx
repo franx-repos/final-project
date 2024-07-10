@@ -2,12 +2,22 @@ import Chat from "./Chat";
 import Taskoverview from "../Aufträge/Taskoverview";
 import UserProfile from "./UserProfile";
 import MatchingPage from "../Aufträge/MatchingPage";
+import { useEffect } from "react";
 
 const DashboardContainer = ({
   currentLocation,
   setCurrentLocation,
   userData,
 }) => {
+  const role = userData?.data?.role;
+
+  useEffect(() => {
+    console.log("Location: " + currentLocation);
+    if (role === "client" && currentLocation === "Dashboard") {
+      setCurrentLocation("Task Overview");
+    }
+  }, [currentLocation, role, setCurrentLocation]);
+
   switch (currentLocation) {
     case "Dashboard":
       return (

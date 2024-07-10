@@ -19,7 +19,7 @@ const DetailMatch = ({
   const { userData } = useAuth();
 
   useEffect(() => {
-   // console.log(entryToUpdate);
+    // console.log(entryToUpdate);
   }, [entryToUpdate]);
 
   const acceptTask = async (id) => {
@@ -56,8 +56,8 @@ const DetailMatch = ({
 
       // console.log(`Task ${task_id} was created by ${created_by}`);
 
-    //chat wird erstellt
-  
+      //chat wird erstellt
+
       const responsechat = await axios.post(
         `${deploy}/chats`,
         {
@@ -67,13 +67,13 @@ const DetailMatch = ({
         { withCredentials: true }
       );
 
-    //console.log(responsechat)
+      //console.log(responsechat)
 
       if (responsepro.status === 200) {
-       // console.log("Professional updated with task.");
+        // console.log("Professional updated with task.");
         checkUser();
+        // setCurrentLocation("Taskoverview");
         toggleUpdateModal();
-        setCurrentLocation("Taskoverview");
       }
     } catch (error) {
       console.error("Error in PATCH request to /pros:", error);
@@ -85,7 +85,7 @@ const DetailMatch = ({
     switch (status) {
       case "OPEN":
         return "bg-green-200 text-green-800";
-      case "SUSPENDED":
+      case "IN PROGRESS":
         return "bg-yellow-200 text-yellow-800";
       case "CLOSED":
         return "bg-red-200 text-red-800";
@@ -106,7 +106,7 @@ const DetailMatch = ({
         { withCredentials: true }
       );
     } catch (error) {
-     // console.log(error);
+      // console.log(error);
     }
     setCurrentLocation("Chat");
   };
