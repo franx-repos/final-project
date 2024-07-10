@@ -98,7 +98,7 @@ const MatchingPage = ({ currentLocation, setCurrentLocation }) => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className="w-full p-4 text-center bg-white rounded-md sm:p-8 dark:bg-gray-800">
+    <div className="w-full p-4 text-center bg-slate-50 rounded-md sm:p-8 dark:bg-gray-800 ">
       <div>
         <fieldset className="flex flex-col">
           <p className={`pl-0 ${styles.label}`}>Filter:</p>
@@ -112,7 +112,7 @@ const MatchingPage = ({ currentLocation, setCurrentLocation }) => {
           >
             {userData?.industry?.map((i) => (
               <Dropdown.Item key={i}>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 ">
                   <Checkbox
                     id={i}
                     checked={formState.industry.includes(i)}
@@ -127,15 +127,15 @@ const MatchingPage = ({ currentLocation, setCurrentLocation }) => {
           </Dropdown>
         </fieldset>
       </div>
-      <h5 className="mb-2 text-3xl font-bold text-gray-900 dark:text-white">
+      <h5 className="mb-10 text-3xl font-bold text-gray-900 dark:text-white ">
         Tasks for you
       </h5>
-      <div className="w-full">
+      <div className="w-full mb-5 ">
         <Slider {...settings}>
           {tasks.map((task) => (
             <div
               key={task._id}
-              className="max-w-64 p-4 bg-white border border-gray-200 rounded-md shadow dark:bg-gray-800 dark:border-gray-700 overflow-auto"
+              className="max-w-64 p-4 h-[20rem] bg-slate-50 border border-gray-200 rounded-md shadow dark:bg-gray-800 dark:border-gray-700 overflow-auto mb-20"
             >
               <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                 {task.content.title}
