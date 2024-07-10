@@ -9,7 +9,7 @@ const deploy = import.meta.env.VITE_DEPLOY_URL;
 
 const styles = {
   wrapper:
-    "p-4 text-center border border-gray-200  shadow sm:p-8 bg-slate-100/50 dark:bg-gray-900  ",
+    "p-4 text-center   shadow sm:p-8 bg-slate-100/50 dark:bg-gray-900  ",
   heading: "mb-2 text-3xl font-bold text-gray-900 dark:text-white",
   card: "max-w-64 p-4 bg-white border border-gray-200 rounded-md shadow dark:bg-gray-800 dark:border-gray-700 overflow-auto ",
   cardHeading: "mb-2 text-xl tracking-tight text-gray-900 dark:text-white ",
@@ -53,7 +53,7 @@ function OpenTasksSlider() {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 3,
+    slidesToShow: 4,
     slidesToScroll: 1,
     adaptiveHeight: true,
   };
