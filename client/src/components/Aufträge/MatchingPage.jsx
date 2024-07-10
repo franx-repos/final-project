@@ -98,82 +98,87 @@ const MatchingPage = ({ currentLocation, setCurrentLocation }) => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className="w-full p-4 text-center bg-white rounded-md sm:p-8 dark:bg-gray-800">
-      <div>
-        <fieldset className="flex flex-col">
-          <p className={`pl-0 ${styles.label}`}>Filter:</p>
-          <Dropdown
-            label={
-              <span className="text-gray-900 dark:text-white">
-                {formState.industry.join(" | ") || "None"}
-              </span>
-            }
-            dismissOnClick={false}
-          >
-            {userData?.industry?.map((i) => (
-              <Dropdown.Item key={i}>
-                <div className="flex items-center gap-2">
-                  <Checkbox
-                    id={i}
-                    checked={formState.industry.includes(i)}
-                    onChange={() => handleOptionChange(i)}
-                  />
-                  <Label className="capitalize" htmlFor={i}>
-                    {i}
-                  </Label>
-                </div>
-              </Dropdown.Item>
-            ))}
-          </Dropdown>
-        </fieldset>
-      </div>
-      <h5 className="mb-2 text-3xl font-bold text-gray-900 dark:text-white">
-        Tasks for you
-      </h5>
-      <div className="w-full">
-        <Slider {...settings}>
-          {tasks.map((task) => (
-            <div
-              key={task._id}
-              className="max-w-64 p-4 bg-white border border-gray-200 rounded-md shadow dark:bg-gray-800 dark:border-gray-700 overflow-auto"
-            >
-              <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                {task.content.title}
-              </h5>
-              <div className={styles.types}>
-                <strong>Industry:</strong> {task.content.industry.join(", ")}
-              </div>
-              <div className={styles.types}>
-                <strong>Created: </strong>
-                {task.content.create_date.split("T")[0]}
-              </div>
-              <div className={styles.types}>
-                <strong>Task:</strong> {task.content.task_type.join(", ")}
-              </div>
-              <div className="flex justify-evenly">
-                <button
-                  type="button"
-                  onClick={() => toggleUpdateModal(task)}
-                  className={styles.button}
+    <>
+      {userData?.data?.role === "pro" && (
+        <div className="w-full p-4 text-center bg-white rounded-md sm:p-8 dark:bg-gray-800">
+          <div>
+            <fieldset className="flex flex-col">
+              <p className={`pl-0 ${styles.label}`}>Filter:</p>
+              <Dropdown
+                label={
+                  <span className="text-gray-900 dark:text-white">
+                    {formState.industry.join(" | ") || "None"}
+                  </span>
+                }
+                dismissOnClick={false}
+              >
+                {userData?.industry?.map((i) => (
+                  <Dropdown.Item key={i}>
+                    <div className="flex items-center gap-2">
+                      <Checkbox
+                        id={i}
+                        checked={formState.industry.includes(i)}
+                        onChange={() => handleOptionChange(i)}
+                      />
+                      <Label className="capitalize" htmlFor={i}>
+                        {i}
+                      </Label>
+                    </div>
+                  </Dropdown.Item>
+                ))}
+              </Dropdown>
+            </fieldset>
+          </div>
+          <h5 className="mb-2 text-3xl font-bold text-gray-900 dark:text-white">
+            Tasks for you
+          </h5>
+          <div className="w-full">
+            <Slider {...settings}>
+              {tasks.map((task) => (
+                <div
+                  key={task._id}
+                  className="max-w-64 p-4 bg-white border border-gray-200 rounded-md shadow dark:bg-gray-800 dark:border-gray-700 overflow-auto"
                 >
-                  Details
-                </button>
-              </div>
-            </div>
-          ))}
-        </Slider>
-      </div>
-      {isDetailMatchOpen && (
-        <DetailMatch
-          isUpdateTaskOpen={isDetailMatchOpen}
-          toggleUpdateModal={toggleUpdateModal}
-          entryToUpdate={entryToUpdate}
-          checkUser={checkUser}
-          currentLocation={currentLocation}
-          setCurrentLocation={setCurrentLocation}
-        />
+                  <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                    {task.content.title}
+                  </h5>
+                  <div className={styles.types}>
+                    <strong>Industry:</strong>{" "}
+                    {task.content.industry.join(", ")}
+                  </div>
+                  <div className={styles.types}>
+                    <strong>Created: </strong>
+                    {task.content.create_date.split("T")[0]}
+                  </div>
+                  <div className={styles.types}>
+                    <strong>Task:</strong> {task.content.task_type.join(", ")}
+                  </div>
+                  <div className="flex justify-evenly">
+                    <button
+                      type="button"
+                      onClick={() => toggleUpdateModal(task)}
+                      className={styles.button}
+                    >
+                      Details
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </Slider>
+          </div>
+          {isDetailMatchOpen && (
+            <DetailMatch
+              isUpdateTaskOpen={isDetailMatchOpen}
+              toggleUpdateModal={toggleUpdateModal}
+              entryToUpdate={entryToUpdate}
+              checkUser={checkUser}
+              currentLocation={currentLocation}
+              setCurrentLocation={setCurrentLocation}
+            />
+          )}
+        </div>
       )}
-    </div>
+    </>
   );
 };
 

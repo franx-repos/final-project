@@ -47,7 +47,7 @@ function Dashboard() {
     checkUser();
   }, []);
 
-  const [currentLocation, setCurrentLocation] = useState("");
+  const [currentLocation, setCurrentLocation] = useState("Dashboard");
   // console.log(userData);
   return isLoggedIn ? (
     <>
