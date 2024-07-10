@@ -1,5 +1,5 @@
 const styles = {
-  container: "flex flex-col justify-center bg-white/75 dark:bg-gray-900/80",
+  container: "flex flex-col justify-center bg-slate-100/50 dark:bg-gray-900",
   content: "my-16 p-5 flex flex-col items-center gap-16",
   header: "flex flex-col gap-2 text-center",
   title:

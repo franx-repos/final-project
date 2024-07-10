@@ -2,10 +2,19 @@ import axios from "axios";
 import { useState, useRef, useEffect } from "react";
 import { format } from "date-fns";
 import Select from "react-select";
+import { Link } from "react-router-dom";
 
 const styles = {
   label:
     "flex pl-2 text-gray-700 text-sm font-bold mb-1 dark:bg-[#1f2937] dark:text-gray-400",
+  input:
+    "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500",
+
+  deleteButton:
+    "text-red-600 inline-flex items-center hover:text-white border border-red-600 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-md text-sm px-5 py-2.5 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900",
+  submitButton:
+    "bg-primary-700 hover:bg-teal-500 ring-2 hover:ring-0 ring-teal-500 font-medium rounded-md text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 text-gray-900 dark:text-white",
+  icon: "M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z",
 };
 
 const UpdateTask = ({
@@ -19,8 +28,8 @@ const UpdateTask = ({
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [deadline, setDeadline] = useState("");
-  const [task_type, setTask_type] = useState([]);
-  const [industry, setIndustry] = useState([]);
+  const [task_type, setTask_type] = useState("");
+  const [industry, setIndustry] = useState("");
   const [create_date, setCreate_date] = useState("");
 
   const [documents, setDocuments] = useState([]);
@@ -32,10 +41,14 @@ const UpdateTask = ({
     setEditTaskId(entryToUpdate?.content?._id || null);
     setTitle(entryToUpdate?.content?.title || "");
     setDescription(entryToUpdate?.content?.description || "");
-    setIndustry(entryToUpdate?.content?.industry || []);
-    setTask_type(entryToUpdate?.content?.task_type || []);
-    setDocuments(entryToUpdate?.content?.documents || []);
+    setIndustry(entryToUpdate?.content?.industry || "");
+    setTask_type(entryToUpdate?.content?.task_type || "");
+    setDocuments(entryToUpdate?.documents || []);
   }, [entryToUpdate]);
+
+  // useEffect(() => {
+  //   console.log(documents);
+  // }, [documents]);
 
   const fileInputRef = useRef(null);
 
@@ -47,26 +60,13 @@ const UpdateTask = ({
   ];
 
   const options = [
-    { value: "it", label: "IT" },
-    { value: "gastronomy", label: "Gastronomy" },
-    { value: "retail", label: "Retail" },
-    { value: "consulting", label: "Consulting" },
-    { value: "healthcare", label: "Healthcare" },
-    { value: "construction", label: "Construction" },
-    { value: "education", label: "Education" },
-    { value: "finance", label: "Finance" },
-    { value: "real_estate", label: "Real Estate" },
-    { value: "marketing", label: "Marketing" },
-    { value: "transportation", label: "Transportation" },
-    { value: "manufacturing", label: "Manufacturing" },
-    { value: "entertainment", label: "Entertainment" },
-    { value: "legal_services", label: "Legal Services" },
-    { value: "arts", label: "Arts" },
-    { value: "personal_services", label: "Personal Services" },
-    { value: "agriculture", label: "Agriculture" },
-    { value: "wellness", label: "Wellness" },
-    { value: "media", label: "Media" },
-    { value: "tourism", label: "Tourism" },
+    { value: "IT", label: "IT" },
+    { value: "Gastronomy", label: "Gastronomy" },
+    { value: "Retail", label: "Retail" },
+    { value: "Consulting", label: "Consulting" },
+    { value: "Healthcare", label: "Healthcare" },
+    { value: "Construction", label: "Construction" },
+    { value: "Education", label: "Education" },
   ];
 
   const handleFileChange = (event) => {
@@ -92,7 +92,7 @@ const UpdateTask = ({
 
   const handleRemoveImage = (index) => {
     setImages([]);
-    setDocuments([]);
+    // setDocuments([]);
     setFile(null);
   };
 
@@ -104,10 +104,12 @@ const UpdateTask = ({
       formData.append("description", description);
       formData.append("industry", industry);
       formData.append("task_type", task_type);
-      formData.append("documentstitle", title);
+      // formData.append("documentstitle", title);
       formData.append("icon", "");
-      console.log(formData);
+      // console.log(formData);
+
       if (file) {
+        // console.log(file);
         formData.append("doc", file);
       }
 
@@ -120,7 +122,9 @@ const UpdateTask = ({
 
       if (response.status === 200) {
         checkUser();
-        toggleUpdateModal();
+        // toggleUpdateModal();
+        // refreshTaskData();
+        setDocuments(response.data.documents);
       }
     } catch (error) {
       setError(error.message || "Something went wrong with updating the task");
@@ -135,6 +139,7 @@ const UpdateTask = ({
         withCredentials: true,
       });
       checkUser();
+
       toggleUpdateModal();
     } catch (error) {
       setError(error.message || "Something went wrong with deleting the task");
@@ -151,6 +156,27 @@ const UpdateTask = ({
         return "bg-red-200 text-red-800";
       default:
         return "";
+    }
+  };
+
+  const deleteDocument = async (documentID) => {
+    // console.log(entryToUpdate);
+    let docs = documents.filter((document) => document._id !== documentID);
+    // console.log(docs);
+    setDocuments(docs);
+    try {
+      const response = await axios.delete(
+        `${deploy}/tasks/${entryToUpdate._id}/${documentID}`,
+        {
+          withCredentials: true,
+        }
+      );
+      // checkUser();
+      // toggleUpdateModal();
+
+      // console.log(response);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -198,7 +224,7 @@ const UpdateTask = ({
                   type="text"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  className="w-full px-2 py-2 border border-gray-300 rounded-md "
+                  className={styles.input}
                 />
               </div>
               <div className="py-5 max-full border-b-gray-200 text-wrap  bg-white text-sm dark:bg-[#1f2937] dark:text-gray-400">
@@ -209,7 +235,7 @@ const UpdateTask = ({
                   type="text"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  className="w-full px-2 py-2 border border-gray-300 h-[7rem] rounded-md overflow-auto"
+                  className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-md border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 />
               </div>
               <div className="flex items-stretch">
@@ -220,14 +246,13 @@ const UpdateTask = ({
 
                   <Select
                     options={options}
-                    value={industry.map((ind) =>
-                      options.find((option) => option.value === ind)
+                    value={options.find(
+                      (option) => option.value === industry[0]
                     )}
-                    onChange={(selectedOptions) =>
-                      setIndustry(selectedOptions.map((option) => option.value))
+                    onChange={(selectedOption) =>
+                      setIndustry(selectedOption.value)
                     }
                     placeholder="Choose one of the following"
-                    isMulti
                   />
                 </div>
                 <div className="w-full ml-2">
@@ -236,17 +261,13 @@ const UpdateTask = ({
                   </label>
 
                   <Select
+                    className="capitalize"
                     options={types}
-                    value={task_type.map((type) =>
-                      types.find((t) => t.value === type)
-                    )}
-                    onChange={(selectedOptions) =>
-                      setTask_type(
-                        selectedOptions.map((option) => option.value)
-                      )
+                    value={types.find((type) => type.value === task_type[0])}
+                    onChange={(selectedOption) =>
+                      setTask_type(selectedOption.value)
                     }
                     placeholder="Choose one of the following"
-                    isMulti
                   />
                 </div>
               </div>
@@ -284,7 +305,7 @@ const UpdateTask = ({
               <div className="flex px-5 py-5 border-gray-200 bg-white text-sm dark:bg-[#1f2937]">
                 <p className="dark:text-gray-400">Status:</p>
                 <span
-                  className={`relative inline-block px-3 py-1 ml-2 rounded-md font-semibold leading-tight ${handleStatus(
+                  className={`relative inline-block px-3 py-1 ml-2 rounded-md font-semibold dark:text-gray-400 leading-tight ${handleStatus(
                     entryToUpdate.content.status
                   )}`}
                 >
@@ -310,6 +331,7 @@ const UpdateTask = ({
                   />
                 </svg>
                 <input
+                  className="dark:text-gray-400"
                   hidden
                   type="file"
                   name="doc"
@@ -367,6 +389,48 @@ const UpdateTask = ({
                   )}
                 </div>
               ))}
+            </div>
+            <div>
+              {documents.length > 0 ? (
+                documents.map((document) => {
+                  return (
+                    <div
+                      className="rounded-md flex justify-between p-2 dark:text-gray-400"
+                      key={document._id}
+                    >
+                       {document.documentstitle.includes(".pdf")? <svg width="20px" height="20px" viewBox="-3 0 24 24" id="meteor-icon-kit__solid-file" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M0 6H5C5.55228 6 6 5.55228 6 5V0H16C17.1046 0 18 0.89543 18 2V22C18 23.1046 17.1046 24 16 24H2C0.89543 24 0 23.1046 0 22V6zM0.34141 4C0.94398 2.29517 2.29517 0.943981 4 0.341411V4H0.34141z" fill="#758CA3"/></svg>
+:<svg width="20px" height="20px" viewBox="0 0 24 24" id="meteor-icon-kit__solid-image" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M3 22H21C21.5523 22 22 21.5523 22 21V17L17.7071 12.7071C17.3166 12.3166 16.6834 12.3166 16.2929 12.7071L10.5 18.5C10.2239 18.7761 9.77614 18.7761 9.5 18.5C9.22386 18.2239 9.22386 17.7761 9.5 17.5L11 16L8.70711 13.7071C8.31658 13.3166 7.68342 13.3166 7.29289 13.7071L2 19V21C2 21.5523 2.44772 22 3 22ZM21 24H3C1.34315 24 0 22.6569 0 21V3C0 1.34315 1.34315 0 3 0H21C22.6569 0 24 1.34315 24 3V21C24 22.6569 22.6569 24 21 24ZM6.5 9C7.88071 9 9 7.88071 9 6.5C9 5.11929 7.88071 4 6.5 4C5.11929 4 4 5.11929 4 6.5C4 7.88071 5.11929 9 6.5 9Z" fill="#758CA3"/></svg>}
+                      <Link to={document.url} target="_blank" className="grow">
+                        {document.documentstitle}
+                      </Link>
+                      <button
+                        type="button"
+                        onClick={() => deleteDocument(document._id)}
+                        className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                      >
+                        <svg
+                          className="w-3 h-3"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 14 14"
+                        >
+                          <path
+                            stroke="currentColor"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M1 1l6 6m0 0l6 6M7 7l6-6M7 7l-6 6"
+                          />
+                        </svg>
+                        <span className="sr-only">Delete Document</span>
+                      </button>
+                    </div>
+                  );
+                })
+              ) : (
+                <p>No Documents</p>
+              )}
             </div>
           </div>
         </div>

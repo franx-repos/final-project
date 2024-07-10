@@ -5,28 +5,29 @@ import { useChat } from "../../context/ChatProvider.jsx";
 
 const ChatSideBar = () => {
   const { userData } = useAuth();
-  const {chats} = useChat();
-
+  const { chats } = useChat();
 
   return (
-    <div className="relative max-w-[340px] mx-auto bg-gray-50 dark:bg-gray-800 shadow-lg rounded-md">
+    <div className="relative  max-w-[340px] mx-auto bg-gray-50 dark:bg-gray-800 shadow-lg rounded-md scrollbar-thin overflow-auto">
       <header className="pt-6 pb-4 px-5 border-b border-gray-200">
         <div className="flex justify-between items-center mb-3">
           <div className="flex items-center">
             <a className="inline-flex items-start mr-3" href="#0">
               <img
                 className="rounded-full"
-                src={userData && userData.image_url}
+                // src="src/assets/abstract-user-flat-3.svg"
+                src={
+                  !userData.image_url
+                    ? "src/assets/abstract-user-flat-3.svg"
+                    : userData.image_url
+                }
                 width="48"
                 height="48"
-                alt="Lauren Marsano"
+                alt={userData.data.first_name}
               />
             </a>
             <div className="pr-1">
-              <a
-                className="inline-flex text-gray-800 hover:text-gray-900"
-                href="#0"
-              >
+              <a className="inline-flex dark:text-gray-400" href="#0">
                 <h2 className="text-xl leading-snug font-bold">
                   {userData.data && userData.data.first_name}{" "}
                   {userData.data && userData.data.last_name}
@@ -81,10 +82,11 @@ const ChatSideBar = () => {
 
         <div className="divide-y divide-gray-200">
           {/* Render chat partner buttons previews */}
-          {chats && chats.map((chat, index) => {
-            console.log(chat)
-            return <ChatPartnerButton key={chat._id} chat={chat} />;
-          })}
+          {chats &&
+            chats.map((chat, index) => {
+              // console.log(chat);
+              return <ChatPartnerButton key={chat._id} chat={chat} />;
+            })}
         </div>
       </div>
     </div>

@@ -21,26 +21,13 @@ const CreateTask = ({ isCreateTaskOpen, toggleModal, checkUser }) => {
   const { userData } = useAuth();
 
   const options = [
-    { value: "it", label: "IT" },
-    { value: "gastronomy", label: "Gastronomy" },
-    { value: "retail", label: "Retail" },
-    { value: "consulting", label: "Consulting" },
-    { value: "healthcare", label: "Healthcare" },
-    { value: "construction", label: "Construction" },
-    { value: "education", label: "Education" },
-    { value: "finance", label: "Finance" },
-    { value: "real_estate", label: "Real Estate" },
-    { value: "marketing", label: "Marketing" },
-    { value: "transportation", label: "Transportation" },
-    { value: "manufacturing", label: "Manufacturing" },
-    { value: "entertainment", label: "Entertainment" },
-    { value: "legal_services", label: "Legal Services" },
-    { value: "arts", label: "Arts" },
-    { value: "personal_services", label: "Personal Services" },
-    { value: "agriculture", label: "Agriculture" },
-    { value: "wellness", label: "Wellness" },
-    { value: "media", label: "Media" },
-    { value: "tourism", label: "Tourism" },
+    { value: "IT", label: "IT" },
+    { value: "Gastronomy", label: "Gastronomy" },
+    { value: "Retail", label: "Retail" },
+    { value: "Consulting", label: "Consulting" },
+    { value: "Healthcare", label: "Healthcare" },
+    { value: "Construction", label: "Construction" },
+    { value: "Education", label: "Education" },
   ];
 
   const types = [
@@ -100,7 +87,7 @@ const CreateTask = ({ isCreateTaskOpen, toggleModal, checkUser }) => {
       }
     } catch (error) {
       setError(error.message || "Something went wrong with Login");
-      console.log("Error:", error.message);
+      //console.log("Error:", error.message);
       if (error.response) {
       }
     }
@@ -192,6 +179,7 @@ const CreateTask = ({ isCreateTaskOpen, toggleModal, checkUser }) => {
                 </label>
                 <div className="mt-2">
                   <Select
+                    className="capitalize"
                     options={types}
                     value={types.find((type) => type.value === task_type)}
                     onChange={(selectedOption) =>

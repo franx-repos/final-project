@@ -9,10 +9,10 @@ const deploy = import.meta.env.VITE_DEPLOY_URL;
 
 const styles = {
   wrapper:
-    "p-4 text-center bg-white border border-gray-200 rounded-md shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700",
+    "p-4 text-center   shadow sm:p-8 bg-slate-100/50 dark:bg-gray-900  ",
   heading: "mb-2 text-3xl font-bold text-gray-900 dark:text-white",
-  card: "max-w-64 p-4 bg-white border border-gray-200 rounded-md shadow dark:bg-gray-800 dark:border-gray-700 overflow-auto",
-  cardHeading: "mb-2 text-xl tracking-tight text-gray-900 dark:text-white",
+  card: "max-w-64 p-4 bg-white border border-gray-200 rounded-md shadow dark:bg-gray-800 dark:border-gray-700 overflow-auto ",
+  cardHeading: "mb-2 text-xl tracking-tight text-gray-900 dark:text-white ",
   button:
     "inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-teal-500 hover:bg-teal-700 rounded-md focus:ring-4 focus:outline-none focus:ring-teal-300 dark:bg-teal-600 dark:hover:bg-teal-700 dark:focus:ring-teal-800",
   types: "mb-2 text-base text-gray-500 dark:text-gray-400",
@@ -42,7 +42,7 @@ function OpenTasksSlider() {
   }, []);
 
   useEffect(() => {
-    console.log(tasks);
+    //console.log(tasks);
   }, [tasks]);
 
   if (loading) return <div>Loading...</div>;
@@ -53,7 +53,7 @@ function OpenTasksSlider() {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 3,
+    slidesToShow: 4,
     slidesToScroll: 1,
     adaptiveHeight: true,
   };
@@ -73,7 +73,7 @@ function OpenTasksSlider() {
   return (
     <div className={styles.wrapper}>
       <h5 className={styles.heading}>Available Tasks</h5>
-      <div className="w-full p-3">
+      <div className="w-full p-3 ">
         <Slider {...settings}>
           {tasks.map((task) => (
             <TaskCard

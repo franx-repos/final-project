@@ -130,7 +130,7 @@ export const updateTask = async (req, res, next) => {
     req.body;
   const content = { title, industry, task_type, description };
 
-  console.log("Content:", content);
+    // console.log("Content:", content);
 
   try {
     const task = await Task.findById(id).populate("content.created_by");
@@ -154,7 +154,7 @@ export const updateTask = async (req, res, next) => {
     }
 
     const updatedTask = await task.save();
-    console.log("Updated Task:", updatedTask);
+    // console.log("Updated Task:", updatedTask);
     res.json(updatedTask);
   } catch (error) {
     console.error("Error updating task:", error);
@@ -194,15 +194,15 @@ export const deleteTaskDocument = async (req, res, next) => {
     //find document and filter it out
     const doc = task.documents.filter((document) => document._id == docID);
 
-    console.log(doc[0].public_id);
+      // console.log(doc[0].public_id);
 
     const deletedRes = await cloudinary.uploader.destroy(
       doc[0].public_id,
       (error, result) => {
         if (result.result === "ok") {
-          console.log(result); // { result: 'ok' }
+          // console.log(result); // { result: 'ok' }
         } else {
-          console.log(error);
+          //  console.log(error);
         }
       }
     );
@@ -257,7 +257,7 @@ export const patchtask = async (req, res, next) => {
   const { id } = req.params;
   const { content } = req.body;
 
-  console.log(`Updating task ${id} with content:`, content);
+  // console.log(`Updating task ${id} with content:`, content);
 
   try {
     const task = await Task.findById(id);

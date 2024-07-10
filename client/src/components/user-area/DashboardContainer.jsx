@@ -9,6 +9,15 @@ const DashboardContainer = ({
   setCurrentLocation,
   userData,
 }) => {
+  const role = userData?.data?.role;
+
+  useEffect(() => {
+    console.log("Location: " + currentLocation);
+    if (role === "client" && currentLocation === "Dashboard") {
+      setCurrentLocation("Task Overview");
+    }
+  }, [currentLocation, role, setCurrentLocation]);
+
   switch (currentLocation) {
     case "Dashboard":
       return (

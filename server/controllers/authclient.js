@@ -47,25 +47,25 @@ export const signUp = asyncHandler(async (req, res, next) => {
     industry,
     languages,
   });
-  console.log(
-    role,
-    first_name,
-    last_name,
-    email,
-    password,
-    vat_id,
-    tax_id,
-    street,
-    zip,
-    city,
-    country,
-    phone_number,
-    industry,
-    languages
-  );
+  //    console.log(
+  //   role,
+  //   first_name,
+  //   last_name,
+  //   email,
+  //   password,
+  //   vat_id,
+  //   tax_id,
+  //   street,
+  //   zip,
+  //   city,
+  //   country,
+  //   phone_number,
+  //   industry,
+  //   languages
+  // );
   const token = jwt.sign({ cid: newClient._id }, process.env.JWT_SECRET);
   res.cookie("token", token, {
-    maxAge: 1800000,
+    maxAge: 86400000,
     httpOnly: true,
     secure: true,
     sameSite: "None",

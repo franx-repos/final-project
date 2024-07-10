@@ -11,7 +11,7 @@ const ResetPassword = () => {
 
   const deploy = import.meta.env.VITE_DEPLOY_URL;
   useEffect(() => {
-    console.log(`email: ${email}, error: ${error}, message: ${message}`);
+    //console.log(`email: ${email}, error: ${error}, message: ${message}`);
   }, [email, error, message]);
 
   const handleResetPassword = async (e) => {

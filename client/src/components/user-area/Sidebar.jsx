@@ -1,13 +1,8 @@
 import { Sidebar } from "flowbite-react";
-import {
-  HiChartPie,
-  HiInbox,
-  HiShoppingBag,
-  HiTable,
-  HiUser,
-  HiViewBoards,
-} from "react-icons/hi";
+import { HiChartPie, HiInbox, HiUser, HiViewBoards } from "react-icons/hi";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../context/UserProvider";
+import React, { useEffect, useState } from "react";
 
 const styles = {
   sidebarItem: "justify-start text-left text-xl p-4",
@@ -19,13 +14,15 @@ function DashboardSidebar({ currentLocation, setCurrentLocation }) {
     setCurrentLocation(location);
   };
 
+  const { userData } = useAuth();
+  const [loading, setLoading] = useState(true);
+
   const sbItems = [
     {
       title: "Dashboard",
       path: "#",
       icon: HiChartPie,
       label: "",
-
       onclick: handleLocation("Dashboard"),
     },
     {
@@ -39,7 +36,7 @@ function DashboardSidebar({ currentLocation, setCurrentLocation }) {
       title: "Chat",
       path: "#",
       icon: HiInbox,
-      label: "3",
+      label: "",
       onclick: handleLocation("Chat"),
     },
     {
@@ -50,6 +47,10 @@ function DashboardSidebar({ currentLocation, setCurrentLocation }) {
       onclick: handleLocation("User Profile"),
     },
   ];
+
+  if (userData?.data?.role === "client") {
+    sbItems.shift();
+  }
 
   return (
     <Sidebar className="h-screen pt-5 sticky top-0 bg-gray-50 dark:bg-gray-800">
@@ -66,18 +67,20 @@ function DashboardSidebar({ currentLocation, setCurrentLocation }) {
       </Link>
       <Sidebar.Items>
         <Sidebar.ItemGroup>
-          {sbItems.map((item, index) => (
-            <Sidebar.Item
-              key={index}
-              className={styles.sidebarItem}
-              href={item.onclick ? "#" : item.path}
-              icon={item.icon}
-              label={item.label}
-              onClick={item.onclick}
-            >
-              {item.title}
-            </Sidebar.Item>
-          ))}
+          {sbItems.map((item, index) => {
+            return (
+              <Sidebar.Item
+                key={index}
+                className={styles.sidebarItem}
+                href={item.onclick ? "#" : item.path}
+                icon={item.icon}
+                label={item.label}
+                onClick={item.onclick}
+              >
+                {item.title}
+              </Sidebar.Item>
+            );
+          })}
         </Sidebar.ItemGroup>
       </Sidebar.Items>
     </Sidebar>

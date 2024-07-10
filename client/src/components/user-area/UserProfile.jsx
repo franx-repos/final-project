@@ -67,18 +67,6 @@ function UserProfile() {
     "Construction",
     "Education",
     "Finance",
-    "Real Estate",
-    "Marketing",
-    "Transportation",
-    "Manufacturing",
-    "Entertainment",
-    "Legal Services",
-    "Arts",
-    "Personal Services",
-    "Agriculture",
-    "Wellness",
-    "Media",
-    "Tourism",
   ];
   useEffect(() => {
     if (userData) {
@@ -160,11 +148,12 @@ function UserProfile() {
       console.log(error || "Updating user data failed");
     }
   };
-  console.log(userData);
+
+  //console.log(userData);
   return (
     <>
       <Toastify />
-      <div className="flex">
+      <div className="flex h-[calc(100%-4rem)]">
         <div className="flex flex-col">
           {/* user picture and name */}
           <div className="flex w-fit h-fit p-3 bg-gray-50 rounded-md shadow dark:bg-gray-800 dark:border-gray-700">
