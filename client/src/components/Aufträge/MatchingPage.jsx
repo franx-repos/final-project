@@ -45,7 +45,7 @@ const MatchingPage = ({ currentLocation, setCurrentLocation }) => {
   const settings = {
     className: "slider variable-width",
     dots: true,
-    infinitfalse: false,
+    infinite: false,
     speed: 250,
     slidesToShow: 4,
     slidesToScroll: 1,

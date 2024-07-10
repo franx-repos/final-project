@@ -70,7 +70,7 @@ const Taskoverview = () => {
   const handleStatus = (status) => {
     if (status === "OPEN") {
       return "bg-green-200 text-green-800";
-    } else if (status === "SUSPENDED") {
+    } else if (status === "IN PROGRESS") {
       return "bg-yellow-200 text-yellow-800";
     } else if (status === "CLOSED") {
       return "bg-red-200 text-red-800";
