@@ -17,13 +17,13 @@ const ChatBubble = ({ message }) => {
         //clients als chatpartner fetchen
         url = `${deploy}/clients/${message.author_id}`;
       }
-      console.log(url);
+        //console.log(url);
       try {
         const response = await axios.get(url);
         // console.log(response);
         setEntry(response.data);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     };
 
@@ -32,7 +32,7 @@ const ChatBubble = ({ message }) => {
 
   useEffect(() => {
     if (entry.length > 0) {
-      console.log(entry);
+        // console.log(entry);
     }
   }, [entry]);
 
