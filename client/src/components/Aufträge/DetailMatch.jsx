@@ -19,7 +19,7 @@ const DetailMatch = ({
   const { userData } = useAuth();
 
   useEffect(() => {
-    console.log(entryToUpdate);
+   // console.log(entryToUpdate);
   }, [entryToUpdate]);
 
   const acceptTask = async (id) => {
@@ -27,7 +27,7 @@ const DetailMatch = ({
       const proId = userData._id;
       const name = userData.data.first_name;
       const newtasks = [...userData.tasks, id];
-      console.log(name, proId, newtasks);
+      //console.log(name, proId, newtasks);
 
       const response = await axios.patch(
         `${deploy}/tasks/${id}`,
@@ -67,10 +67,10 @@ const DetailMatch = ({
         { withCredentials: true }
       );
 
-    console.log(responsechat)
+    //console.log(responsechat)
 
       if (responsepro.status === 200) {
-        console.log("Professional updated with task.");
+       // console.log("Professional updated with task.");
         checkUser();
         toggleUpdateModal();
         setCurrentLocation("Taskoverview");
@@ -106,7 +106,7 @@ const DetailMatch = ({
         { withCredentials: true }
       );
     } catch (error) {
-      console.log(error);
+     // console.log(error);
     }
     setCurrentLocation("Chat");
   };

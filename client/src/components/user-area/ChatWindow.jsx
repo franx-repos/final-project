@@ -35,23 +35,23 @@ const ChatWindow = () => {
       } else {
         url = `${deploy}/chats/pro_chat/`;
       }
-      console.log(url);
+        // console.log(url);
       try {
         const response = await axios.get(url, { withCredentials: true });
         setChats(response.data);
       } catch (error) {
-        console.log(error);
+         //console.log(error);
       }
     };
 
     if (userData) {
-      console.log("fetching chat");
+         // console.log("fetching chat");
       fetchChat();
     }
   }, []);
 
   useEffect(() => {
-    console.log(chats);
+     //console.log(chats);
   }, [chats]);
 
   // const debouncedSaveMessages = useRef(
@@ -87,7 +87,7 @@ const ChatWindow = () => {
   }, []);
 
   useEffect(() => {
-    console.log(socket);
+    // console.log(socket);
   }, [socket]);
 
   // useEffect(() => {
@@ -117,11 +117,11 @@ const ChatWindow = () => {
 
   useEffect(() => {
     if (socket && isListenerSetup === false) {
-      console.log("Socket is connected");
+      //console.log("Socket is connected");
 
       socket
         .on("recieve-message", (message) => {
-          console.log("Received message:", message);
+         // console.log("Received message:", message);
 
           setMessages((prevMessages) => [...prevMessages, message]);
           setSaveNewMessage(true);
@@ -131,7 +131,7 @@ const ChatWindow = () => {
         });
       setIsListenerSetup(true);
     } else {
-      console.log("Socket is not connected");
+     // console.log("Socket is not connected");
     }
   }, [socket, isListenerSetup]);
 
@@ -157,15 +157,15 @@ const ChatWindow = () => {
         } else {
           url = `${deploy}/chats/pro_chat/`;
         }
-        console.log(url);
+        // console.log(url);
         try {
           const response = await axios.get(url, { withCredentials: true });
           setChats(response.data);
         } catch (error) {
-          console.log(error);
+          //console.log(error);
         }
       };
-      console.log("fetching chat");
+      // console.log("fetching chat");
       fetchChat();
     }
   }, [userData]);
@@ -180,7 +180,7 @@ const ChatWindow = () => {
         <div className="flex flex-col w-full ml-3 shadow-lg rounded-t-md">
           <div className="flex-1 scrollbar-thin overflow-auto border-gray-200 dark:bg-gray-800 rounded-t-md">
             {messages.map((message, index) => {
-              console.log(message);
+              // console.log(message);
               if (message !== messages[index - 1]) {
                 return <ChatBubble key={index} message={message} />;
               }

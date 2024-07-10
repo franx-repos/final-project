@@ -42,7 +42,7 @@ function OpenTasksSlider() {
   }, []);
 
   useEffect(() => {
-    console.log(tasks);
+    //console.log(tasks);
   }, [tasks]);
 
   if (loading) return <div>Loading...</div>;

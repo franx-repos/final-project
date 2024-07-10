@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }) => {
         responseClient.data._id &&
         responseClient.data.data.role === "client"
       ) {
-        console.log(responseClient);
+       // console.log(responseClient);
         setIsLoggedIn(true);
         
         setUserData(responseClient.data);
@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }) => {
         responsePro.data._id &&
         responsePro.data.data.role === "pro"
       ) {
-        console.log(responseClient);
+       // console.log(responseClient);
         setIsLoggedIn(true);
         setUserData(responsePro.data);
         return;

@@ -48,14 +48,14 @@ const UserDropdown = () => {
       setUserData({});
       navigate("/");
     } catch (error) {
-      console.log("Error:", error.message);
-      console.log("Error:", error.response.data);
+    //  console.log("Error:", error.message);
+    //  console.log("Error:", error.response.data);
       if (error.response) {
         // The request was made and the server responded with a status code
         // that falls out of the range of 2xx
-        console.log("Response data:", error.response.data);
-        console.log("Response status:", error.response.status);
-        console.log("Response headers:", error.response.headers);
+        //    console.log("Response data:", error.response.data);
+        //    console.log("Response status:", error.response.status);
+        //    console.log("Response headers:", error.response.headers);
       }
     }
   };

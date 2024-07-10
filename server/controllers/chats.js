@@ -8,8 +8,8 @@ export const updateChat = async (req, res, next) => {
   const { id } = req.params;
   const { cid, body } = req;
   const { messages } = body;
-  console.log("update Chat");
-  console.log(body);
+    // console.log("update Chat");
+    // console.log(body);
   try {
     // const newMessage = {
     //   author_id: cid,
@@ -61,7 +61,7 @@ export const getChatByClientID = async (req, res, next) => {
 
     res.status(200).json(chat);
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     next(error);
   }
 };
@@ -74,7 +74,7 @@ export const getChatByProID = async (req, res, next) => {
 
     res.status(200).json(chat);
   } catch (error) {
-    console.log(error);
+      // console.log(error);
   }
 };
 
