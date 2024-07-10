@@ -28,19 +28,6 @@ const CreateTask = ({ isCreateTaskOpen, toggleModal, checkUser }) => {
     { value: "Healthcare", label: "Healthcare" },
     { value: "Construction", label: "Construction" },
     { value: "Education", label: "Education" },
-    { value: "Finance", label: "Finance" },
-    { value: "Real Estate", label: "Real Estate" },
-    { value: "Marketing", label: "Marketing" },
-    { value: "Transportation", label: "Transportation" },
-    { value: "Manufacturing", label: "Manufacturing" },
-    { value: "Entertainment", label: "Entertainment" },
-    { value: "Legal Services", label: "Legal Services" },
-    { value: "Arts", label: "Arts" },
-    { value: "Personal Services", label: "Personal Services" },
-    { value: "Agriculture", label: "Agriculture" },
-    { value: "Wellness", label: "Wellness" },
-    { value: "Media", label: "Media" },
-    { value: "Tourism", label: "Tourism" },
   ];
 
   const types = [
@@ -100,7 +87,7 @@ const CreateTask = ({ isCreateTaskOpen, toggleModal, checkUser }) => {
       }
     } catch (error) {
       setError(error.message || "Something went wrong with Login");
-      console.log("Error:", error.message);
+      //console.log("Error:", error.message);
       if (error.response) {
       }
     }

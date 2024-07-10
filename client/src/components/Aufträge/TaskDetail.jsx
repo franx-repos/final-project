@@ -20,11 +20,10 @@ const TaskDetail = ({
 }) => {
   const { userData } = useAuth();
 
-  useEffect(() => {
-    console.log(entryToShow);
-  }, [entryToShow]);
+  // useEffect(() => {
+  //   console.log(entryToShow);
+  // }, [entryToShow]);
 
-  
   const handleStatus = (status) => {
     switch (status) {
       case "OPEN":
@@ -114,23 +113,37 @@ const TaskDetail = ({
               <div className="flex px-5 py-5 border-gray-200 bg-white text-sm dark:bg-[#1f2937]">
                 <p className="dark:text-gray-400">Status:</p>
                 <span
-                  className={`relative inline-block px-3 py-1 ml-2 rounded-md font-semibold leading-tight ${handleStatus(
+                  className={`relative inline-block px-3 py-1 ml-2 rounded-md font-semibold dark:text-gray-400 leading-tight ${handleStatus(
                     entryToShow.content.status
                   )}`}
                 >
                   {entryToShow.content.status}
                 </span>
               </div>
-              
-              
             </div>
-            <div>{entryToShow.documents.length>0 ? entryToShow.documents.map((document)=>{
-                console.log(document);
-                return <div className="rounded-md flex justify-between p-2" key={document._id}>
-                <Link to={document.url} target="_blank" className="grow">{document.documentstitle}</Link>
-                
-              </div>
-              }) : <p>No Documents</p>}</div>
+            <div>
+              {entryToShow.documents.length > 0 ? (
+                entryToShow.documents.map((document) => {
+                  // console.log(document);
+                  return (
+                    <div
+                      className="rounded-md flex justify-between p-2"
+                      key={document._id}
+                    >
+                      <Link
+                        to={document.url}
+                        target="_blank"
+                        className="grow dark:text-gray-400"
+                      >
+                        {document.documentstitle}
+                      </Link>
+                    </div>
+                  );
+                })
+              ) : (
+                <p>No Documents</p>
+              )}
+            </div>
           </div>
         </div>
       </div>

@@ -33,7 +33,7 @@ const TaskCard = ({
         { withCredentials: true }
       );
     } catch (error) {
-      console.log(error);
+     // console.log(error);
     }
   };
   return (

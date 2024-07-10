@@ -23,6 +23,7 @@ const Taskoverview = () => {
   const [isCreateTaskOpen, setIsCreateTaskOpen] = useState(false);
   const [isUpdateTaskOpen, setIsUpdateTaskOpen] = useState(false);
   const [isTaskDetailOpen, setIsTaskDetailOpen] = useState(false);
+  const [updateTask, setUpdateTask] = useState(false);
   const [entryToUpdate, setEntryToUpdate] = useState({});
   const [entryToShow, setEntryToShow] = useState({});
 
@@ -45,7 +46,7 @@ const Taskoverview = () => {
       const detailedTasksData = detailedTasksResults
         .filter((result) => result.status === "fulfilled")
         .map((result) => result.value.data);
-
+      // console.log(detailedTasksData);
       setEntries(detailedTasksData);
 
       setLoading(false);
@@ -58,11 +59,12 @@ const Taskoverview = () => {
 
   useEffect(() => {
     fetchTasks();
-  }, [userData]);
+  }, [userData, isUpdateTaskOpen]);
 
   const handleStatus = (status) => {
     if (status === "OPEN") {
       return "bg-green-200 text-green-800";
+    } else if (status === "IN PROGRESS") {
     } else if (status === "IN PROGRESS") {
       return "bg-yellow-200 text-yellow-800";
     } else if (status === "CLOSED") {

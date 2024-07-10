@@ -67,18 +67,6 @@ function UserProfile() {
     "Construction",
     "Education",
     "Finance",
-    "Real Estate",
-    "Marketing",
-    "Transportation",
-    "Manufacturing",
-    "Entertainment",
-    "Legal Services",
-    "Arts",
-    "Personal Services",
-    "Agriculture",
-    "Wellness",
-    "Media",
-    "Tourism",
   ];
   useEffect(() => {
     if (userData) {
@@ -161,6 +149,7 @@ function UserProfile() {
     }
   };
 
+  //console.log(userData);
   return (
     <>
       <Toastify />
