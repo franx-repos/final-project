@@ -9,6 +9,7 @@ import ResetPassword from "./components/ResetPassword";
 import Modalsignin from "./components/signinmodal/Modalsignin";
 import NotFound from "./components/NotFound";
 import About from "./components/user-area/taxmaxheader/About";
+import Contact from "./components/user-area/taxmaxheader/Contact";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/modalsignin" element={<Modalsignin />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
       </Routes>
     </>
   );
