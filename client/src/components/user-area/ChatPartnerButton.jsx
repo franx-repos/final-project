@@ -31,13 +31,13 @@ const ChatPartnerButton = ({ chat }) => {
         //clients als chatpartner fetchen
         url = `${deploy}/clients/${chat.client}`;
       }
-      console.log(url);
+        //console.log(url);
       try {
         const response = await axios.get(url);
         // console.log(response);
         setEntry(response.data);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     };
 
@@ -48,7 +48,7 @@ const ChatPartnerButton = ({ chat }) => {
         });
         setTask(response.data);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     };
     fetchChatTask();

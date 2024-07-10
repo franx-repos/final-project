@@ -27,32 +27,32 @@ export const ChatProvider = ({ children }) => {
         } else {
           url = `${deploy}/chats/pro_chat/`;
         }
-        console.log(url);
+         //console.log(url);
         try {
           const response = await axios.get(url, { withCredentials: true });
           setChats(response.data);
         } catch (error) {
-          console.log(error);
+          //console.log(error);
         }
   }
 
   const saveMessages = async (userData) => {
     const messagesToSave = messages;
     try {
-      console.log("Saving messages to DB:", messagesToSave);
+      // console.log("Saving messages to DB:", messagesToSave);
       const response = await axios.patch(
         `${deploy}/chats/${room}`,
         { messages: messagesToSave },
         { withCredentials: true }
       );
-      console.log(response)
+       //console.log(response)
       if(response){
         fetchChat(userData);
         setSaveNewMessage(false);
       }
       
     } catch (error) {
-      console.log(error);
+     //  console.log(error);
     }
   };
 

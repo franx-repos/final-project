@@ -145,10 +145,10 @@ function UserProfile() {
         navigate("/signin");
       }
     } catch (error) {
-      console.log(error || "Updating user data failed");
+     // console.log(error || "Updating user data failed");
     }
   };
-  console.log(userData);
+   //console.log(userData);
   return (
     <>
       <Toastify />

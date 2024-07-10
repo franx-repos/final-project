@@ -84,7 +84,7 @@ const ChatSideBar = () => {
           {/* Render chat partner buttons previews */}
           {chats &&
             chats.map((chat, index) => {
-              console.log(chat);
+              // console.log(chat);
               return <ChatPartnerButton key={chat._id} chat={chat} />;
             })}
         </div>
