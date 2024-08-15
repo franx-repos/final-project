@@ -58,11 +58,7 @@ function DashboardSidebar({ currentLocation, setCurrentLocation }) {
         to="/"
         className="flex items-center ml-2 space-x-3 rtl:space-x-reverse"
       >
-        <img
-          src="\src\assets\TaxMax-Logo3.png"
-          className="h-8"
-          alt="TaxMax Logo"
-        />
+        <img src="\public\TaxMax-Logo3.png" className="h-8" alt="TaxMax Logo" />
         <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"></span>
       </Link>
       <Sidebar.Items>
