@@ -1,3 +1,7 @@
+[build]
+  publish = "public"
+  static_assets = ["src/assets"]
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
