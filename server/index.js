@@ -24,6 +24,7 @@ const io = new Server(httpServer, {
       "http://localhost:5173",
       "https://admin.socket.io/",
       "https://tax-max-rm6g.onrender.com",
+      "https://taxmax.netlify.app/",
     ],
     credentials: true,
   },
