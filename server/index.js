@@ -95,7 +95,11 @@ instrument(io, {
 
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://tax-max-rm6g.onrender.com"],
+    origin: [
+      "http://localhost:5173",
+      "https://tax-max-rm6g.onrender.com",
+      "https://taxmax.netlify.app",
+    ],
     credentials: true,
   })
 );
