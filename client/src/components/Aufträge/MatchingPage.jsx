@@ -11,7 +11,7 @@ const deploy = import.meta.env.VITE_DEPLOY_URL;
 const styles = {
   button:
     "inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-teal-700 rounded-lg hover:bg-teal-800 focus:ring-4 focus:outline-none focus:ring-teal-300 dark:bg-teal-600 dark:hover:bg-teal-700 dark:focus:ring-teal-800",
-  types: "mb-2 text-base text-gray-500 dark:text-gray-400",
+  types: "mb-2 text-base text-gray-500 dark:text-gray-400 h-[2rem]",
   label:
     "block mb-2 text-left text-sm pl-2 font-medium text-gray-900 dark:text-white",
 };
@@ -129,15 +129,15 @@ const MatchingPage = ({ currentLocation, setCurrentLocation }) => {
               </Dropdown>
             </fieldset>
           </div>
-          <h5 className="mb-2 text-3xl font-bold text-gray-900 dark:text-white">
+          <h5 className="mb-10 h-[2rem] text-3xl font-bold text-gray-900 dark:text-white ">
             Tasks for you
           </h5>
-          <div className="w-full">
+          <div className="w-full mb-5">
             <Slider {...settings}>
               {tasks.map((task) => (
                 <div
                   key={task._id}
-                  className="max-w-64 p-4 bg-white border border-gray-200 rounded-md shadow dark:bg-gray-800 dark:border-gray-700 overflow-auto"
+                  className="max-w-64 p-4 h-[20rem] bg-slate-50 border border-gray-200 rounded-md shadow dark:bg-gray-800 dark:border-gray-700 overflow-auto"
                 >
                   <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                     {task.content.title}

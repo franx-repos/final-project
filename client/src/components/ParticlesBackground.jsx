@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
+import particles from "particlesjs";
 
 const ParticlesBackground = () => {
   useEffect(() => {
-    Particles.init({
+    particles.init({
       // normal options
       selector: ".background",
       maxParticles: 160,
