@@ -26,19 +26,19 @@ const steps = [
     num: "1",
     title: "Create your Account",
     desc: "Condimentum vit pellemsque habitant morbi at molestie.",
-    img: "/src/assets/user-icon.svg",
+    img: "./src/assets/user-icon.svg",
   },
   {
     num: "2",
     title: "Create a task",
     desc: "Condimentum vit pellemsque habitant morbi at molestie.",
-    img: "/src/assets/task-icon.svg",
+    img: "./src/assets/task-icon.svg",
   },
   {
     num: "3",
     title: "Get connected with a Pro",
     desc: "Condimentum vit pellemsque habitant morbi at molestie.",
-    img: "/src/assets/connect-icon.svg",
+    img: "./src/assets/connect-icon.svg",
   },
 ];
 
