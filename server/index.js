@@ -24,17 +24,18 @@ const io = new Server(httpServer, {
       "http://localhost:5173",
       "https://admin.socket.io/",
       "https://tax-max-rm6g.onrender.com",
+      "https://taxmax.netlify.app/",
     ],
     credentials: true,
   },
 });
 
 io.on("connection", (socket) => {
- // console.log(`${socket.id} user just connected`);
- // console.log(`${io.engine.clientsCount} user are connected`);
+  // console.log(`${socket.id} user just connected`);
+  // console.log(`${io.engine.clientsCount} user are connected`);
   // may or may not be similar to the count of Socket instances in the main namespace, depending on your usage
   const count2 = io.of("/").sockets.size;
- // console.log(count2);
+  // console.log(count2);
 
   socket.emit("connectionStatus", `Connection under socket ID ${socket.id}`);
 
@@ -48,14 +49,14 @@ io.on("connection", (socket) => {
 
   //room is the task id later
   socket.on("join-room", (room) => {
-   // console.log(`${socket.id} join room: ${room}`);
+    // console.log(`${socket.id} join room: ${room}`);
     socket.join(room);
   });
 
   socket.on("send-message", (message, room) => {
-      // console.log(socket.rooms);
-      // console.log(message);
-      //  console.log(`Message from Room: ${room}`);
+    // console.log(socket.rooms);
+    // console.log(message);
+    //  console.log(`Message from Room: ${room}`);
     if (room === "" || room === undefined) {
       socket.broadcast.emit("recieve-message", message);
       socket.to("Room1").emit("some event", message);
@@ -78,13 +79,13 @@ io.on("connection", (socket) => {
   });
 
   socket.on("disconnect", () => {
-      // console.log("A user disconnected");
+    // console.log("A user disconnected");
   });
 });
 
 io.engine.on("connection_error", (err) => {
-      // console.log(err.req); // the request object
-      //console.log(err.message); // the error "Session ID unknown"
+  // console.log(err.req); // the request object
+  //console.log(err.message); // the error "Session ID unknown"
 });
 
 instrument(io, {
@@ -111,5 +112,5 @@ app.use("/chats", chatRouter);
 app.use(errorHandler);
 
 httpServer.listen(PORT, () => {
-    // console.log(`Server is running on Port: http://localhost:${PORT}`);
+  // console.log(`Server is running on Port: http://localhost:${PORT}`);
 });
