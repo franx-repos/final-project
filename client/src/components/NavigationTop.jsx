@@ -39,7 +39,7 @@ const NavigationTop = () => {
       <div className={styles.container}>
         <Link to="/" className={styles.logo}>
           <img
-            src="\src\assets\TaxMax-Logo3.png"
+            src="./src/assets/TaxMax-Logo3.png"
             className="h-8"
             alt="TaxMax Logo"
           />
@@ -78,17 +78,17 @@ const NavigationTop = () => {
         >
           <ul className={styles.navList}>
             <li>
-            <Link to="/" className={styles.menuItem} aria-current="page">
-              <a href="#" className={styles.menuItem} aria-current="page">
-                Home
-              </a>
+              <Link to="/" className={styles.menuItem} aria-current="page">
+                <a href="#" className={styles.menuItem} aria-current="page">
+                  Home
+                </a>
               </Link>
             </li>
             <li>
-             <Link to="/about" className={styles.menuItem}>
-              <a href="#" className={styles.menuItem}>
-                About
-              </a>
+              <Link to="/about" className={styles.menuItem}>
+                <a href="#" className={styles.menuItem}>
+                  About
+                </a>
               </Link>
             </li>
             <li>
@@ -102,10 +102,10 @@ const NavigationTop = () => {
               </a>
             </li>
             <li>
-           <Link to="/contact">
-              <a href="#" className={styles.menuItem}>
-                Contact
-              </a>
+              <Link to="/contact">
+                <a href="#" className={styles.menuItem}>
+                  Contact
+                </a>
               </Link>
             </li>
           </ul>
