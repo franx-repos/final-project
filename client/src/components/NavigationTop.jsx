@@ -4,6 +4,7 @@ import { useAuth } from "../context/UserProvider";
 import ThemeToggle from "./ThemeToggle";
 import Modalsignin from "./signinmodal/Modalsignin";
 import UserDropdown from "./UserDropdown";
+import logo from "../assets/TaxMax-Logo3.png";
 
 const styles = {
   container:
@@ -38,11 +39,7 @@ const NavigationTop = () => {
     <nav className="w-full bg-white/75 border-gray-200 dark:bg-gray-900/80">
       <div className={styles.container}>
         <Link to="/" className={styles.logo}>
-          <img
-            src="./src/assets/TaxMax-Logo3.png"
-            className="h-8"
-            alt="TaxMax Logo"
-          />
+          <img src={logo} className="h-8" alt="TaxMax Logo" />
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"></span>
         </Link>
         <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse relative">
