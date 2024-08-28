@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/UserProvider.jsx";
 import axios from "axios";
+import logo from "../../assets/TaxMax-Logo3.png";
 
 const Modalsignin = ({ isLoginModalOpen, toggleLoginModal }) => {
   const [email, setEmail] = useState("");
@@ -15,14 +16,12 @@ const Modalsignin = ({ isLoginModalOpen, toggleLoginModal }) => {
   const deploy = import.meta.env.VITE_DEPLOY_URL;
   // ${deploy}
 
-
   useEffect(() => {
-    const storedAuth = localStorage.getItem('auth');
-    if (storedAuth === 'true') {
+    const storedAuth = localStorage.getItem("auth");
+    if (storedAuth === "true") {
       setIsLoggedIn(true);
     }
   }, []);
-
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -41,7 +40,7 @@ const Modalsignin = ({ isLoginModalOpen, toggleLoginModal }) => {
         );
 
         if (response.status === 200) {
-          localStorage.setItem('auth', 'true');
+          localStorage.setItem("auth", "true");
           setIsLoggedIn(true);
           checkUser();
           navigate("/Dashboard");
@@ -71,7 +70,7 @@ const Modalsignin = ({ isLoginModalOpen, toggleLoginModal }) => {
       );
 
       if (response.status === 200) {
-        localStorage.setItem('auth', 'true');
+        localStorage.setItem("auth", "true");
         setIsLoggedIn(true);
         checkUser();
         navigate("/Dashboard");
@@ -131,7 +130,7 @@ const Modalsignin = ({ isLoginModalOpen, toggleLoginModal }) => {
                 <Link to="/">
                   <img
                     className="mx-auto h-10 w-auto"
-                    src=".\src\assets\TaxMax-Logo3.svg"
+                    src={logo}
                     alt="TAXMAX"
                   />
                 </Link>

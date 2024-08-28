@@ -3,6 +3,7 @@ import { HiChartPie, HiInbox, HiUser, HiViewBoards } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/UserProvider";
 import React, { useEffect, useState } from "react";
+import logo from "../../assets/TaxMax-Logo3.png";
 
 const styles = {
   sidebarItem: "justify-start text-left text-xl p-4",
@@ -58,11 +59,7 @@ function DashboardSidebar({ currentLocation, setCurrentLocation }) {
         to="/"
         className="flex items-center ml-2 space-x-3 rtl:space-x-reverse"
       >
-        <img
-          src="\src\assets\TaxMax-Logo3.png"
-          className="h-8"
-          alt="TaxMax Logo"
-        />
+        <img src={logo} className="h-8" alt="TaxMax Logo" />
         <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"></span>
       </Link>
       <Sidebar.Items>

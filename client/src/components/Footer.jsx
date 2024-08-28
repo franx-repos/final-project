@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import logo from "../assets/TaxMax-Logo3.png";
 
 function Footer() {
   return (
@@ -7,32 +8,34 @@ function Footer() {
         <div className="md:flex md:justify-between">
           <div className="mb-6 md:mb-0">
             <a href="/" className="flex items-center">
-              <img
-                src="\src\assets\TaxMax-Logo3.png"
-                className="h-8 me-3"
-                alt="Logo"
-              />
+              <img src={logo} className="h-8 me-3" alt="Logo" />
               <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"></span>
             </a>
           </div>
           <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
             <div>
               <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
-              COMPANY
+                COMPANY
               </h2>
               <ul className="text-gray-500 dark:text-gray-400 font-medium">
                 <li className="mb-4">
-                  <Link to="about" >
-                  <a href="#" className="hover:underline  text-gray-900 uppercase dark:text-white ">
-                 About
-                  </a>
+                  <Link to="about">
+                    <a
+                      href="#"
+                      className="hover:underline  text-gray-900 uppercase dark:text-white "
+                    >
+                      About
+                    </a>
                   </Link>
                 </li>
                 <li>
-                <Link to="contact" >
-                  <a href="#" className="hover:underline  text-gray-900 uppercase dark:text-white ">
-                  contact
-                  </a>
+                  <Link to="contact">
+                    <a
+                      href="#"
+                      className="hover:underline  text-gray-900 uppercase dark:text-white "
+                    >
+                      contact
+                    </a>
                   </Link>
                 </li>
               </ul>
@@ -47,7 +50,7 @@ function Footer() {
                     href="https://github.com/franx-repos/final-project"
                     className="hover:underline  text-gray-900 uppercase dark:text-white "
                   >
-                   Linkedin
+                    Linkedin
                   </a>
                 </li>
                 <li>
@@ -62,16 +65,22 @@ function Footer() {
             </div>
             <div>
               <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
-              HELP
+                HELP
               </h2>
               <ul className="text-gray-500 dark:text-gray-400 font-medium">
                 <li className="mb-4">
-                  <a href="#" className="hover:underline  text-gray-900 uppercase dark:text-white ">
-                  Support Center
+                  <a
+                    href="#"
+                    className="hover:underline  text-gray-900 uppercase dark:text-white "
+                  >
+                    Support Center
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:underline  text-gray-900 uppercase dark:text-white ">
+                  <a
+                    href="#"
+                    className="hover:underline  text-gray-900 uppercase dark:text-white "
+                  >
                     Terms &amp; Conditions
                   </a>
                 </li>
