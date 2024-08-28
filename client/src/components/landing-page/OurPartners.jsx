@@ -3,6 +3,7 @@ import axios from "axios";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import taxConsultant from "../../assets/tax_consultant1.jpg";
 
 function OurPartners() {
   const [pros, setPros] = useState([]);
@@ -69,7 +70,7 @@ function OurPartners() {
                   <a href="#">
                     <img
                       className="h-28 rounded-tl-md"
-                      src="public\tax_consultant1.jpg"
+                      src={taxConsultant}
                       alt="Foto"
                     />
                   </a>
