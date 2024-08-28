@@ -8,11 +8,11 @@ import CreateTask from "./CreateTask";
 import TaskDetail from "./TaskDetail";
 
 const styles = {
-  th: "px-3 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase dark:text-gray-400 dark:bg-[#1f2937]",
-  td: "text-left py-5 border-b max-w-10 overflow-clip border-b-gray-200 text-wrap dark:border-x-0 dark:border-r-white dark:border dark:bg-[#1f2937]  bg-white text-sm",
+  th: "px-3 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600 uppercase dark:text-gray-400 dark:bg-[#1f2937]",
+  td: "text-center py-5 border-b max-w-10 overflow-clip border-b-gray-200 text-wrap dark:border-x-0 dark:border-r-white dark:border dark:bg-[#1f2937]  bg-white text-sm",
   button:
     "text-white bg-teal-500 hover:bg-teal-700 focus:outline-none font-medium rounded-lg text-sm mx-2 px-4 py-2 text-center dark:bg-teal-500 dark:hover:bg-teal-700",
-  tdP: "text-gray-900 whitespace-no-wrap dark:text-gray-300",
+  tdP: "text-gray-900 whitespace-no-wrap dark:text-gray-300 text-center",
 };
 
 const Taskoverview = () => {
@@ -160,7 +160,9 @@ const Taskoverview = () => {
                         Edit
                       </button>
                     </td>
-                  ) : null}
+                  ) : (
+                    <td className={styles.td}></td>
+                  )}
                 </tr>
               ))}
             </tbody>

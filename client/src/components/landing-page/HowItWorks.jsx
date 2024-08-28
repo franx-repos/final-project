@@ -1,3 +1,7 @@
+import userIcon from "../../assets/user-icon.svg";
+import taskIcon from "../../assets/task-icon.svg";
+import connectIcon from "../../assets/connect-icon.svg";
+
 const styles = {
   container: "flex flex-col justify-center bg-slate-100/50 dark:bg-gray-900",
   content: "my-16 p-5 flex flex-col items-center gap-16",
@@ -26,19 +30,19 @@ const steps = [
     num: "1",
     title: "Create your Account",
     desc: "Condimentum vit pellemsque habitant morbi at molestie.",
-    img: "./src/assets/user-icon.svg",
+    img: userIcon,
   },
   {
     num: "2",
     title: "Create a task",
     desc: "Condimentum vit pellemsque habitant morbi at molestie.",
-    img: "./src/assets/task-icon.svg",
+    img: taskIcon,
   },
   {
     num: "3",
     title: "Get connected with a Pro",
     desc: "Condimentum vit pellemsque habitant morbi at molestie.",
-    img: "./src/assets/connect-icon.svg",
+    img: connectIcon,
   },
 ];
 

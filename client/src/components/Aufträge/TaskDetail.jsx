@@ -28,7 +28,7 @@ const TaskDetail = ({
     switch (status) {
       case "OPEN":
         return "bg-green-200 text-green-800";
-      case "SUSPENDED":
+      case "IN PROGRESS":
         return "bg-yellow-200 text-yellow-800";
       case "CLOSED":
         return "bg-red-200 text-red-800";
@@ -130,8 +130,39 @@ const TaskDetail = ({
                       className="rounded-md flex justify-between p-2"
                       key={document._id}
                     >
-                       {document.documentstitle.includes(".pdf")? <svg width="20px" height="20px" viewBox="-3 0 24 24" id="meteor-icon-kit__solid-file" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M0 6H5C5.55228 6 6 5.55228 6 5V0H16C17.1046 0 18 0.89543 18 2V22C18 23.1046 17.1046 24 16 24H2C0.89543 24 0 23.1046 0 22V6zM0.34141 4C0.94398 2.29517 2.29517 0.943981 4 0.341411V4H0.34141z" fill="#758CA3"/></svg>
-:<svg width="20px" height="20px" viewBox="0 0 24 24" id="meteor-icon-kit__solid-image" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M3 22H21C21.5523 22 22 21.5523 22 21V17L17.7071 12.7071C17.3166 12.3166 16.6834 12.3166 16.2929 12.7071L10.5 18.5C10.2239 18.7761 9.77614 18.7761 9.5 18.5C9.22386 18.2239 9.22386 17.7761 9.5 17.5L11 16L8.70711 13.7071C8.31658 13.3166 7.68342 13.3166 7.29289 13.7071L2 19V21C2 21.5523 2.44772 22 3 22ZM21 24H3C1.34315 24 0 22.6569 0 21V3C0 1.34315 1.34315 0 3 0H21C22.6569 0 24 1.34315 24 3V21C24 22.6569 22.6569 24 21 24ZM6.5 9C7.88071 9 9 7.88071 9 6.5C9 5.11929 7.88071 4 6.5 4C5.11929 4 4 5.11929 4 6.5C4 7.88071 5.11929 9 6.5 9Z" fill="#758CA3"/></svg>}
+                      {document.documentstitle.includes(".pdf") ? (
+                        <svg
+                          width="20px"
+                          height="20px"
+                          viewBox="-3 0 24 24"
+                          id="meteor-icon-kit__solid-file"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            clip-rule="evenodd"
+                            d="M0 6H5C5.55228 6 6 5.55228 6 5V0H16C17.1046 0 18 0.89543 18 2V22C18 23.1046 17.1046 24 16 24H2C0.89543 24 0 23.1046 0 22V6zM0.34141 4C0.94398 2.29517 2.29517 0.943981 4 0.341411V4H0.34141z"
+                            fill="#758CA3"
+                          />
+                        </svg>
+                      ) : (
+                        <svg
+                          width="20px"
+                          height="20px"
+                          viewBox="0 0 24 24"
+                          id="meteor-icon-kit__solid-image"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            clip-rule="evenodd"
+                            d="M3 22H21C21.5523 22 22 21.5523 22 21V17L17.7071 12.7071C17.3166 12.3166 16.6834 12.3166 16.2929 12.7071L10.5 18.5C10.2239 18.7761 9.77614 18.7761 9.5 18.5C9.22386 18.2239 9.22386 17.7761 9.5 17.5L11 16L8.70711 13.7071C8.31658 13.3166 7.68342 13.3166 7.29289 13.7071L2 19V21C2 21.5523 2.44772 22 3 22ZM21 24H3C1.34315 24 0 22.6569 0 21V3C0 1.34315 1.34315 0 3 0H21C22.6569 0 24 1.34315 24 3V21C24 22.6569 22.6569 24 21 24ZM6.5 9C7.88071 9 9 7.88071 9 6.5C9 5.11929 7.88071 4 6.5 4C5.11929 4 4 5.11929 4 6.5C4 7.88071 5.11929 9 6.5 9Z"
+                            fill="#758CA3"
+                          />
+                        </svg>
+                      )}
                       <Link
                         to={document.url}
                         target="_blank"
